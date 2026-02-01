@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>디트로 맨홀관리 시스템(DMMS) v3.3</title>
+    <style>
+        /* 기본 레이아웃 및 스타일 (이전과 동일) */
+        html, body { margin: 0; padding: 0; width: 100%; height: 100%; font-family: 'Malgun Gothic', sans-serif; overflow: hidden; }
+        #app-container { display: flex; width: 100%; height: 100%; position: relative; }
+        #sidebar { width: 320px; height: 100%; background: #fff; border-right: 1px solid #ddd; z-index: 10; overflow-y: auto; display: flex; flex-direction: column; transition: transform 0.3s ease; }
+        #app-container.sidebar-hidden #sidebar { transform: translateX(-320px); position: absolute; }
+        .sidebar-header { padding: 25px 20px; background: #2c3e50; color: #fff; font-size: 19px; font-weight: bold; position: sticky; top: 0; z-index: 11; }
+        #main-content { flex: 1; display: flex; flex-direction: column; position: relative; }
+        #toggle-sidebar-btn { position: absolute; top: 15px; left: 330px; z-index: 20; background: #2c3e50; color: white; border: none; border-radius: 4px; padding: 10px; cursor: pointer; transition: left 0.3s ease; box-shadow: 2px 2px 5px rgba(0,0,0,0.2); }
+        #app-container.sidebar-hidden #toggle-sidebar-btn { left: 10px; }
+        .location-control { padding: 15px 20px; background: #f1f3f5; border-bottom: 1px solid #ddd; display: flex; justify-content: space-between; align-items: center; }
+        .toggle-btn { padding: 6px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        .btn-off { background: #dee2e6; color: #495057; }
+        .btn-on { background: #28a745; color: #fff; }
+        .tree-group-header { padding: 12px 20px; background: #fff; border-bottom: 1px solid #eee; cursor: pointer; font-weight: bold; display: flex; justify-content: space-between; align-items: center; }
+        .line-header { background: #f8f9fa; color: #2c3e50; font-size: 15px; border-left: 5px solid #2c3e50; }
+        .station-header { padding-left: 35px; font-size: 14px; font-weight: normal; color: #555; border-bottom: 1px dashed #eee; }
+        .tree-group-content { display: none; }
+        .tree-group-content.show { display: block; }
+        .manhole-item { padding: 10px 20px 10px 55px; border-bottom: 1px solid #f9f9f9; cursor: pointer; transition: all 0.2s ease; }
+        .manhole-item.active { background: #e3f2fd; border-left: 4px solid #2196f3; }
+        .manhole-id { color: #2196f3; display: block; font-size: 11px; font-weight: bold; }
+        .manhole-addr { font-size: 13px; color: #333; }
+        #map { flex: 1; }
+        #roadview { height: 38%; border-top: 4px solid #2c3e50; background: #eee; }
+        #rv-msg { position: absolute; bottom: 15%; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.6); color: white; padding: 10px 20px; border-radius: 20px; z-index: 5; font-size: 13px; }
+    </style>
+</head>
+<body>
+
+<div id="app-container">
+    <button id="toggle-sidebar-btn" onclick="toggleSidebar()">◀ 리스트</button>
+    <div id="sidebar">
+        <div class="sidebar-header">디트로 맨홀관리 시스템</div>
+        <div class="location-control">
+            <span style="font-size: 14px; font-weight: bold;">📍 실시간 위치</span>
+            <button id="track-btn" class="toggle-btn btn-off" onclick="toggleTracking()">OFF</button>
+        </div>
+        <div id="tree-container"></div>
+    </div>
+    <div id="main-content">
+        <div id="map"></div>
+        <div id="rv-msg">핀을 클릭하면 로드뷰가 표시됩니다</div>
+        <div id="roadview"></div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=bfdc537ae38f2581f61b334ea4034de6&libraries=services"></script>
+
+<script>
+    let map, rv, rvClient;
+    let selectedMarker = null, selectedItemEl = null;
+    let myLocMarker = null, watchId = null;
+
+    // 클릭 시에만 별 모양 마커로 변경하기 위한 이미지
+    const selectedImage = new kakao.maps.MarkerImage('https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', new kakao.maps.Size(24, 35));
+
+    function initMap() {
+        const mapContainer = document.getElementById('map');
+        const mapOption = { center: new kakao.maps.LatLng(35.8714, 128.6014), level: 7 };
+        map = new kakao.maps.Map(mapContainer, mapOption);
+        rv = new kakao.maps.Roadview(document.getElementById('roadview'));
+        rvClient = new kakao.maps.RoadviewClient();
+        loadManholeData();
+    }
+
+    async function loadManholeData() {
+        try {
+            const response = await fetch('manholes.json');
+            const data = await response.json();
+            const container = document.getElementById('tree-container');
+
+            data.lines.forEach(line => {
+                // 노선별 총 카운트 계산
+                const totalLineCount = line.stations.reduce((sum, st) => sum + st.manholes.length, 0);
+
+                const lineDiv = document.createElement('div');
+                lineDiv.className = 'tree-group';
+                lineDiv.innerHTML = `
+                    <div class="tree-group-header line-header" onclick="toggleGroup('${line.lineId}')">
+                        <span>🚇 ${line.lineTitle} (${totalLineCount})</span> <span id="arrow-${line.lineId}">▼</span>
+                    </div>
+                    <div id="${line.lineId}" class="tree-group-content"></div>
+                `;
+                container.appendChild(lineDiv);
+                const lineContent = document.getElementById(line.lineId);
+
+                line.stations.forEach(st => {
+                    const stDiv = document.createElement('div');
+                    stDiv.innerHTML = `
+                        <div class="tree-group-header station-header" onclick="toggleGroup('${st.stationId}')">
+                            <span>🚉 ${st.stationName} (${st.manholes.length})</span> <span id="arrow-${st.stationId}">▼</span>
+                        </div>
+                        <div id="${st.stationId}" class="tree-group-content"></div>
+                    `;
+                    lineContent.appendChild(stDiv);
+                    const stContent = document.getElementById(st.stationId);
+
+                    st.manholes.forEach(mh => {
+                        const pos = new kakao.maps.LatLng(mh.lat, mh.lng);
+                        
+                        // [수정] 아무 옵션도 주지 않아 카카오 기본 파란색 마커 생성
+                        const marker = new kakao.maps.Marker({ 
+                            position: pos, 
+                            map: map 
+                        });
+
+                        const itemEl = document.createElement('div');
+                        itemEl.className = 'manhole-item';
+                        itemEl.innerHTML = `<span class="manhole-id">${mh.id}</span><span class="manhole-addr">${mh.name}</span>`;
+
+                        const selectAction = () => {
+                            if (selectedItemEl) selectedItemEl.classList.remove('active');
+                            itemEl.classList.add('active'); selectedItemEl = itemEl;
+                            
+                            // 선택된 마커만 별 모양으로 변경
+                            if (selectedMarker) selectedMarker.setImage(null); // 이전 별 마커를 기본으로 복구
+                            marker.setImage(selectedImage); selectedMarker = marker;
+
+                            map.panTo(pos);
+                            rvClient.getNearestPanoId(pos, 50, pId => {
+                                if(pId) { rv.setPanoId(pId, pos); document.getElementById('rv-msg').style.display='none'; }
+                                else { document.getElementById('rv-msg').style.display='block'; document.getElementById('rv-msg').innerText="로드뷰 미지원 지역"; }
+                            });
+                            itemEl.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                        };
+
+                        itemEl.onclick = selectAction;
+                        kakao.maps.event.addListener(marker, 'click', selectAction);
+                        stContent.appendChild(itemEl);
+                    });
+                });
+            });
+            if(data.lines.length > 0) toggleGroup(data.lines[0].lineId);
+        } catch (error) { console.error("로드 실패:", error); }
+    }
+
+    function toggleSidebar() {
+        const container = document.getElementById('app-container');
+        const btn = document.getElementById('toggle-sidebar-btn');
+        container.classList.toggle('sidebar-hidden');
+        btn.innerText = container.classList.contains('sidebar-hidden') ? "▶ 리스트" : "◀ 리스트";
+        setTimeout(() => { map.relayout(); rv.relayout(); }, 300);
+    }
+
+    function toggleGroup(id) {
+        const content = document.getElementById(id);
+        const arrow = document.getElementById('arrow-' + id);
+        if(!content) return;
+        content.classList.toggle('show');
+        arrow.innerText = content.classList.contains('show') ? '▲' : '▼';
+    }
+
+    function toggleTracking() {
+        const btn = document.getElementById('track-btn');
+        if (watchId === null) {
+            if (navigator.geolocation) {
+                watchId = navigator.geolocation.watchPosition((pos) => {
+                    const newPos = new kakao.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+                    if (!myLocMarker) {
+                        myLocMarker = new kakao.maps.Marker({
+                            position: newPos, map: map,
+                            image: new kakao.maps.MarkerImage('https://t1.daumcdn.net/localimg/localimages/07/2012/img/marker_p.png', new kakao.maps.Size(24, 24))
+                        });
+                    } else { myLocMarker.setPosition(newPos); }
+                    map.setCenter(newPos);
+                }, null, { enableHighAccuracy: true });
+                btn.innerText = "ON"; btn.className = "toggle-btn btn-on";
+            }
+        } else {
+            navigator.geolocation.clearWatch(watchId);
+            watchId = null;
+            if (myLocMarker) { myLocMarker.setMap(null); myLocMarker = null; }
+            btn.innerText = "OFF"; btn.className = "toggle-btn btn-off";
+        }
+    }
+
+    window.onresize = () => { if(map) map.relayout(); if(rv) rv.relayout(); };
+    initMap();
+</script>
+</body>
+</html>
