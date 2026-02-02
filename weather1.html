@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>대구 실시간 강수 예보 (3시간)</title>
+    <style>
+        :root { --primary-color: #0077b6; --bg-color: #f4f7f9; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); padding: 20px; display: flex; justify-content: center; }
+        .container { width: 100%; max-width: 600px; background: white; padding: 25px; border-radius: 16px; box-shadow: 0 8px 20px rgba(0,0,0,0.05); }
+        h2 { color: var(--primary-color); text-align: center; margin-bottom: 20px; }
+        
+        .info-box { background: #e3f2fd; padding: 12px; border-radius: 8px; font-size: 0.9em; color: #0056b3; margin-bottom: 20px; text-align: center; }
+        .btn-container { text-align: center; margin-bottom: 20px; }
+        button { padding: 12px 24px; background-color: var(--primary-color); color: white; border: none; cursor: pointer; border-radius: 6px; font-weight: bold; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { border-bottom: 1px solid #eee; padding: 15px; text-align: center; }
+        th { background-color: #fafafa; color: #666; font-weight: 600; }
+        
+        .precip-val { color: #0077b6; font-weight: bold; } /* 강수량 강조 */
+        .status-text { font-weight: bold; }
+        
+        details { margin-top: 25px; border-top: 1px solid #ddd; padding-top: 10px; }
+        pre { background: #222; color: #eee; padding: 15px; border-radius: 6px; font-size: 0.8em; overflow-x: auto; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>☔ 대구 강수 예보 (3시간)</h2>
+    
+    <div id="status-info" class="info-box">
+        조회 지점: 대구 (nx=89, ny=90)
+    </div>
+    
+    <div class="btn-container">
+        <button onclick="main()">실시간 강수 정보 업데이트</button>
+    </div>
+
+    <div id="result"></div>
+    <div id="raw-data-area"></div>
+</div>
+
+<script>
+    const PROXY_URL = "https://cors-anywhere.herokuapp.com/";
+    const AUTH_KEY = "-MBhNUogT9uAYTVKIL_bWA";
+    const NX = 89; 
+    const NY = 90; 
+
+    function translatePty(code) {
+        const ptyMap = { "0": "맑음", "1": "비 🌧️", "2": "비/눈 🌨️", "3": "눈 ❄️", "5": "빗방울", "6": "빗방울/눈날림", "7": "눈날림" };
+        return ptyMap[code] || "정보 없음";
+    }
+
+    // XML 정렬 및 이스케이프 함수
+    function formatXml(xml) {
+        let formatted = '';
+        let reg = /(>)(<)(\/*)/g;
+        xml = xml.replace(reg, '$1\r\n$2$3');
+        let pad = 0;
+        xml.split('\r\n').forEach(node => {
+            let indent = 0;
+            if (node.match( /.+<\/\w[^>]*>$/ )) indent = 0;
+            else if (node.match( /^<\/\w/ )) { if (pad != 0) pad -= 1; }
+            else if (node.match( /^<\w[^>]*[^\/]>.*$/ )) indent = 1;
+            formatted += '  '.repeat(pad) + node + '\r\n';
+            pad += indent;
+        });
+        return formatted.trim();
+    }
+
+    function escapeXml(unsafe) {
+        return unsafe.replace(/[<>&'"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','\'':'&apos;','"':'&quot;'}[c]));
+    }
+
+    async function main() {
+        const resultDiv = document.getElementById('result');
+        const rawArea = document.getElementById('raw-data-area');
+        
+        resultDiv.innerHTML = "<strong>최신 데이터를 가져오는 중...</strong>";
+
+        const now = new Date();
+        let hours = now.getHours();
+        if (now.getMinutes() < 30) hours = (hours === 0) ? 23 : hours - 1;
+        const base_date = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
+        const base_time = `${String(hours).padStart(2, '0')}30`;
+
+        const targetUrl = `https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtFcst?pageNo=1&numOfRows=1000&dataType=XML&base_date=${base_date}&base_time=${base_time}&nx=${NX}&ny=${NY}&authKey=${AUTH_KEY}`;
+
+        try {
+            const response = await fetch(PROXY_URL + targetUrl);
+            const xmlText = await response.text();
+            rawArea.innerHTML = `<details><summary>📄 원본 XML 데이터</summary><pre>${escapeXml(formatXml(xmlText))}</pre></details>`;
+
+            const parser = new DOMParser();
+            const xmlDoc = parser.parseFromString(xmlText, "text/xml");
+            const items = Array.from(xmlDoc.getElementsByTagName("item"));
+
+            // 예보 시간(fcstTime) 기준으로 상위 3개 시간대 추출
+            const forecastTimes = [...new Set(items.map(i => i.getElementsByTagName("fcstTime")[0].textContent))].sort().slice(0, 3);
+
+            // 💡 필터링: 강수량(RN1)과 강수형태(PTY)만 남김
+            const targetCategories = { "RN1": "강수량", "PTY": "상태" };
+
+            let tableHtml = `<table><thead><tr><th>시간</th><th>항목</th><th>예보</th></tr></thead><tbody>`;
+
+            items.forEach(item => {
+                const fcstTime = item.getElementsByTagName("fcstTime")[0].textContent;
+                const cat = item.getElementsByTagName("category")[0].textContent;
+                
+                if (forecastTimes.includes(fcstTime) && targetCategories[cat]) {
+                    let val = item.getElementsByTagName("fcstValue")[0].textContent;
+                    
+                    if (cat === "PTY") val = translatePty(val);
+                    else if (cat === "RN1") val = (val === "0" || val === "강수없음") ? "0mm" : val + "mm";
+                    
+                    tableHtml += `<tr>
+                        <td>${fcstTime.substring(0,2)}시</td>
+                        <td>${targetCategories[cat]}</td>
+                        <td class="${cat === 'RN1' ? 'precip-val' : 'status-text'}">${val}</td>
+                    </tr>`;
+                }
+            });
+
+            tableHtml += "</tbody></table>";
+            resultDiv.innerHTML = tableHtml;
+
+        } catch (error) {
+            resultDiv.innerHTML = "<p style='color:red;'>프록시 또는 네트워크 오류 발생</p>";
+        }
+    }
+</script>
+
+</body>
+</html>

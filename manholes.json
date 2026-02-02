@@ -8,110 +8,110 @@
           "stationName": "대구역",
           "stationId": "st1_daegu",
           "manholes": [
-            {"id": "MH-1-01-01", "name": "대구역 교차로 서편", "lat": 35.8759, "lng": 128.5962},
-            {"id": "MH-1-01-02", "name": "대구역 2번 출구 앞", "lat": 35.8765, "lng": 128.5970},
-            {"id": "MH-1-01-03", "name": "대구역 롯데백화점 인근", "lat": 35.8772, "lng": 128.5965},
-            {"id": "MH-1-01-04", "name": "대구역 지하 환기구 #1", "lat": 35.8755, "lng": 128.5958},
-            {"id": "MH-1-01-05", "name": "대구역 북편 진입로", "lat": 35.8768, "lng": 128.5975}
+            {"id": "MH-1-01-01", "name": "대구역 교차로 서편", "lat": 35.8759, "lng": 128.5962, "flood_freq": 7, "repair_cnt": 4, "complaint_cnt": 8},
+            {"id": "MH-1-01-02", "name": "대구역 2번 출구 앞", "lat": 35.8765, "lng": 128.5970, "flood_freq": 3, "repair_cnt": 2, "complaint_cnt": 4},
+            {"id": "MH-1-01-03", "name": "대구역 롯데백화점 인근", "lat": 35.8772, "lng": 128.5965, "flood_freq": 2, "repair_cnt": 1, "complaint_cnt": 2},
+            {"id": "MH-1-01-04", "name": "대구역 지하 환기구 #1", "lat": 35.8755, "lng": 128.5958, "flood_freq": 5, "repair_cnt": 3, "complaint_cnt": 6},
+            {"id": "MH-1-01-05", "name": "대구역 북편 진입로", "lat": 35.8768, "lng": 128.5975, "flood_freq": 4, "repair_cnt": 2, "complaint_cnt": 3}
           ]
         },
         {
           "stationName": "중앙로역",
           "stationId": "st1_jungang",
           "manholes": [
-            {"id": "MH-1-02-01", "name": "중앙로역 대중교통전용지구", "lat": 35.8715, "lng": 128.5938},
-            {"id": "MH-1-02-02", "name": "중앙로역 1번 출구", "lat": 35.8721, "lng": 128.5942},
-            {"id": "MH-1-02-03", "name": "중앙로역 지하상가 입구", "lat": 35.8710, "lng": 128.5935},
-            {"id": "MH-1-02-04", "name": "중앙로역 사거리 동편", "lat": 35.8718, "lng": 128.5950},
-            {"id": "MH-1-02-05", "name": "중앙로역 경상감영공원 방면", "lat": 35.8725, "lng": 128.5930}
+            {"id": "MH-1-02-01", "name": "중앙로역 대중교통전용지구", "lat": 35.8715, "lng": 128.5938, "flood_freq": 8, "repair_cnt": 6, "complaint_cnt": 9},
+            {"id": "MH-1-02-02", "name": "중앙로역 1번 출구", "lat": 35.8721, "lng": 128.5942, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 5},
+            {"id": "MH-1-02-03", "name": "중앙로역 지하상가 입구", "lat": 35.8710, "lng": 128.5935, "flood_freq": 9, "repair_cnt": 8, "complaint_cnt": 10},
+            {"id": "MH-1-02-04", "name": "중앙로역 사거리 동편", "lat": 35.8718, "lng": 128.5950, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 7},
+            {"id": "MH-1-02-05", "name": "중앙로역 경상감영공원 방면", "lat": 35.8725, "lng": 128.5930, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 3}
           ]
         },
         {
           "stationName": "반월당역(1호선)",
           "stationId": "st1_ban1",
           "manholes": [
-            {"id": "MH-1-03-01", "name": "반월당역 1호선 환승통로", "lat": 35.8647, "lng": 128.5933},
-            {"id": "MH-1-03-02", "name": "반월당역 13번 출구 앞", "lat": 35.8655, "lng": 128.5940},
-            {"id": "MH-1-03-03", "name": "반월당역 메트로센터 입구", "lat": 35.8640, "lng": 128.5925},
-            {"id": "MH-1-03-04", "name": "반월당역 현대백화점 인근", "lat": 35.8652, "lng": 128.5915},
-            {"id": "MH-1-03-05", "name": "반월당역 동아쇼핑 앞", "lat": 35.8660, "lng": 128.5928}
+            {"id": "MH-1-03-01", "name": "반월당역 1호선 환승통로", "lat": 35.8647, "lng": 128.5933, "flood_freq": 3, "repair_cnt": 5, "complaint_cnt": 4},
+            {"id": "MH-1-03-02", "name": "반월당역 13번 출구 앞", "lat": 35.8655, "lng": 128.5940, "flood_freq": 6, "repair_cnt": 4, "complaint_cnt": 7},
+            {"id": "MH-1-03-03", "name": "반월당역 메트로센터 입구", "lat": 35.8640, "lng": 128.5925, "flood_freq": 8, "repair_cnt": 7, "complaint_cnt": 9},
+            {"id": "MH-1-03-04", "name": "반월당역 현대백화점 인근", "lat": 35.8652, "lng": 128.5915, "flood_freq": 4, "repair_cnt": 2, "complaint_cnt": 5},
+            {"id": "MH-1-03-05", "name": "반월당역 동아쇼핑 앞", "lat": 35.8660, "lng": 128.5928, "flood_freq": 5, "repair_cnt": 3, "complaint_cnt": 6}
           ]
         },
         {
           "stationName": "명덕역",
           "stationId": "st1_myeong",
           "manholes": [
-            {"id": "MH-1-04-01", "name": "명덕역 교차로 북측", "lat": 35.8578, "lng": 128.5910},
-            {"id": "MH-1-04-02", "name": "명덕역 3번 출구", "lat": 35.8585, "lng": 128.5915},
-            {"id": "MH-1-04-03", "name": "명덕역 남측 배수구", "lat": 35.8570, "lng": 128.5905},
-            {"id": "MH-1-04-04", "name": "명덕역 경북여상 방면", "lat": 35.8582, "lng": 128.5920},
-            {"id": "MH-1-04-05", "name": "명덕역 버스정류장 앞", "lat": 35.8575, "lng": 128.5900}
+            {"id": "MH-1-04-01", "name": "명덕역 교차로 북측", "lat": 35.8578, "lng": 128.5910, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 6},
+            {"id": "MH-1-04-02", "name": "명덕역 3번 출구", "lat": 35.8585, "lng": 128.5915, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 3},
+            {"id": "MH-1-04-03", "name": "명덕역 남측 배수구", "lat": 35.8570, "lng": 128.5905, "flood_freq": 7, "repair_cnt": 5, "complaint_cnt": 8},
+            {"id": "MH-1-04-04", "name": "명덕역 경북여상 방면", "lat": 35.8582, "lng": 128.5920, "flood_freq": 3, "repair_cnt": 2, "complaint_cnt": 4},
+            {"id": "MH-1-04-05", "name": "명덕역 버스정류장 앞", "lat": 35.8575, "lng": 128.5900, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 5}
           ]
         },
         {
           "stationName": "교대역",
           "stationId": "st1_gyo",
           "manholes": [
-            {"id": "MH-1-05-01", "name": "교대역 영남대병원 방면", "lat": 35.8502, "lng": 128.5908},
-            {"id": "MH-1-05-02", "name": "교대역 4번 출구", "lat": 35.8510, "lng": 128.5915},
-            {"id": "MH-1-05-03", "name": "교대역 대구교대 정문", "lat": 35.8495, "lng": 128.5900},
-            {"id": "MH-1-05-04", "name": "교대역 남구청 방면", "lat": 35.8505, "lng": 128.5920},
-            {"id": "MH-1-05-05", "name": "교대역 횡단보도 하부", "lat": 35.8498, "lng": 128.5912}
+            {"id": "MH-1-05-01", "name": "교대역 영남대병원 방면", "lat": 35.8502, "lng": 128.5908, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 5},
+            {"id": "MH-1-05-02", "name": "교대역 4번 출구", "lat": 35.8510, "lng": 128.5915, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 2},
+            {"id": "MH-1-05-03", "name": "교대역 대구교대 정문", "lat": 35.8495, "lng": 128.5900, "flood_freq": 3, "repair_cnt": 4, "complaint_cnt": 3},
+            {"id": "MH-1-05-04", "name": "교대역 남구청 방면", "lat": 35.8505, "lng": 128.5920, "flood_freq": 5, "repair_cnt": 3, "complaint_cnt": 4},
+            {"id": "MH-1-05-05", "name": "교대역 횡단보도 하부", "lat": 35.8498, "lng": 128.5912, "flood_freq": 6, "repair_cnt": 5, "complaint_cnt": 6}
           ]
         },
         {
           "stationName": "상인역",
           "stationId": "st1_sangin",
           "manholes": [
-            {"id": "MH-1-06-01", "name": "상인역 롯데백화점 앞", "lat": 35.8188, "lng": 128.5367},
-            {"id": "MH-1-06-02", "name": "상인역 교차로 동편", "lat": 35.8195, "lng": 128.5375},
-            {"id": "MH-1-06-03", "name": "상인역 4번 출구", "lat": 35.8180, "lng": 128.5360},
-            {"id": "MH-1-06-04", "name": "상인역 상인광장 인근", "lat": 35.8192, "lng": 128.5380},
-            {"id": "MH-1-06-05", "name": "상인역 달서구청 방면", "lat": 35.8185, "lng": 128.5355}
+            {"id": "MH-1-06-01", "name": "상인역 롯데백화점 앞", "lat": 35.8188, "lng": 128.5367, "flood_freq": 2, "repair_cnt": 3, "complaint_cnt": 4},
+            {"id": "MH-1-06-02", "name": "상인역 교차로 동편", "lat": 35.8195, "lng": 128.5375, "flood_freq": 6, "repair_cnt": 5, "complaint_cnt": 8},
+            {"id": "MH-1-06-03", "name": "상인역 4번 출구", "lat": 35.8180, "lng": 128.5360, "flood_freq": 3, "repair_cnt": 2, "complaint_cnt": 4},
+            {"id": "MH-1-06-04", "name": "상인역 상인광장 인근", "lat": 35.8192, "lng": 128.5380, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 5},
+            {"id": "MH-1-06-05", "name": "상인역 달서구청 방면", "lat": 35.8185, "lng": 128.5355, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 6}
           ]
         },
         {
           "stationName": "월촌역",
           "stationId": "st1_wolchon",
           "manholes": [
-            {"id": "MH-1-07-01", "name": "월촌역 1번 출구", "lat": 35.8242, "lng": 128.5442},
-            {"id": "MH-1-07-02", "name": "월촌역 공원 앞", "lat": 35.8248, "lng": 128.5450},
-            {"id": "MH-1-07-03", "name": "월촌역 주택가 인입", "lat": 35.8235, "lng": 128.5435},
-            {"id": "MH-1-07-04", "name": "월촌역 지하 환풍구", "lat": 35.8245, "lng": 128.5455},
-            {"id": "MH-1-07-05", "name": "월촌역 도로 중앙", "lat": 35.8240, "lng": 128.5438}
+            {"id": "MH-1-07-01", "name": "월촌역 1번 출구", "lat": 35.8242, "lng": 128.5442, "flood_freq": 3, "repair_cnt": 2, "complaint_cnt": 3},
+            {"id": "MH-1-07-02", "name": "월촌역 공원 앞", "lat": 35.8248, "lng": 128.5450, "flood_freq": 2, "repair_cnt": 1, "complaint_cnt": 2},
+            {"id": "MH-1-07-03", "name": "월촌역 주택가 인입", "lat": 35.8235, "lng": 128.5435, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 6},
+            {"id": "MH-1-07-04", "name": "월촌역 지하 환풍구", "lat": 35.8245, "lng": 128.5455, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 4},
+            {"id": "MH-1-07-05", "name": "월촌역 도로 중앙", "lat": 35.8240, "lng": 128.5438, "flood_freq": 6, "repair_cnt": 4, "complaint_cnt": 5}
           ]
         },
         {
           "stationName": "성당못역",
           "stationId": "st1_seong",
           "manholes": [
-            {"id": "MH-1-08-01", "name": "성당못역 서부정류장", "lat": 35.8358, "lng": 128.5583},
-            {"id": "MH-1-08-02", "name": "성당못역 3번 출구", "lat": 35.8365, "lng": 128.5590},
-            {"id": "MH-1-08-03", "name": "성당못역 관문시장 앞", "lat": 35.8350, "lng": 128.5575},
-            {"id": "MH-1-08-04", "name": "성당못역 사거리 남측", "lat": 35.8362, "lng": 128.5600},
-            {"id": "MH-1-08-05", "name": "성당못역 지하 횡단로", "lat": 35.8355, "lng": 128.5580}
+            {"id": "MH-1-08-01", "name": "성당못역 서부정류장", "lat": 35.8358, "lng": 128.5583, "flood_freq": 8, "repair_cnt": 7, "complaint_cnt": 9},
+            {"id": "MH-1-08-02", "name": "성당못역 3번 출구", "lat": 35.8365, "lng": 128.5590, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 5},
+            {"id": "MH-1-08-03", "name": "성당못역 관문시장 앞", "lat": 35.8350, "lng": 128.5575, "flood_freq": 7, "repair_cnt": 6, "complaint_cnt": 8},
+            {"id": "MH-1-08-04", "name": "성당못역 사거리 남측", "lat": 35.8362, "lng": 128.5600, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 6},
+            {"id": "MH-1-08-05", "name": "성당못역 지하 횡단로", "lat": 35.8355, "lng": 128.5580, "flood_freq": 6, "repair_cnt": 5, "complaint_cnt": 7}
           ]
         },
         {
           "stationName": "대명역",
           "stationId": "st1_daemyeong",
           "manholes": [
-            {"id": "MH-1-09-01", "name": "대명역 주택가 1", "lat": 35.8395, "lng": 128.5645},
-            {"id": "MH-1-09-02", "name": "대명역 2번 출구", "lat": 35.8402, "lng": 128.5652},
-            {"id": "MH-1-09-03", "name": "대명역 안지랑 방면", "lat": 35.8388, "lng": 128.5638},
-            {"id": "MH-1-09-04", "name": "대명역 사거리 서편", "lat": 35.8405, "lng": 128.5658},
-            {"id": "MH-1-09-05", "name": "대명역 인도 경계점", "lat": 35.8390, "lng": 128.5640}
+            {"id": "MH-1-09-01", "name": "대명역 주택가 1", "lat": 35.8395, "lng": 128.5645, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 5},
+            {"id": "MH-1-09-02", "name": "대명역 2번 출구", "lat": 35.8402, "lng": 128.5652, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 2},
+            {"id": "MH-1-09-03", "name": "대명역 안지랑 방면", "lat": 35.8388, "lng": 128.5638, "flood_freq": 3, "repair_cnt": 2, "complaint_cnt": 4},
+            {"id": "MH-1-09-04", "name": "대명역 사거리 서편", "lat": 35.8405, "lng": 128.5658, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 6},
+            {"id": "MH-1-09-05", "name": "대명역 인도 경계점", "lat": 35.8390, "lng": 128.5640, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 3}
           ]
         },
         {
           "stationName": "안지랑역",
           "stationId": "st1_anji",
           "manholes": [
-            {"id": "MH-1-10-01", "name": "안지랑역 곱창골목 입구", "lat": 35.8443, "lng": 128.5703},
-            {"id": "MH-1-10-02", "name": "안지랑역 3번 출구 앞", "lat": 35.8450, "lng": 128.5710},
-            {"id": "MH-1-10-03", "name": "안지랑역 교차로 남측", "lat": 35.8435, "lng": 128.5695},
-            {"id": "MH-1-10-04", "name": "안지랑역 카톨릭대 방면", "lat": 35.8452, "lng": 128.5715},
-            {"id": "MH-1-10-05", "name": "안지랑역 변전소 인근", "lat": 35.8438, "lng": 128.5700}
+            {"id": "MH-1-10-01", "name": "안지랑역 곱창골목 입구", "lat": 35.8443, "lng": 128.5703, "flood_freq": 6, "repair_cnt": 5, "complaint_cnt": 9},
+            {"id": "MH-1-10-02", "name": "안지랑역 3번 출구 앞", "lat": 35.8450, "lng": 128.5710, "flood_freq": 3, "repair_cnt": 2, "complaint_cnt": 4},
+            {"id": "MH-1-10-03", "name": "안지랑역 교차로 남측", "lat": 35.8435, "lng": 128.5695, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 6},
+            {"id": "MH-1-10-04", "name": "안지랑역 카톨릭대 방면", "lat": 35.8452, "lng": 128.5715, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 3},
+            {"id": "MH-1-10-05", "name": "안지랑역 변전소 인근", "lat": 35.8438, "lng": 128.5700, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 5}
           ]
         }
       ]
@@ -124,110 +124,110 @@
           "stationName": "범어역",
           "stationId": "st2_beomeo",
           "manholes": [
-            {"id": "MH-2-01-01", "name": "범어역 네거리 북서", "lat": 35.8589, "lng": 128.6247},
-            {"id": "MH-2-01-02", "name": "범어역 5번 출구", "lat": 35.8595, "lng": 128.6255},
-            {"id": "MH-2-01-03", "name": "범어역 법원 방면", "lat": 35.8602, "lng": 128.6240},
-            {"id": "MH-2-01-04", "name": "범어역 사거리 중앙", "lat": 35.8582, "lng": 128.6258},
-            {"id": "MH-2-01-05", "name": "범어역 지하상가 환기구", "lat": 35.8590, "lng": 128.6235}
+            {"id": "MH-2-01-01", "name": "범어역 네거리 북서", "lat": 35.8589, "lng": 128.6247, "flood_freq": 4, "repair_cnt": 5, "complaint_cnt": 7},
+            {"id": "MH-2-01-02", "name": "범어역 5번 출구", "lat": 35.8595, "lng": 128.6255, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 3},
+            {"id": "MH-2-01-03", "name": "범어역 법원 방면", "lat": 35.8602, "lng": 128.6240, "flood_freq": 3, "repair_cnt": 3, "complaint_cnt": 4},
+            {"id": "MH-2-01-04", "name": "범어역 사거리 중앙", "lat": 35.8582, "lng": 128.6258, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 6},
+            {"id": "MH-2-01-05", "name": "범어역 지하상가 환기구", "lat": 35.8590, "lng": 128.6235, "flood_freq": 6, "repair_cnt": 4, "complaint_cnt": 5}
           ]
         },
         {
           "stationName": "대구은행역",
           "stationId": "st2_dgb",
           "manholes": [
-            {"id": "MH-2-02-01", "name": "대구은행역 본점 앞", "lat": 35.8602, "lng": 128.6152},
-            {"id": "MH-2-02-02", "name": "대구은행역 2번 출구", "lat": 35.8610, "lng": 128.6160},
-            {"id": "MH-2-02-03", "name": "대구은행역 교육청 방면", "lat": 35.8595, "lng": 128.6145},
-            {"id": "MH-2-02-04", "name": "대구은행역 사거리 동편", "lat": 35.8605, "lng": 128.6165},
-            {"id": "MH-2-02-05", "name": "대구은행역 도로변", "lat": 35.8598, "lng": 128.6148}
+            {"id": "MH-2-02-01", "name": "대구은행역 본점 앞", "lat": 35.8602, "lng": 128.6152, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 3},
+            {"id": "MH-2-02-02", "name": "대구은행역 2번 출구", "lat": 35.8610, "lng": 128.6160, "flood_freq": 1, "repair_cnt": 1, "complaint_cnt": 1},
+            {"id": "MH-2-02-03", "name": "대구은행역 교육청 방면", "lat": 35.8595, "lng": 128.6145, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 4},
+            {"id": "MH-2-02-04", "name": "대구은행역 사거리 동편", "lat": 35.8605, "lng": 128.6165, "flood_freq": 3, "repair_cnt": 2, "complaint_cnt": 4},
+            {"id": "MH-2-02-05", "name": "대구은행역 도로변", "lat": 35.8598, "lng": 128.6148, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 5}
           ]
         },
         {
           "stationName": "경대병원역",
           "stationId": "st2_knu",
           "manholes": [
-            {"id": "MH-2-03-01", "name": "경대병원역 사거리", "lat": 35.8631, "lng": 128.6033},
-            {"id": "MH-2-03-02", "name": "경대병원역 1번 출구", "lat": 35.8638, "lng": 128.6040},
-            {"id": "MH-2-03-03", "name": "경대병원역 수성교 방면", "lat": 35.8625, "lng": 128.6025},
-            {"id": "MH-2-03-04", "name": "경대병원역 응급실 인근", "lat": 35.8635, "lng": 128.6045},
-            {"id": "MH-2-03-05", "name": "경대병원역 지하 연결로", "lat": 35.8628, "lng": 128.6028}
+            {"id": "MH-2-03-01", "name": "경대병원역 사거리", "lat": 35.8631, "lng": 128.6033, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 6},
+            {"id": "MH-2-03-02", "name": "경대병원역 1번 출구", "lat": 35.8638, "lng": 128.6040, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 3},
+            {"id": "MH-2-03-03", "name": "경대병원역 수성교 방면", "lat": 35.8625, "lng": 128.6025, "flood_freq": 6, "repair_cnt": 5, "complaint_cnt": 7},
+            {"id": "MH-2-03-04", "name": "경대병원역 응급실 인근", "lat": 35.8635, "lng": 128.6045, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 5},
+            {"id": "MH-2-03-05", "name": "경대병원역 지하 연결로", "lat": 35.8628, "lng": 128.6028, "flood_freq": 3, "repair_cnt": 2, "complaint_cnt": 4}
           ]
         },
         {
           "stationName": "청라언덕역",
           "stationId": "st2_cheong",
           "manholes": [
-            {"id": "MH-2-04-01", "name": "청라언덕역 환승통로", "lat": 35.8643, "lng": 128.5833},
-            {"id": "MH-2-04-02", "name": "청라언덕역 9번 출구", "lat": 35.8650, "lng": 128.5840},
-            {"id": "MH-2-04-03", "name": "청라언덕역 서문시장 쪽", "lat": 35.8635, "lng": 128.5825},
-            {"id": "MH-2-04-04", "name": "청라언덕역 사거리 북측", "lat": 35.8648, "lng": 128.5845},
-            {"id": "MH-2-04-05", "name": "청라언덕역 고가 하부", "lat": 35.8640, "lng": 128.5830}
+            {"id": "MH-2-04-01", "name": "청라언덕역 환승통로", "lat": 35.8643, "lng": 128.5833, "flood_freq": 3, "repair_cnt": 4, "complaint_cnt": 4},
+            {"id": "MH-2-04-02", "name": "청라언덕역 9번 출구", "lat": 35.8650, "lng": 128.5840, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 5},
+            {"id": "MH-2-04-03", "name": "청라언덕역 서문시장 쪽", "lat": 35.8635, "lng": 128.5825, "flood_freq": 8, "repair_cnt": 7, "complaint_cnt": 10},
+            {"id": "MH-2-04-04", "name": "청라언덕역 사거리 북측", "lat": 35.8648, "lng": 128.5845, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 6},
+            {"id": "MH-2-04-05", "name": "청라언덕역 고가 하부", "lat": 35.8640, "lng": 128.5830, "flood_freq": 6, "repair_cnt": 5, "complaint_cnt": 7}
           ]
         },
         {
           "stationName": "반고개역",
           "stationId": "st2_ban",
           "manholes": [
-            {"id": "MH-2-05-01", "name": "반고개역 무침회골목", "lat": 35.8625, "lng": 128.5710},
-            {"id": "MH-2-05-02", "name": "반고개역 1번 출구", "lat": 35.8632, "lng": 128.5718},
-            {"id": "MH-2-05-03", "name": "반고개역 사거리 서편", "lat": 35.8618, "lng": 128.5702},
-            {"id": "MH-2-05-04", "name": "반고개역 지하 환풍구", "lat": 35.8628, "lng": 128.5722},
-            {"id": "MH-2-05-05", "name": "반고개역 인도변", "lat": 35.8620, "lng": 128.5705}
+            {"id": "MH-2-05-01", "name": "반고개역 무침회골목", "lat": 35.8625, "lng": 128.5710, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 7},
+            {"id": "MH-2-05-02", "name": "반고개역 1번 출구", "lat": 35.8632, "lng": 128.5718, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 3},
+            {"id": "MH-2-05-03", "name": "반고개역 사거리 서편", "lat": 35.8618, "lng": 128.5702, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 5},
+            {"id": "MH-2-05-04", "name": "반고개역 지하 환풍구", "lat": 35.8628, "lng": 128.5722, "flood_freq": 3, "repair_cnt": 2, "complaint_cnt": 4},
+            {"id": "MH-2-05-05", "name": "반고개역 인도변", "lat": 35.8620, "lng": 128.5705, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 3}
           ]
         },
         {
           "stationName": "내당역",
           "stationId": "st2_naedang",
           "manholes": [
-            {"id": "MH-2-06-01", "name": "내당역 홈플러스 앞", "lat": 35.8602, "lng": 128.5613},
-            {"id": "MH-2-06-02", "name": "내당역 3번 출구", "lat": 35.8610, "lng": 128.5620},
-            {"id": "MH-2-06-03", "name": "내당역 교차로 북측", "lat": 35.8595, "lng": 128.5605},
-            {"id": "MH-2-06-04", "name": "내당역 지하 환기통", "lat": 35.8605, "lng": 128.5625},
-            {"id": "MH-2-06-05", "name": "내당역 도로 분계점", "lat": 35.8598, "lng": 128.5608}
+            {"id": "MH-2-06-01", "name": "내당역 홈플러스 앞", "lat": 35.8602, "lng": 128.5613, "flood_freq": 3, "repair_cnt": 3, "complaint_cnt": 5},
+            {"id": "MH-2-06-02", "name": "내당역 3번 출구", "lat": 35.8610, "lng": 128.5620, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 2},
+            {"id": "MH-2-06-03", "name": "내당역 교차로 북측", "lat": 35.8595, "lng": 128.5605, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 6},
+            {"id": "MH-2-06-04", "name": "내당역 지하 환기통", "lat": 35.8605, "lng": 128.5625, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 4},
+            {"id": "MH-2-06-05", "name": "내당역 도로 분계점", "lat": 35.8598, "lng": 128.5608, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 5}
           ]
         },
         {
           "stationName": "두류역",
           "stationId": "st2_duryu",
           "manholes": [
-            {"id": "MH-2-07-01", "name": "두류역 이월드 입구", "lat": 35.8572, "lng": 128.5528},
-            {"id": "MH-2-07-02", "name": "두류역 7번 출구", "lat": 35.8580, "lng": 128.5535},
-            {"id": "MH-2-07-03", "name": "두류역 광장코아 인근", "lat": 35.8565, "lng": 128.5520},
-            {"id": "MH-2-07-04", "name": "두류역 사거리 중앙", "lat": 35.8575, "lng": 128.5540},
-            {"id": "MH-2-07-05", "name": "두류역 지하상가 출구", "lat": 35.8568, "lng": 128.5525}
+            {"id": "MH-2-07-01", "name": "두류역 이월드 입구", "lat": 35.8572, "lng": 128.5528, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 3},
+            {"id": "MH-2-07-02", "name": "두류역 7번 출구", "lat": 35.8580, "lng": 128.5535, "flood_freq": 3, "repair_cnt": 3, "complaint_cnt": 4},
+            {"id": "MH-2-07-03", "name": "두류역 광장코아 인근", "lat": 35.8565, "lng": 128.5520, "flood_freq": 6, "repair_cnt": 5, "complaint_cnt": 9},
+            {"id": "MH-2-07-04", "name": "두류역 사거리 중앙", "lat": 35.8575, "lng": 128.5540, "flood_freq": 7, "repair_cnt": 6, "complaint_cnt": 8},
+            {"id": "MH-2-07-05", "name": "두류역 지하상가 출구", "lat": 35.8568, "lng": 128.5525, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 5}
           ]
         },
         {
           "stationName": "감삼역",
           "stationId": "st2_gamsam",
           "manholes": [
-            {"id": "MH-2-08-01", "name": "감삼역 서남시장 앞", "lat": 35.8528, "lng": 128.5435},
-            {"id": "MH-2-08-02", "name": "감삼역 2번 출구", "lat": 35.8535, "lng": 128.5442},
-            {"id": "MH-2-08-03", "name": "감삼역 사거리 동편", "lat": 35.8520, "lng": 128.5428},
-            {"id": "MH-2-08-04", "name": "감삼역 달서구보건소", "lat": 35.8532, "lng": 128.5448},
-            {"id": "MH-2-08-05", "name": "감삼역 도로 경계선", "lat": 35.8525, "lng": 128.5430}
+            {"id": "MH-2-08-01", "name": "감삼역 서남시장 앞", "lat": 35.8528, "lng": 128.5435, "flood_freq": 7, "repair_cnt": 6, "complaint_cnt": 10},
+            {"id": "MH-2-08-02", "name": "감삼역 2번 출구", "lat": 35.8535, "lng": 128.5442, "flood_freq": 3, "repair_cnt": 2, "complaint_cnt": 4},
+            {"id": "MH-2-08-03", "name": "감삼역 사거리 동편", "lat": 35.8520, "lng": 128.5428, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 6},
+            {"id": "MH-2-08-04", "name": "감삼역 달서구보건소", "lat": 35.8532, "lng": 128.5448, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 3},
+            {"id": "MH-2-08-05", "name": "감삼역 도로 경계선", "lat": 35.8525, "lng": 128.5430, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 4}
           ]
         },
         {
           "stationName": "죽전역",
           "stationId": "st2_jukjeon",
           "manholes": [
-            {"id": "MH-2-09-01", "name": "죽전역 죽전네거리", "lat": 35.8488, "lng": 128.5335},
-            {"id": "MH-2-09-02", "name": "죽전역 1번 출구", "lat": 35.8495, "lng": 128.5342},
-            {"id": "MH-2-09-03", "name": "죽전역 용산 방면", "lat": 35.8480, "lng": 128.5328},
-            {"id": "MH-2-09-04", "name": "죽전역 아파트 진입로", "lat": 35.8492, "lng": 128.5348},
-            {"id": "MH-2-09-05", "name": "죽전역 중앙분리대", "lat": 35.8485, "lng": 128.5330}
+            {"id": "MH-2-09-01", "name": "죽전역 죽전네거리", "lat": 35.8488, "lng": 128.5335, "flood_freq": 6, "repair_cnt": 5, "complaint_cnt": 8},
+            {"id": "MH-2-09-02", "name": "죽전역 1번 출구", "lat": 35.8495, "lng": 128.5342, "flood_freq": 3, "repair_cnt": 2, "complaint_cnt": 4},
+            {"id": "MH-2-09-03", "name": "죽전역 용산 방면", "lat": 35.8480, "lng": 128.5328, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 5},
+            {"id": "MH-2-09-04", "name": "죽전역 아파트 진입로", "lat": 35.8492, "lng": 128.5348, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 3},
+            {"id": "MH-2-09-05", "name": "죽전역 중앙분리대", "lat": 35.8485, "lng": 128.5330, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 6}
           ]
         },
         {
           "stationName": "용산역",
           "stationId": "st2_yongsan",
           "manholes": [
-            {"id": "MH-2-10-01", "name": "용산역 성서IC 방면", "lat": 35.8505, "lng": 128.5235},
-            {"id": "MH-2-10-02", "name": "용산역 법원/검찰청", "lat": 35.8512, "lng": 128.5242},
-            {"id": "MH-2-10-03", "name": "용산역 3번 출구", "lat": 35.8498, "lng": 128.5228},
-            {"id": "MH-2-10-04", "name": "용산역 홈플러스 앞", "lat": 35.8508, "lng": 128.5248},
-            {"id": "MH-2-10-05", "name": "용산역 지하 주차장 쪽", "lat": 35.8502, "lng": 128.5230}
+            {"id": "MH-2-10-01", "name": "용산역 성서IC 방면", "lat": 35.8505, "lng": 128.5235, "flood_freq": 5, "repair_cnt": 4, "complaint_cnt": 6},
+            {"id": "MH-2-10-02", "name": "용산역 법원/검찰청", "lat": 35.8512, "lng": 128.5242, "flood_freq": 2, "repair_cnt": 2, "complaint_cnt": 2},
+            {"id": "MH-2-10-03", "name": "용산역 3번 출구", "lat": 35.8498, "lng": 128.5228, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 5},
+            {"id": "MH-2-10-04", "name": "용산역 홈플러스 앞", "lat": 35.8508, "lng": 128.5248, "flood_freq": 3, "repair_cnt": 2, "complaint_cnt": 4},
+            {"id": "MH-2-10-05", "name": "용산역 지하 주차장 쪽", "lat": 35.8502, "lng": 128.5230, "flood_freq": 4, "repair_cnt": 3, "complaint_cnt": 3}
           ]
         }
       ]

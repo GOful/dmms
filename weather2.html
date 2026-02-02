@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>실시간 전국 기상 상태</title>
+    <style>
+        :root { --primary-color: #264653; --bg-color: #f4f1de; }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); padding: 20px; display: flex; justify-content: center; min-height: 100vh; margin: 0; }
+        .container { width: 100%; max-width: 480px; background: white; padding: 30px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
+        h2 { color: var(--primary-color); margin-bottom: 20px; }
+        
+        .temp-card { color: white; padding: 25px; border-radius: 20px; margin-bottom: 15px; text-align: left; }
+        .location-name { font-weight: bold; font-size: 1.2em; margin-bottom: 8px; }
+        .main-row { display: flex; align-items: center; justify-content: space-between; }
+        .temp-value { font-size: 2.8em; font-weight: 800; margin: 0; }
+        .weather-status { font-size: 1.5em; font-weight: bold; }
+        .obs-time { font-size: 0.8em; opacity: 0.8; margin-top: 10px; display: block; }
+
+        button { width: 100%; padding: 15px; background-color: var(--primary-color); color: white; border: none; cursor: pointer; border-radius: 12px; font-weight: bold; font-size: 1em; margin-bottom: 20px; }
+        
+        .bg-sunny { background: linear-gradient(135deg, #f4a261, #e76f51); } 
+        .bg-rainy { background: linear-gradient(135deg, #457b9d, #1d3557); } 
+        .bg-etc { background: linear-gradient(135deg, #2a9d8f, #264653); }
+
+        pre { background: #2d3436; color: #dfe6e9; padding: 10px; border-radius: 8px; font-size: 0.75em; text-align: left; overflow-x: auto; white-space: pre-wrap; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>전국 기상 관측소</h2>
+    <button onclick="updateAllWeather()">날씨 정보 업데이트</button>
+    <div id="result-list"><p>데이터를 불러와 주세요.</p></div>
+
+    <details style="margin-top: 20px;">
+        <summary>RAW 데이터 보기</summary>
+        <div id="raw-data-area"></div>
+    </details>
+</div>
+
+<script>
+    const AUTH_KEY = "-MBhNUogT9uAYTVKIL_bWA";
+
+    const locations = [
+        { name: "제주", lon: 126.5329, lat: 33.3610 },
+        { name: "서울", lon: 126.965, lat: 37.571 },
+        { name: "대구", lon: 128.62, lat: 35.87 }
+    ];
+
+    function getSafeFormattedDate(date) {
+        const f = (n) => String(n).padStart(2, '0');
+        const minutes = Math.floor(date.getMinutes() / 10) * 10;
+        return `${date.getFullYear()}${f(date.getMonth() + 1)}${f(date.getDate())}${f(date.getHours())}${f(minutes)}`;
+    }
+
+    async function fetchWeatherData(loc, tm1, tm2) {
+        // ✅ PROXY_URL을 제거하고 기상청 URL로 직접 요청합니다.
+        const targetUrl = `https://apihub.kma.go.kr/api/typ01/cgi-bin/url/nph-sfc_obs_nc_pt_api?obs=ta,rn_ox,vs&tm1=${tm1}&tm2=${tm2}&itv=10&lon=${loc.lon}&lat=${loc.lat}&authKey=${AUTH_KEY}`;
+        
+        try {
+            const response = await fetch(targetUrl);
+            if (!response.ok) throw new Error('네트워크 응답 에러');
+            const text = await response.text();
+            return { name: loc.name, text: text };
+        } catch (error) {
+            console.error(error);
+            return { name: loc.name, text: "error: 직접 요청 시 CORS 정책에 의해 차단될 수 있습니다." };
+        }
+    }
+
+    async function updateAllWeather() {
+        const resultList = document.getElementById('result-list');
+        const rawArea = document.getElementById('raw-data-area');
+        resultList.innerHTML = "<p>분석 중...</p>";
+        rawArea.innerHTML = "";
+
+        const now = new Date();
+        const endTime = new Date(now.getTime() - (10 * 60 * 1000));
+        const startTime = new Date(endTime.getTime() - (30 * 60 * 1000));
+        const tm1 = getSafeFormattedDate(startTime);
+        const tm2 = getSafeFormattedDate(endTime);
+
+        try {
+            const results = await Promise.all(locations.map(loc => fetchWeatherData(loc, tm1, tm2)));
+            
+            let htmlContent = "";
+            results.forEach(res => {
+                rawArea.innerHTML += `<strong>[${res.name}]</strong><pre>${res.text}</pre>`;
+
+                if (res.text.startsWith("error")) {
+                    htmlContent += `<div class="temp-card bg-etc"><p>📍 ${res.name}: 요청 실패 (CORS 확인 필요)</p></div>`;
+                    return;
+                }
+
+                const lines = res.text.trim().split('\n');
+                const dataLines = lines.filter(line => !line.startsWith('#') && line.trim() !== "");
+
+                if (dataLines.length > 0) {
+                    const latestLine = dataLines[dataLines.length - 1];
+                    const parts = latestLine.split(/[,\s]+/).filter(p => p.trim() !== "");
+                    
+                    const timeStr = parts[0];
+                    const tempVal = parts[3];  // ta
+                    const rainOx = parseFloat(parts[4]); // rn_ox
+                    const visibility = parseFloat(parts[5]); // vs (시정)
+
+                    let statusText = "맑음 ☀️";
+                    let bgClass = "bg-sunny";
+
+                    if (rainOx > 0) {
+                        statusText = "비 ☔";
+                        bgClass = "bg-rainy";
+                    } else if (visibility < 10) { 
+                        statusText = "흐림 ☁️";
+                        bgClass = "bg-etc";
+                    }
+
+                    const displayTime = `${timeStr.substring(8, 10)}:${timeStr.substring(10, 12)}`;
+
+                    htmlContent += `
+                        <div class="temp-card ${bgClass}">
+                            <div class="location-name">📍 ${res.name}</div>
+                            <div class="main-row">
+                                <p class="temp-value">${tempVal}°C</p>
+                                <p class="weather-status">${statusText}</p>
+                            </div>
+                            <span class="obs-time">관측: ${displayTime}</span>
+                        </div>
+                    `;
+                } else {
+                    htmlContent += `<div class="temp-card bg-etc"><p>${res.name}: 데이터 없음</p></div>`;
+                }
+            });
+            resultList.innerHTML = htmlContent;
+        } catch (error) {
+            resultList.innerHTML = `<p>오류 발생: ${error.message}</p>`;
+        }
+    }
+</script>
+
+</body>
+</html>
