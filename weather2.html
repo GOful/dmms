@@ -90,23 +90,18 @@
 
             let htmlContent = "";
 
-            // 🔥 50개 지점 전체를 순회하며 카드 생성
             data.forEach(obs => {
-                // 키값 매핑 (파이썬에서 LOCATION_NAME과 TA를 사용하도록 설정함)
-                const name = obs.LOCATION_NAME || "알 수 없음";
-                const temp = obs.ta || obs.DATA || "0";
+                // 1. JSON 구조에 맞춰 키값 수정
+                const name = obs.LOCATION_NAME || `지점(${obs.LON}, ${obs.LAT})`; 
+                const temp = obs.DATA || obs.ta || "0"; // DATA 키를 우선적으로 읽음
                 const time = obs.TM || "";
                 
-                // 날씨 상태 판별 (임의 기준: 10도 이하 흐림, 비 정보 있을 시 비)
                 let status = "맑음 ☀️";
                 let bg = "bg-sunny";
 
-                // 파이썬 코드에서 rn_ox(강수여부)를 가져왔을 경우
-                if (parseFloat(obs.rn_ox || "0") > 0) {
-                    status = "비 ☔";
-                    bg = "bg-rainy";
-                } else if (parseFloat(obs.vs || "100") < 10) {
-                    status = "흐림 ☁️";
+                // 기온에 따른 색상 변화 예시 (데이터에 강수 정보가 없을 경우)
+                if (parseFloat(temp) <= 0) {
+                    status = "추위 ❄️";
                     bg = "bg-etc";
                 }
 
