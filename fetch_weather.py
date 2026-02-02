@@ -1,13 +1,15 @@
 import requests
 import json
 import urllib3
+import os
 from datetime import datetime, timedelta
+
 
 # SSL 경고 무시
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def fetch_and_save_as_json():
-    auth_key = "-MBhNUogT9uAYTVKIL_bWA"
+    auth_key = os.environ.get('KMA_API_KEY')
     
     # 1. 현재 시간과 12분 전 시간 계산
     now = datetime.now()
