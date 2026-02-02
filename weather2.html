@@ -3,41 +3,69 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>실시간 기상 대시보드</title>
+    <title>전국 50개 지점 실시간 기상 현황</title>
     <style>
         :root { --primary-color: #264653; --bg-color: #f4f1de; }
-        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg-color); padding: 20px; display: flex; justify-content: center; min-height: 100vh; margin: 0; }
-        .container { width: 100%; max-width: 480px; background: white; padding: 30px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); text-align: center; }
-        h2 { color: var(--primary-color); margin-bottom: 20px; }
-        .temp-card { color: white; padding: 25px; border-radius: 20px; margin-bottom: 15px; text-align: left; transition: transform 0.3s; }
-        .temp-card:hover { transform: translateY(-5px); }
-        .location-name { font-weight: bold; font-size: 1.2em; margin-bottom: 8px; }
-        .main-row { display: flex; align-items: center; justify-content: space-between; }
-        .temp-value { font-size: 2.8em; font-weight: 800; margin: 0; }
-        .weather-status { font-size: 1.5em; font-weight: bold; }
-        .obs-time { font-size: 0.8em; opacity: 0.8; margin-top: 10px; display: block; }
-        button { width: 100%; padding: 15px; background-color: var(--primary-color); color: white; border: none; cursor: pointer; border-radius: 12px; font-weight: bold; font-size: 1em; margin-bottom: 20px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); padding: 20px; margin: 0; }
+        
+        .header { text-align: center; margin-bottom: 30px; }
+        h2 { color: var(--primary-color); }
+
+        /* 50개 카드를 위한 그리드 설정 */
+        #result-list { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); 
+            gap: 15px; 
+            max-width: 1200px; 
+            margin: 0 auto;
+        }
+
+        .temp-card { 
+            color: white; 
+            padding: 15px; 
+            border-radius: 16px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+        .temp-card:hover { transform: scale(1.03); }
+
+        .location-name { font-weight: bold; font-size: 1em; margin-bottom: 5px; }
+        .main-row { display: flex; align-items: baseline; justify-content: space-between; }
+        .temp-value { font-size: 1.8em; font-weight: 800; margin: 0; }
+        .weather-status { font-size: 1em; font-weight: bold; }
+        .obs-time { font-size: 0.7em; opacity: 0.8; margin-top: 8px; display: block; }
+
+        button { 
+            display: block; width: 200px; margin: 0 auto 30px; padding: 12px; 
+            background-color: var(--primary-color); color: white; border: none; 
+            cursor: pointer; border-radius: 10px; font-weight: bold; 
+        }
+
+        /* 배경색 그라데이션 */
         .bg-sunny { background: linear-gradient(135deg, #f4a261, #e76f51); } 
         .bg-rainy { background: linear-gradient(135deg, #457b9d, #1d3557); } 
         .bg-etc { background: linear-gradient(135deg, #2a9d8f, #264653); }
-        pre { background: #2d3436; color: #dfe6e9; padding: 10px; border-radius: 8px; font-size: 0.75em; text-align: left; overflow-x: auto; white-space: pre-wrap; }
+
+        pre { background: #2d3436; color: #dfe6e9; padding: 15px; border-radius: 8px; font-size: 0.75em; overflow-x: auto; }
     </style>
 </head>
 <body>
 
-<div class="container">
-    <h2>실시간 기상 관측</h2>
+<div class="header">
+    <h2>전국 실시간 기상 현황</h2>
     <button onclick="loadGithubData()">데이터 새로고침</button>
-    <div id="result-list"><p>데이터를 불러오는 중...</p></div>
-
-    <details style="margin-top: 20px;">
-        <summary>RAW JSON 데이터 보기</summary>
-        <div id="raw-data-area"></div>
-    </details>
 </div>
 
+<div id="result-list"></div>
+
+<hr style="margin: 50px 0; border: 0; border-top: 1px solid #ccc;">
+
+<details style="max-width: 1200px; margin: 0 auto;">
+    <summary>전체 RAW 데이터 (JSON) 확인</summary>
+    <div id="raw-data-area"></div>
+</details>
+
 <script>
-    // ⚠️ 여기에 본인의 정보를 입력하세요!
     const USERNAME = "Goful";
     const REPO = "dmms";
     const FILE_PATH = "weather_data.json";
@@ -46,54 +74,63 @@
     async function loadGithubData() {
         const resultList = document.getElementById('result-list');
         const rawArea = document.getElementById('raw-data-area');
-        
+        resultList.innerHTML = "<p style='grid-column: 1/-1; text-align: center;'>데이터를 불러오는 중...</p>";
+
         try {
-            // 캐시 방지를 위해 타임스탬프 추가
             const response = await fetch(`${JSON_URL}?t=${new Date().getTime()}`);
-            if (!response.ok) throw new Error('파일을 불러올 수 없습니다. 경로를 확인하세요.');
+            if (!response.ok) throw new Error('파일을 불러올 수 없습니다.');
             
             const data = await response.json();
             rawArea.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
 
             if (!data || data.length === 0) {
-                resultList.innerHTML = "<p>표시할 최신 데이터가 없습니다.</p>";
+                resultList.innerHTML = "<p style='grid-column: 1/-1;'>최신 데이터가 없습니다.</p>";
                 return;
             }
 
-            // 가장 최신 데이터 1개만 표시 (필요시 data.forEach 사용)
-            const latest = data[data.length - 1];
-            
-            // 데이터 키값 매핑 (파이썬에서 저장한 키 이름과 동일해야 함)
-            const temp = latest.DATA || latest.ta || "0";
-            const time = latest.TM || "";
-            const rain = parseFloat(latest.rn_ox || "0");
-            const vis = parseFloat(latest.vs || "100");
+            let htmlContent = "";
 
-            let status = "맑음 ☀️";
-            let bg = "bg-sunny";
+            // 🔥 50개 지점 전체를 순회하며 카드 생성
+            data.forEach(obs => {
+                // 키값 매핑 (파이썬에서 LOCATION_NAME과 TA를 사용하도록 설정함)
+                const name = obs.LOCATION_NAME || "알 수 없음";
+                const temp = obs.ta || obs.DATA || "0";
+                const time = obs.TM || "";
+                
+                // 날씨 상태 판별 (임의 기준: 10도 이하 흐림, 비 정보 있을 시 비)
+                let status = "맑음 ☀️";
+                let bg = "bg-sunny";
 
-            if (rain > 0) { status = "비 ☔"; bg = "bg-rainy"; }
-            else if (vis < 10) { status = "흐림 ☁️"; bg = "bg-etc"; }
+                // 파이썬 코드에서 rn_ox(강수여부)를 가져왔을 경우
+                if (parseFloat(obs.rn_ox || "0") > 0) {
+                    status = "비 ☔";
+                    bg = "bg-rainy";
+                } else if (parseFloat(obs.vs || "100") < 10) {
+                    status = "흐림 ☁️";
+                    bg = "bg-etc";
+                }
 
-            const displayTime = time ? `${time.substring(8,10)}시 ${time.substring(10,12)}분` : "시간 정보 없음";
+                const displayTime = time ? `${time.substring(8,10)}:${time.substring(10,12)}` : "--:--";
 
-            resultList.innerHTML = `
-                <div class="temp-card ${bg}">
-                    <div class="location-name">📍 관측 지점</div>
-                    <div class="main-row">
-                        <p class="temp-value">${temp}°C</p>
-                        <p class="weather-status">${status}</p>
+                htmlContent += `
+                    <div class="temp-card ${bg}">
+                        <div class="location-name">${name}</div>
+                        <div class="main-row">
+                            <p class="temp-value">${temp}°</p>
+                            <p class="weather-status" style="font-size: 0.8em;">${status}</p>
+                        </div>
+                        <span class="obs-time">관측 ${displayTime}</span>
                     </div>
-                    <span class="obs-time">최근 관측: ${displayTime}</span>
-                </div>
-            `;
+                `;
+            });
+
+            resultList.innerHTML = htmlContent;
 
         } catch (e) {
-            resultList.innerHTML = `<p style="color:red;">오류: ${e.message}</p>`;
+            resultList.innerHTML = `<p style="grid-column: 1/-1; color:red; text-align: center;">오류: ${e.message}</p>`;
         }
     }
 
-    // 초기 로드
     window.onload = loadGithubData;
 </script>
 </body>
