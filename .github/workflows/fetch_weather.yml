@@ -26,6 +26,7 @@ jobs:
       - name: Run weather script
         env:
           KMA_API_KEY: ${{ secrets.KMA_API_KEY }}
+          TZ: Asia/Seoul
         run: python fetch_weather.py
 
       - name: Commit and Push changes
