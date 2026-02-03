@@ -1,5 +1,58 @@
 import { createMarker } from './map-service.js';
 
+let currentSelectedItemId = null;
+
+export function selectManholeInSidebar(id) {
+    if (currentSelectedItemId) {
+        const prevSelected = document.getElementById(`manhole-item-${currentSelectedItemId}`);
+        if (prevSelected) {
+            prevSelected.classList.remove('selected');
+        }
+    }
+
+    const newSelected = document.getElementById(`manhole-item-${id}`);
+    if (newSelected) {
+        newSelected.classList.add('selected');
+        currentSelectedItemId = id;
+
+        const currentStationContent = newSelected.closest('.tree-group-content');
+
+        // 모든 역 그룹을 찾아서 처리
+        const allStationHeaders = document.querySelectorAll('.station-header');
+        allStationHeaders.forEach(header => {
+            // header-stationId 형식에서 stationId를 추출
+            const stationId = header.id.replace('header-', '');
+            const stationContent = document.getElementById(stationId);
+            
+            if (stationContent && stationContent !== currentStationContent) {
+                // 다른 역의 콘텐츠 영역은 닫는다
+                if (stationContent.classList.contains('show')) {
+                    stationContent.classList.remove('show');
+                    const arrow = header.querySelector('span[id^="arrow-"]');
+                    if (arrow) arrow.innerText = '▼';
+                }
+            }
+        });
+
+        // Ensure the selected item is visible
+        let parent = newSelected.parentElement;
+        while(parent && parent.id !== 'tree-container') {
+            if (parent.classList.contains('tree-group-content')) {
+                if (!parent.classList.contains('show')) {
+                    parent.classList.add('show');
+                    const header = document.getElementById(`header-${parent.id}`);
+                    if(header) {
+                        const arrow = header.querySelector('span[id^="arrow-"]');
+                        if(arrow) arrow.innerText = '▲';
+                    }
+                }
+            }
+            parent = parent.parentElement;
+        }
+        newSelected.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+}
+
 export function toggleSidebar() {
     const container = document.getElementById('app-container');
     container.classList.toggle('sidebar-hidden');
@@ -49,6 +102,7 @@ export function renderTree(data, onSelect) {
                 createMarker(mh, pos, st.stationName, onSelect);
 
                 const item = document.createElement('div');
+                item.id = `manhole-item-${mh.id}`; // 아이디 추가
                 item.className = 'manhole-item';
                 item.innerText = `[${mh.id}] ${mh.name}`;
                 item.onclick = () => onSelect(mh.id);

@@ -1,3 +1,5 @@
+import { selectManholeInSidebar } from './ui-manager.js';
+
 let map, rv, rvClient;
 let currentCircle = null; // 현재 그려진 원을 저장
 let centerMarker = null;  // 중심점 마커를 저장
@@ -76,6 +78,7 @@ export function drawTestCircle(lat, lng, radiusMeter = 5000) {
  * 맨홀 선택 시 처리
  */
 export function selectManhole(id) {
+    selectManholeInSidebar(id); // 사이드바 선택 동기화
     const target = markersMap[id];
     if(!target) return;
     map.panTo(target.pos);
