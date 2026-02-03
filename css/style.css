@@ -1,4 +1,6 @@
-/* --- Global Resets & Fonts --- */
+/* =========================================
+   1. Global Variables & Reset
+   ========================================= */
 :root {
     --primary-color: #3498db;
     --secondary-color: #2c3e50;
@@ -22,7 +24,9 @@ html, body {
     font-size: 15px;
 }
 
-/* --- Main Layout --- */
+/* =========================================
+   2. Main Layout Structure
+   ========================================= */
 #app-container { 
     display: flex; 
     width: 100%; 
@@ -30,6 +34,7 @@ html, body {
     position: relative; 
 }
 
+/* 사이드바: 트리 메뉴 및 챗봇 영역 */
 #sidebar { 
     width: 340px; 
     height: 100%; 
@@ -41,11 +46,14 @@ html, body {
     box-shadow: var(--shadow);
     border-right: 1px solid var(--light-gray);
 }
+
+/* 사이드바 숨김 처리 시 위치 이동 */
 #app-container.sidebar-hidden #sidebar { 
     transform: translateX(-340px); 
     position: absolute; 
 }
 
+/* 메인 콘텐츠: 지도 및 로드뷰 */
 #main-content { 
     flex: 1; 
     display: flex; 
@@ -61,7 +69,9 @@ html, body {
     box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.05);
 }
 
-/* --- Buttons --- */
+/* =========================================
+   3. Buttons & Controls
+   ========================================= */
 #toggle-sidebar-btn { 
     position: absolute; 
     top: 15px; 
@@ -105,7 +115,9 @@ html, body {
 }
 
 
-/* --- Sidebar Header --- */
+/* =========================================
+   4. Sidebar Components
+   ========================================= */
 .sidebar-header { 
     display: flex;
     align-items: center;
@@ -121,7 +133,7 @@ html, body {
     height: 30px;
 }
 
-/* --- Tree Container --- */
+/* --- Tree Menu (시설물 목록) --- */
 #sidebar-main-content {
     flex: 1;
     display: flex;
@@ -135,6 +147,7 @@ html, body {
     padding: 10px 0;
 }
 
+/* 사이드바 높이 조절 핸들 */
 .resizer {
     flex-shrink: 0;
     height: 5px;
@@ -201,7 +214,7 @@ html, body {
     background-color: var(--primary-color);
 }
 
-/* --- AI Chat --- */
+/* --- AI Chat Interface --- */
 #ai-chat-container { 
     border-top: 1px solid var(--light-gray); 
     background: #f8f9fa; 
@@ -258,8 +271,22 @@ html, body {
     border-color: var(--primary-color);
 }
 
+.loading-msg {
+    display: flex;
+    align-items: center;
+}
+.loading-spinner {
+    width: 16px;
+    height: 16px;
+    border: 2px solid var(--medium-gray);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 8px;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-/* --- Sidebar Footer --- */
+/* --- Footer --- */
 .sidebar-footer {
     padding: 15px;
     text-align: center;
@@ -269,8 +296,10 @@ html, body {
     border-top: 1px solid var(--light-gray);
 }
 
-
-/* --- Map Overlays --- */
+/* =========================================
+   5. Map Overlays & Custom Elements
+   ========================================= */
+/* 날씨 정보 오버레이 (말풍선 스타일) */
 .weather-overlay {
     display: flex;
     align-items: center;
@@ -308,6 +337,7 @@ html, body {
     color: #555;
 }
 
+/* 지도 우측 상단 컨트롤 박스 */
 #map-controls {
     position: absolute;
     top: 15px;
@@ -332,7 +362,7 @@ html, body {
     color: white;
 }
 
-/* Custom Toggle Switch */
+/* 커스텀 토글 스위치 디자인 */
 #map-controls input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
@@ -370,6 +400,7 @@ html, body {
     text-align: center;
 }
 
+/* 노선 아이콘 (1호선, 2호선) */
 .line-icon {
     display: inline-block;
     width: 20px;

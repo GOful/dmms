@@ -2,6 +2,11 @@ import { createMarker } from './map-service.js';
 
 let currentSelectedItemId = null;
 
+/**
+ * [기능] 사이드바 트리 메뉴에서 특정 맨홀 항목을 선택(하이라이트)하고,
+ * 해당 항목이 보이도록 트리를 자동으로 펼치고 스크롤합니다.
+ * @param {string} id - 선택할 맨홀 ID
+ */
 export function selectManholeInSidebar(id) {
     if (currentSelectedItemId) {
         const prevSelected = document.getElementById(`manhole-item-${currentSelectedItemId}`);
@@ -17,7 +22,7 @@ export function selectManholeInSidebar(id) {
 
         const currentStationContent = newSelected.closest('.tree-group-content');
 
-        // 모든 역 그룹을 찾아서 처리
+        // 다른 역의 그룹은 닫아서 현재 선택된 역에 집중되도록 처리 (아코디언 효과)
         const allStationHeaders = document.querySelectorAll('.station-header');
         allStationHeaders.forEach(header => {
             // header-stationId 형식에서 stationId를 추출
@@ -25,7 +30,6 @@ export function selectManholeInSidebar(id) {
             const stationContent = document.getElementById(stationId);
             
             if (stationContent && stationContent !== currentStationContent) {
-                // 다른 역의 콘텐츠 영역은 닫는다
                 if (stationContent.classList.contains('show')) {
                     stationContent.classList.remove('show');
                     const arrow = header.querySelector('span[id^="arrow-"]');
@@ -34,7 +38,7 @@ export function selectManholeInSidebar(id) {
             }
         });
 
-        // Ensure the selected item is visible
+        // 선택된 항목의 부모 그룹들이 닫혀있다면 모두 열어줌 (경로 확보)
         let parent = newSelected.parentElement;
         while(parent && parent.id !== 'tree-container') {
             if (parent.classList.contains('tree-group-content')) {
@@ -53,11 +57,18 @@ export function selectManholeInSidebar(id) {
     }
 }
 
+/**
+ * [기능] 사이드바 전체를 보이거나 숨깁니다.
+ */
 export function toggleSidebar() {
     const container = document.getElementById('app-container');
     container.classList.toggle('sidebar-hidden');
 }
 
+/**
+ * [기능] 트리 메뉴의 그룹(노선, 역)을 접거나 펼칩니다.
+ * @param {string} id - 대상 그룹의 ID
+ */
 export function toggleGroup(id) {
     const el = document.getElementById(id);
     const arrow = document.getElementById('arrow-' + id);
@@ -67,6 +78,9 @@ export function toggleGroup(id) {
     }
 }
 
+/**
+ * [유틸] 노선 이름에 따른 아이콘 HTML을 반환합니다.
+ */
 function getLineIcon(lineTitle) {
     if (lineTitle === '1호선') {
         return '<span class="line-icon line-1">1</span>';
@@ -77,6 +91,11 @@ function getLineIcon(lineTitle) {
     return '🚇'; // 기본 아이콘
 }
 
+/**
+ * [기능] JSON 데이터를 기반으로 사이드바의 트리 메뉴 구조를 동적으로 생성합니다.
+ * @param {Object} data - 맨홀 데이터 객체
+ * @param {Function} onSelect - 항목 클릭 시 실행할 콜백
+ */
 export function renderTree(data, onSelect) {
     const container = document.getElementById('tree-container');
     container.innerHTML = ""; 
@@ -120,6 +139,9 @@ export function renderTree(data, onSelect) {
     });
 }
 
+/**
+ * [기능] 사이드바 내의 트리 영역과 채팅 영역 사이의 높이 조절(Resizer) 기능을 초기화합니다.
+ */
 export function initSidebarResizer() {
     const resizer = document.getElementById('sidebar-resizer');
     const treeContainer = document.getElementById('tree-container');
@@ -140,7 +162,7 @@ export function initSidebarResizer() {
             const sidebarRect = sidebarMainContent.getBoundingClientRect();
             let newTreeHeight = e.clientY - sidebarRect.top;
 
-            // Enforce min/max heights (e.g., 100px)
+            // 최소/최대 높이 제한 설정 (최소 100px)
             const minHeight = 100;
             const maxHeight = sidebarRect.height - minHeight - resizer.offsetHeight;
 

@@ -5,6 +5,10 @@ const genAI = new GoogleGenerativeAI(API_KEY);
 // 사용 중인 Gemma 3 모델 설정
 const model = genAI.getGenerativeModel({ model: "gemma-3-27b-it" });
 
+/**
+ * [기능] 사용자의 질문을 받아 AI에게 전송하고 답변을 화면에 표시합니다.
+ * @param {Object} rawData - AI가 분석할 맨홀 및 역 데이터 (JSON 객체)
+ */
 export async function askAI(rawData) {
     const input = document.getElementById('chat-input');
     const history = document.getElementById('chat-history');
@@ -19,24 +23,24 @@ export async function askAI(rawData) {
     input.disabled = true;
     sendBtn.disabled = true;
 
+    // 로딩 인디케이터 표시
     const loadingId = "loading-" + Date.now();
     history.innerHTML += `
-        <div id="${loadingId}" class="chat-msg ai-msg" style="display: flex; align-items: center;">
-            <div style="width: 16px; height: 16px; border: 2px solid #ccc; border-top-color: #007bff; border-radius: 50%; animation: spin 1s linear infinite; margin-right: 8px;"></div>
-            <span>Gemma가 분석 중...</span>
-            <style>@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>
+        <div id="${loadingId}" class="chat-msg ai-msg loading-msg">
+            <div class="loading-spinner"></div>
+            <span>생각 중...</span>
         </div>`;
     history.scrollTop = history.scrollHeight;
 
     try {
-        // 1. 관련성 검사 키워드 (대구 지역 및 시설물 관련)
+        // 1. 질문 의도 파악: 시설물 관리 관련 질문인지 키워드로 검사
         const infraKeywords = ['맨홀', '역', '호선', '좌표', '위도', '경도', '침수', '수선', '민원', '위험', '데이터', '목록', '어디', '가장', '제일', '상태', '분석', '점검', '관리', '지역'];
         const isRelated = infraKeywords.some(key => userMsg.includes(key));
 
         let finalPrompt = "";
 
         if (isRelated) {
-            // 2. 관련 질문인 경우에만 context 생성 (토큰 절약)
+            // 2-A. 관련 질문인 경우: CSV 포맷으로 변환된 데이터를 프롬프트에 주입 (RAG 유사 방식)
             let contextData = "ID,이름,역,위도,경도,침수빈도,수선횟수,민원횟수\n";
             rawData.lines.forEach(line => {
                 line.stations.forEach(st => {
@@ -63,17 +67,19 @@ ${contextData}
 
 Question: ${userMsg}`;
         } else {
-            // 3. 관련 없는 질문인 경우 일반 챗봇으로 동작
+            // 2-B. 관련 없는 질문인 경우: 데이터 주입 없이 일반 페르소나만 적용 (토큰 절약)
             console.log("일반 대화 모드로 전환 (데이터 제외).");
-            finalPrompt = `너는 '디트로 맨홀관리 시스템'의 도우미 Gemma야. 시설물 관리와 관련 없는 일상적인 대화나 질문에는 친절하게 대답해줘. 질문: ${userMsg}`;
+            finalPrompt = `너는 '대구교통공사 맨홀관리 시스템'의 AI야. 시설물 관리와 관련 없는 일상적인 대화나 질문에는 친절하게 대답해줘. 질문: ${userMsg}`;
         }
 
+        // AI 응답 생성 요청
         const result = await model.generateContent(finalPrompt);
         const response = await result.response;
         
         const loadingEl = document.getElementById(loadingId);
         if (loadingEl) loadingEl.remove();
         
+        // 결과 표시
         history.innerHTML += `<div class="chat-msg ai-msg">${response.text()}</div>`;
     } catch (error) {
         console.error("AI 응답 오류:", error);

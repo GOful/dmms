@@ -48,12 +48,13 @@
     const NX = 89; 
     const NY = 90; 
 
+    // 기상청 강수형태(PTY) 코드를 사람이 읽을 수 있는 문자열로 변환
     function translatePty(code) {
         const ptyMap = { "0": "맑음", "1": "비 🌧️", "2": "비/눈 🌨️", "3": "눈 ❄️", "5": "빗방울", "6": "빗방울/눈날림", "7": "눈날림" };
         return ptyMap[code] || "정보 없음";
     }
 
-    // XML 정렬 및 이스케이프 함수
+    // [유틸] XML 원본 데이터를 화면에 예쁘게 출력하기 위한 포맷팅 및 이스케이프 함수
     function formatXml(xml) {
         let formatted = '';
         let reg = /(>)(<)(\/*)/g;
@@ -74,6 +75,7 @@
         return unsafe.replace(/[<>&'"]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','\'':'&apos;','"':'&quot;'}[c]));
     }
 
+    // 메인 실행 함수: API 호출 및 데이터 파싱
     async function main() {
         const resultDiv = document.getElementById('result');
         const rawArea = document.getElementById('raw-data-area');
@@ -81,6 +83,7 @@
         resultDiv.innerHTML = "<strong>최신 데이터를 가져오는 중...</strong>";
 
         const now = new Date();
+        // 기상청 초단기예보는 매시 30분에 생성되므로, 현재 분이 30분 전이면 1시간 전 데이터를 요청
         let hours = now.getHours();
         if (now.getMinutes() < 30) hours = (hours === 0) ? 23 : hours - 1;
         const base_date = `${now.getFullYear()}${String(now.getMonth() + 1).padStart(2, '0')}${String(now.getDate()).padStart(2, '0')}`;
@@ -89,6 +92,7 @@
         const targetUrl = `https://apihub.kma.go.kr/api/typ02/openApi/VilageFcstInfoService_2.0/getUltraSrtFcst?pageNo=1&numOfRows=1000&dataType=XML&base_date=${base_date}&base_time=${base_time}&nx=${NX}&ny=${NY}&authKey=${AUTH_KEY}`;
 
         try {
+            // CORS 문제 회피를 위해 프록시 서버 경유
             const response = await fetch(PROXY_URL + targetUrl);
             const xmlText = await response.text();
             rawArea.innerHTML = `<details><summary>📄 원본 XML 데이터</summary><pre>${escapeXml(formatXml(xmlText))}</pre></details>`;
@@ -97,10 +101,10 @@
             const xmlDoc = parser.parseFromString(xmlText, "text/xml");
             const items = Array.from(xmlDoc.getElementsByTagName("item"));
 
-            // 예보 시간(fcstTime) 기준으로 상위 3개 시간대 추출
+            // 예보 시간(fcstTime) 기준으로 정렬하여 가장 빠른 3개 시간대만 추출
             const forecastTimes = [...new Set(items.map(i => i.getElementsByTagName("fcstTime")[0].textContent))].sort().slice(0, 3);
 
-            // 💡 필터링: 강수량(RN1)과 강수형태(PTY)만 남김
+            // 필터링: 관심 항목인 강수량(RN1)과 강수형태(PTY)만 처리
             const targetCategories = { "RN1": "강수량", "PTY": "상태" };
 
             let tableHtml = `<table><thead><tr><th>시간</th><th>항목</th><th>예보</th></tr></thead><tbody>`;
