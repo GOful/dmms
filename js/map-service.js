@@ -19,8 +19,9 @@ export function initMap() {
     rv = new kakao.maps.Roadview(document.getElementById('roadview'));
     rvClient = new kakao.maps.RoadviewClient();
 
-    // 초기화 시 테스트를 위해 대구 달서구청 인근에 5km 반경 표시
-    // (테스트가 끝나면 아래 줄은 삭제하세요)
+    // --- 추가된 부분: 실시간 교통정보 레이어를 추가합니다 ---
+    map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);    
+    // --------------------------------------------------
   
 }
 
