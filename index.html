@@ -12,18 +12,26 @@
     <div id="app-container">
         <button id="toggle-sidebar-btn">◀</button>
         <div id="sidebar">
-            <div class="sidebar-header">디트로 맨홀관리 시스템</div>
-            <div id="tree-container"></div>
-            
-            <div id="ai-chat-container">
-                <div id="chat-history">
-                    <div class="chat-msg ai-msg">안녕하세요! 맨홀관리 AI입니다.</div>
-                </div>
-                <div class="chat-input-area">
-                    <input type="text" id="chat-input" placeholder="맨홀 정보 물어보기..." autocomplete="off">
-                    <button id="send-btn">전송</button>
+            <div class="sidebar-header">
+                <img src="img/logo.svg" alt="DMMS 로고" id="sidebar-logo">
+                <span>디트로 맨홀관리 시스템</span>
+            </div>
+            <div id="sidebar-main-content">
+                <div id="tree-container"></div>
+                <div class="resizer" id="sidebar-resizer"></div>
+                <div id="ai-chat-container">
+                    <div id="chat-history">
+                        <div class="chat-msg ai-msg">안녕하세요! 맨홀관리 AI입니다.</div>
+                    </div>
+                    <div class="chat-input-area">
+                        <input type="text" id="chat-input" placeholder="맨홀 정보 물어보기..." autocomplete="off">
+                        <button id="send-btn">전송</button>
+                    </div>
                 </div>
             </div>
+            <footer class="sidebar-footer">
+                &copy; 2026 Copyright 변전팀
+            </footer>
         </div>
         <div id="main-content">
             <div id="map"></div>

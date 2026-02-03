@@ -1,5 +1,5 @@
 import { initMap, selectManhole, relayoutMap } from './map-service.js';
-import { renderTree, toggleSidebar } from './ui-manager.js';
+import { renderTree, toggleSidebar, initSidebarResizer } from './ui-manager.js';
 import { askAI } from './ai-service.js';
 
 let rawData = null;
@@ -32,6 +32,9 @@ async function init() {
     document.getElementById('chat-input').onkeypress = (e) => {
         if (e.key === 'Enter') askAI(rawData);
     };
+
+    // 사이드바 리사이저 초기화
+    initSidebarResizer();
 
     // 시간 표시 초기화 및 1분마다 업데이트
     updateDateTime();

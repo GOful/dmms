@@ -9,10 +9,7 @@ from datetime import datetime, timedelta
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 def fetch_and_save_as_json():
-    auth_key = os.environ.get('KMA_API_KEY')
-    if not auth_key:
-        print("오류: API 키가 설정되지 않았습니다.")
-        return
+    auth_key = "-MBhNUogT9uAYTVKIL_bWA"
 
     # 1. 대구 지하철 역 위경도 데이터
     stations = {
@@ -57,42 +54,42 @@ def fetch_and_save_as_json():
         try:
             # 타임아웃을 5초로 설정
             response = requests.get(url, verify=False, timeout=5)
+            
             if response.status_code != 200:
                 print(f" - {station_name}: API 호출 실패 (상태 코드: {response.status_code})")
                 continue
 
             lines = response.text.strip().split('\n')
-            headers = []
             
-            # 데이터가 최신 순으로 오므로, 첫 번째 데이터만 사용
+            # API 응답에 헤더가 없으므로, 요청한 순서대로 헤더를 직접 정의합니다.
+            # API 응답 순서: tm, ta, rn_ox, rn_60m, vs
+            headers = ['tm', 'ta', 'rn_ox', 'rn_60m', 'vs']
+
+            # 데이터가 최신 순으로 오므로, 첫 번째 유효한 데이터만 사용합니다.
             for line in lines:
                 line = line.strip()
-                # 77777은 결측값이므로 무시
-                if not line or "77777" in line or "No data" in line:
+                # 주석('#'), 빈 줄, 결측값('77777', 'No data')은 무시합니다.
+                if line.startswith('#') or not line or "77777" in line:
                     continue
 
-                if line.startswith('#'):
-                    raw_headers = line.replace('#', '').strip().split(',')
-                    headers = [h.strip().lower() for h in raw_headers if h.strip() and h.strip() != '=']
-                else:
-                    raw_row = line.split(',')
-                    row = [r.strip() for r in raw_row if r.strip() and r.strip() != '=']
-                    
-                    if len(row) == len(headers):
-                        item = dict(zip(headers, row))
-                        # 필요한 값들이 모두 있는지 확인
-                        if all(k in item for k in ['ta', 'rn_ox', 'rn_60m', 'vs']):
-                            final_data_dict[station_name] = {
-                                "LAT": coords['lat'],
-                                "LON": coords['lon'],
-                                "TA": item.get('ta', 'N/A'),
-                                "RN_OX": item.get('rn_ox', 'N/A'),
-                                "RN_60M": item.get('rn_60m', 'N/A'),
-                                "VS": item.get('vs', 'N/A')
-                            }
-                            # 최신 데이터 하나만 저장하고 다음 역으로 넘어감
-                            print(f" - {station_name}: 데이터 수집 성공")
-                            break
+                raw_row = line.split(',')
+                row = [r.strip() for r in raw_row]
+                
+                if len(row) == len(headers):
+                    item = dict(zip(headers, row))
+                    # 필요한 값들이 모두 있는지 확인
+                    if all(k in item for k in ['ta', 'rn_ox', 'rn_60m', 'vs']):
+                        final_data_dict[station_name] = {
+                            "LAT": coords['lat'],
+                            "LON": coords['lon'],
+                            "TA": item.get('ta', 'N/A'),
+                            "RN_OX": item.get('rn_ox', 'N/A'),
+                            "RN_60M": item.get('rn_60m', 'N/A'),
+                            "VS": item.get('vs', 'N/A')
+                        }
+                        # 최신 데이터 하나만 저장하고 다음 역으로 넘어감
+                        print(f" - {station_name}: 데이터 수집 성공")
+                        break
             
             # API 서버 부하 방지
             time.sleep(0.1)
