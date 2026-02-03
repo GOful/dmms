@@ -14,77 +14,47 @@ def fetch_and_save_as_json():
         print("오류: API 키가 설정되지 않았습니다.")
         return
 
-    # 1. 특정 50개 지역 위경도 데이터 (주요 도시 및 거점 관측소)
-    locations = [
-        {"name": "서울", "lon": 126.965, "lat": 37.571},
-        {"name": "인천", "lon": 126.624, "lat": 37.477},
-        {"name": "수원", "lon": 127.012, "lat": 37.272},
-        {"name": "파주", "lon": 126.766, "lat": 37.885},
-        {"name": "강화", "lon": 126.446, "lat": 37.746},
-        {"name": "춘천", "lon": 127.730, "lat": 37.902},
-        {"name": "원주", "lon": 127.946, "lat": 37.337},
-        {"name": "강릉", "lon": 128.890, "lat": 37.751},
-        {"name": "속초", "lon": 128.591, "lat": 38.250},
-        {"name": "동해", "lon": 129.114, "lat": 37.507},
-        {"name": "철원", "lon": 127.304, "lat": 38.147},
-        {"name": "대전", "lon": 127.374, "lat": 36.371},
-        {"name": "청주", "lon": 127.441, "lat": 36.639},
-        {"name": "충주", "lon": 127.908, "lat": 36.970},
-        {"name": "천안", "lon": 127.113, "lat": 36.776},
-        {"name": "서산", "lon": 126.493, "lat": 36.776},
-        {"name": "보령", "lon": 126.554, "lat": 36.326},
-        {"name": "전주", "lon": 127.118, "lat": 35.840},
-        {"name": "군산", "lon": 126.716, "lat": 35.975},
-        {"name": "목포", "lon": 126.381, "lat": 34.817},
-        {"name": "여수", "lon": 127.730, "lat": 34.736},
-        {"name": "순천", "lon": 127.501, "lat": 34.945},
-        {"name": "광주", "lon": 126.851, "lat": 35.155},
-        {"name": "대구", "lon": 128.624, "lat": 35.877},
-        {"name": "안동", "lon": 128.711, "lat": 36.574},
-        {"name": "포항", "lon": 129.379, "lat": 36.032},
-        {"name": "경주", "lon": 129.210, "lat": 35.837},
-        {"name": "구미", "lon": 128.319, "lat": 36.130},
-        {"name": "울릉도", "lon": 130.898, "lat": 37.484},
-        {"name": "독도", "lon": 131.866, "lat": 37.239},
-        {"name": "부산", "lon": 129.075, "lat": 35.179},
-        {"name": "울산", "lon": 129.332, "lat": 35.538},
-        {"name": "창원", "lon": 128.673, "lat": 35.228},
-        {"name": "진주", "lon": 128.115, "lat": 35.191},
-        {"name": "통영", "lon": 128.435, "lat": 34.845},
-        {"name": "거제", "lon": 128.604, "lat": 34.888},
-        {"name": "제주", "lon": 126.532, "lat": 33.361},
-        {"name": "서귀포", "lon": 126.561, "lat": 33.246},
-        {"name": "고산", "lon": 126.162, "lat": 33.293},
-        {"name": "성산", "lon": 126.880, "lat": 33.386},
-        {"name": "백령도", "lon": 124.630, "lat": 37.966},
-        {"name": "흑산도", "lon": 125.435, "lat": 34.686},
-        {"name": "진도", "lon": 126.257, "lat": 34.481},
-        {"name": "완도", "lon": 126.698, "lat": 34.316},
-        {"name": "고흥", "lon": 127.275, "lat": 34.618},
-        {"name": "광양", "lon": 127.691, "lat": 34.943},
-        {"name": "양산", "lon": 129.029, "lat": 35.343},
-        {"name": "김해", "lon": 128.879, "lat": 35.233},
-        {"name": "밀양", "lon": 128.744, "lat": 35.491},
-        {"name": "의령", "lon": 128.261, "lat": 35.322}
-    ]
+    # 1. 대구 지하철 역 위경도 데이터
+    stations = {
+        "대구역": {"lat": 35.8759, "lon": 128.5961},
+        "중앙로역": {"lat": 35.8711, "lon": 128.5939},
+        "반월당역(1호선)": {"lat": 35.8647, "lon": 128.5933},
+        "명덕역": {"lat": 35.8578, "lon": 128.5910},
+        "교대역": {"lat": 35.8502, "lon": 128.5908},
+        "상인역": {"lat": 35.8188, "lon": 128.5367},
+        "월촌역": {"lat": 35.8242, "lon": 128.5442},
+        "성당못역": {"lat": 35.8358, "lon": 128.5583},
+        "대명역": {"lat": 35.8395, "lon": 128.5645},
+        "안지랑역": {"lat": 35.8443, "lon": 128.5703},
+        "범어역": {"lat": 35.8589, "lon": 128.6247},
+        "대구은행역": {"lat": 35.8602, "lon": 128.6152},
+        "경대병원역": {"lat": 35.8631, "lon": 128.6033},
+        "청라언덕역": {"lat": 35.8643, "lon": 128.5833},
+        "반고개역": {"lat": 35.8625, "lon": 128.5710},
+        "내당역": {"lat": 35.8602, "lon": 128.5613},
+        "두류역": {"lat": 35.8572, "lon": 128.5528},
+        "감삼역": {"lat": 35.8528, "lon": 128.5435},
+        "죽전역": {"lat": 35.8488, "lon": 128.5335},
+        "용산역": {"lat": 35.8505, "lon": 128.5235}
+    }
 
     # 시간 설정
     now = datetime.now()
     tm2 = now.strftime('%Y%m%d%H%M')
     tm1 = (now - timedelta(minutes=20)).strftime('%Y%m%d%H%M')
 
-    final_data_list = []
-    print(f"[{now.strftime('%H:%M:%S')}] 총 {len(locations)}개 지점 데이터 수집 시작...")
+    final_data_dict = {}
+    print(f"[{now.strftime('%H:%M:%S')}] 총 {len(stations)}개 지점 데이터 수집 시작...")
 
-    for loc in locations:
+    for station_name, coords in stations.items():
         url = (
             f"https://apihub.kma.go.kr/api/typ01/cgi-bin/url/nph-sfc_obs_nc_pt_api?"
             f"obs=ta&tm1={tm1}&tm2={tm2}&itv=10"
-            f"&lon={loc['lon']}&lat={loc['lat']}&authKey={auth_key}"
+            f"&lon={coords['lon']}&lat={coords['lat']}&authKey={auth_key}"
         )
         
         try:
-            # 50번 호출하므로 타임아웃을 5초로 짧게 설정
+            # 타임아웃을 5초로 설정
             response = requests.get(url, verify=False, timeout=5)
             if response.status_code != 200: continue
 
@@ -104,21 +74,20 @@ def fetch_and_save_as_json():
                     
                     if len(row) == len(headers):
                         item = dict(zip(headers, row))
-                        item['LOCATION_NAME'] = loc['name'] # 지정한 한글 이름 추가
-                        final_data_list.append(item)
+                        final_data_dict[station_name] = item
                         break 
             
             # API 서버 부하 방지
             time.sleep(0.1)
 
         except Exception as e:
-            print(f"{loc['name']} 수집 중 오류: {e}")
+            print(f"{station_name} 수집 중 오류: {e}")
 
     # 결과 저장
     with open("weather_data.json", "w", encoding="utf-8") as f:
-        json.dump(final_data_list, f, ensure_ascii=False, indent=4)
+        json.dump(final_data_dict, f, ensure_ascii=False, indent=4)
     
-    print(f"수집 완료: {len(final_data_list)}개 데이터 저장됨.")
+    print(f"수집 완료: {len(final_data_dict)}개 데이터 저장됨.")
 
 if __name__ == "__main__":
     fetch_and_save_as_json()
