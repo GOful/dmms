@@ -3,11 +3,14 @@
 <head>
     <meta charset="utf-8"/>
     <title>디트로 맨홀관리 시스템(DMMS) v4.1</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div id="app-container">
-        <button id="toggle-sidebar-btn">◀ 리스트</button>
+        <button id="toggle-sidebar-btn">◀</button>
         <div id="sidebar">
             <div class="sidebar-header">디트로 맨홀관리 시스템</div>
             <div id="tree-container"></div>
@@ -24,6 +27,11 @@
         </div>
         <div id="main-content">
             <div id="map"></div>
+            <div id="map-controls">
+                <div id="datetime-display"></div>
+                <label><input type="checkbox" id="traffic-checkbox"> 실시간 교통</label>
+                <label><input type="checkbox" id="weather-checkbox"> 역별 날씨</label>
+            </div>
             <div id="roadview"></div>
         </div>
     </div>

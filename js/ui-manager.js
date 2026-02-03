@@ -56,8 +56,6 @@ export function selectManholeInSidebar(id) {
 export function toggleSidebar() {
     const container = document.getElementById('app-container');
     container.classList.toggle('sidebar-hidden');
-    const btn = document.getElementById('toggle-sidebar-btn');
-    btn.innerText = container.classList.contains('sidebar-hidden') ? "▶ 리스트" : "◀ 리스트";
 }
 
 export function toggleGroup(id) {

@@ -4,6 +4,7 @@ let map, rv, rvClient;
 let currentCircle = null; // 현재 그려진 원을 저장
 let centerMarker = null;  // 중심점 마커를 저장
 const markersMap = {};
+let weatherOverlays = []; // 날씨 오버레이 저장 배열
 
 const starImg = new kakao.maps.MarkerImage(
     'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', 
@@ -21,10 +22,88 @@ export function initMap() {
     rv = new kakao.maps.Roadview(document.getElementById('roadview'));
     rvClient = new kakao.maps.RoadviewClient();
 
-    // --- 추가된 부분: 실시간 교통정보 레이어를 추가합니다 ---
-    map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);    
-    // --------------------------------------------------
-  
+    // 지도 컨트롤 이벤트 리스너 연결
+    setupMapControls();
+}
+
+/**
+ * 지도 컨트롤(체크박스) 이벤트를 설정하는 함수
+ */
+function setupMapControls() {
+    const trafficCheckbox = document.getElementById('traffic-checkbox');
+    const weatherCheckbox = document.getElementById('weather-checkbox');
+
+    trafficCheckbox.addEventListener('change', (e) => {
+        if (e.target.checked) {
+            map.addOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+        } else {
+            map.removeOverlayMapTypeId(kakao.maps.MapTypeId.TRAFFIC);
+        }
+    });
+
+    weatherCheckbox.addEventListener('change', (e) => {
+        toggleWeather(e.target.checked);
+    });
+}
+
+/**
+ * 날씨 정보 표시를 토글하는 함수
+ * @param {boolean} show - 날씨 정보를 표시할지 여부
+ */
+function toggleWeather(show) {
+    if (show && weatherOverlays.length === 0) {
+        // 데이터가 없으면 새로 그림
+        displayWeather();
+    } else {
+        // 데이터가 있으면 지도에 표시하거나 숨김
+        weatherOverlays.forEach(overlay => overlay.setMap(show ? map : null));
+    }
+}
+
+/**
+ * 날씨 정보를 가져와 지도에 표시하는 함수
+ */
+async function displayWeather() {
+    if (weatherOverlays.length > 0) return; // 이미 데이터가 있으면 실행하지 않음
+
+    try {
+        const response = await fetch('weather_data.json');
+        const weatherData = await response.json();
+
+        for (const stationName in weatherData) {
+            const data = weatherData[stationName];
+            const lat = parseFloat(data.LAT);
+            const lng = parseFloat(data.LON);
+            const temp = parseFloat(data.DATA);
+            const position = new kakao.maps.LatLng(lat, lng);
+
+            // 1. 반경 500m 원 생성
+            const circle = new kakao.maps.Circle({
+                center: position,
+                radius: 500, // 500m
+                strokeWeight: 2,
+                strokeColor: '#1E90FF',
+                strokeOpacity: 0.8,
+                strokeStyle: 'solid',
+                fillColor: '#87CEFA',
+                fillOpacity: 0.3,
+                map: map
+            });
+
+            // 2. 온도 정보를 표시할 커스텀 오버레이 생성
+            const content = `<div class="weather-overlay">${temp.toFixed(1)}°C</div>`;
+            const customOverlay = new kakao.maps.CustomOverlay({
+                position: position,
+                content: content,
+                map: map
+            });
+            
+            weatherOverlays.push(circle);
+            weatherOverlays.push(customOverlay);
+        }
+    } catch (e) {
+        console.error("날씨 데이터 로드 또는 표시에 실패했습니다:", e);
+    }
 }
 
 /**
@@ -81,6 +160,7 @@ export function selectManhole(id) {
     selectManholeInSidebar(id); // 사이드바 선택 동기화
     const target = markersMap[id];
     if(!target) return;
+    map.setLevel(4);
     map.panTo(target.pos);
     Object.values(markersMap).forEach(m => m.marker.setImage(null));
     target.marker.setImage(starImg);
