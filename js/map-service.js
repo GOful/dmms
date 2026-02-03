@@ -74,13 +74,30 @@ async function displayWeather() {
             const data = weatherData[stationName];
             const lat = parseFloat(data.LAT);
             const lng = parseFloat(data.LON);
-            const temp = parseFloat(data.DATA);
             const position = new kakao.maps.LatLng(lat, lng);
 
-            // 1. 반경 500m 원 생성
+            // 날씨 정보 파싱
+            const ta = parseFloat(data.TA);
+            const rn_ox = data.RN_OX; // 강수 유무 (API에서 'O' 또는 'X' 등으로 올 수 있음)
+            const rn_60m = parseFloat(data.RN_60M);
+            const vs = parseInt(data.VS, 10);
+
+            // 1. 날씨 아이콘 결정 (우선순위: 비 > 흐림/안개 > 맑음)
+            let weatherIcon = '☀️'; // 기본값: 맑음
+            if (rn_ox === 'O' || (rn_60m > 0)) { // 강수 유무가 'O' 이거나, 강수량이 0보다 크면
+                weatherIcon = '☔️'; // 비
+            } else if (vs < 5000) { // 시정이 5km 미만이면
+                weatherIcon = '🌫️'; // 흐림/안개
+            }
+
+            // 2. 텍스트 정보 구성
+            const tempText = `${ta.toFixed(1)}°C`;
+            const pcpText = rn_60m > 0 ? `강수: ${rn_60m}mm` : "강수 없음";
+
+            // 3. 반경 500m 원 생성
             const circle = new kakao.maps.Circle({
                 center: position,
-                radius: 500, // 500m
+                radius: 500,
                 strokeWeight: 2,
                 strokeColor: '#1E90FF',
                 strokeOpacity: 0.8,
@@ -90,12 +107,21 @@ async function displayWeather() {
                 map: map
             });
 
-            // 2. 온도 정보를 표시할 커스텀 오버레이 생성
-            const content = `<div class="weather-overlay">${temp.toFixed(1)}°C</div>`;
+            // 4. 날씨 정보를 표시할 커스텀 오버레이 생성
+            const content = `
+                <div class="weather-overlay">
+                    <div class="weather-icon">${weatherIcon}</div>
+                    <div class="weather-info">
+                        <div class="weather-temp">${tempText}</div>
+                        <div class="weather-pcp">${pcpText}</div>
+                    </div>
+                </div>
+            `;
             const customOverlay = new kakao.maps.CustomOverlay({
                 position: position,
                 content: content,
-                map: map
+                map: map,
+                yAnchor: 1.2
             });
             
             weatherOverlays.push(circle);

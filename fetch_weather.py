@@ -40,48 +40,66 @@ def fetch_and_save_as_json():
 
     # 시간 설정
     now = datetime.now()
+    # API가 10분 단위로 데이터를 제공하므로, 가장 최신 데이터를 얻기 위해 시간 범위를 설정
     tm2 = now.strftime('%Y%m%d%H%M')
-    tm1 = (now - timedelta(minutes=20)).strftime('%Y%m%d%H%M')
+    tm1 = (now - timedelta(minutes=30)).strftime('%Y%m%d%H%M') # 30분 전부터 조회
 
     final_data_dict = {}
     print(f"[{now.strftime('%H:%M:%S')}] 총 {len(stations)}개 지점 데이터 수집 시작...")
 
     for station_name, coords in stations.items():
         url = (
-            f"https://apihub.kma.go.kr/api/typ01/cgi-bin/url/nph-sfc_obs_nc_pt_api?"
-            f"obs=ta&tm1={tm1}&tm2={tm2}&itv=10"
+            f"https://apihub.kma.go.kr/api/typ01/url/sfc_nc_var.php?"
+            f"tm1={tm1}&tm2={tm2}&obs=ta,rn_ox,rn_60m,vs"
             f"&lon={coords['lon']}&lat={coords['lat']}&authKey={auth_key}"
         )
         
         try:
             # 타임아웃을 5초로 설정
             response = requests.get(url, verify=False, timeout=5)
-            if response.status_code != 200: continue
+            if response.status_code != 200:
+                print(f" - {station_name}: API 호출 실패 (상태 코드: {response.status_code})")
+                continue
 
             lines = response.text.strip().split('\n')
             headers = []
             
+            # 데이터가 최신 순으로 오므로, 첫 번째 데이터만 사용
             for line in lines:
                 line = line.strip()
-                if not line or "77777" in line: continue
+                # 77777은 결측값이므로 무시
+                if not line or "77777" in line or "No data" in line:
+                    continue
 
                 if line.startswith('#'):
                     raw_headers = line.replace('#', '').strip().split(',')
-                    headers = [h.strip() for h in raw_headers if h.strip() and h.strip() != '=']
+                    headers = [h.strip().lower() for h in raw_headers if h.strip() and h.strip() != '=']
                 else:
                     raw_row = line.split(',')
                     row = [r.strip() for r in raw_row if r.strip() and r.strip() != '=']
                     
                     if len(row) == len(headers):
                         item = dict(zip(headers, row))
-                        final_data_dict[station_name] = item
-                        break 
+                        # 필요한 값들이 모두 있는지 확인
+                        if all(k in item for k in ['ta', 'rn_ox', 'rn_60m', 'vs']):
+                            final_data_dict[station_name] = {
+                                "LAT": coords['lat'],
+                                "LON": coords['lon'],
+                                "TA": item.get('ta', 'N/A'),
+                                "RN_OX": item.get('rn_ox', 'N/A'),
+                                "RN_60M": item.get('rn_60m', 'N/A'),
+                                "VS": item.get('vs', 'N/A')
+                            }
+                            # 최신 데이터 하나만 저장하고 다음 역으로 넘어감
+                            print(f" - {station_name}: 데이터 수집 성공")
+                            break
             
             # API 서버 부하 방지
             time.sleep(0.1)
 
         except Exception as e:
-            print(f"{station_name} 수집 중 오류: {e}")
+            print(f" - {station_name}: 수집 중 오류: {e}")
+
 
     # 결과 저장
     with open("weather_data.json", "w", encoding="utf-8") as f:
