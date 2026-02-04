@@ -11,10 +11,10 @@
 <body>
     <nav class="navbar">
         <div class="navbar-brand">
+            <button class="navbar-toggle" id="navbar-toggle">☰</button>
             <img src="img/logo.svg" alt="DMMS 로고" class="nav-logo">
             <a href="#" class="logo">대구교통공사 맨홀관리 시스템 (DMMS)</a>
         </div>
-        <button class="navbar-toggle" id="navbar-toggle">☰</button>
         <ul class="menu-list" id="menu-list">
        
             <li class="menu-item">
@@ -52,7 +52,9 @@
         </ul>
     </nav>
     <div id="app-container" style="height: calc(100vh - 60px);">
-        <button id="toggle-sidebar-btn">◀</button>
+        <button id="toggle-sidebar-btn-desktop">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
         <div id="sidebar">
             <div class="sidebar-header">
                 
@@ -60,16 +62,6 @@
             </div>
             <div id="sidebar-main-content">
                 <div id="tree-container"></div>
-                <div class="resizer" id="sidebar-resizer"></div>
-                <div id="ai-chat-container">
-                    <div id="chat-history">
-                        <div class="chat-msg ai-msg">안녕하세요! 맨홀관리 AI입니다.</div>
-                    </div>
-                    <div class="chat-input-area">
-                        <input type="text" id="chat-input" placeholder="맨홀 정보 물어보기..." autocomplete="off">
-                        <button id="send-btn">전송</button>
-                    </div>
-                </div>
             </div>
             <footer class="sidebar-footer">
                 &copy; 2026 Copyright Electric Conversion Team
@@ -86,6 +78,22 @@
             </div>
             <div id="roadview"></div>
         </div>
+        
+        <!-- AI Chat Elements -->
+        <div id="ai-chat-container">
+            <div id="chat-history">
+                <div class="chat-msg ai-msg">안녕하세요! 맨홀관리 AI입니다.</div>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="맨홀 정보 물어보기..." autocomplete="off">
+                <button id="send-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                </button>
+            </div>
+        </div>
+        <button id="toggle-chat-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="30" height="30"><path fill="currentColor" d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"/></svg>
+        </button>
     </div>
 
     <!-- SPA 동작 확인용 공통 모달 -->
@@ -106,11 +114,6 @@
     <script type="module">
         import { setupMenuEvents } from './js/ui-manager.js';
         setupMenuEvents(); // 메뉴 이벤트 리스너 등록
-
-        // 모바일 메뉴 토글 스크립트 추가
-        document.getElementById('navbar-toggle').addEventListener('click', () => {
-            document.getElementById('menu-list').classList.toggle('active');
-        });
     </script>
 </body>
 </html>

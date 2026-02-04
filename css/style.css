@@ -28,34 +28,36 @@ html, body {
    2. Main Layout Structure
    ========================================= */
 #app-container { 
-    display: flex; 
     width: 100%; 
     height: 100%; 
     position: relative; 
 }
 
-/* 사이드바: 트리 메뉴 및 챗봇 영역 */
+/* 사이드바: 트리 메뉴 (Floating) */
 #sidebar { 
-    width: 340px; 
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 340px;
     height: 100%; 
     background: var(--sidebar-bg); 
-    z-index: 10; 
+    z-index: 1001;
     display: flex; 
     flex-direction: column; 
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: var(--shadow);
     border-right: 1px solid var(--light-gray);
+    transform: translateX(0%);
 }
 
-/* 사이드바 숨김 처리 시 위치 이동 */
 #app-container.sidebar-hidden #sidebar { 
-    transform: translateX(-340px); 
-    position: absolute; 
+    transform: translateX(-100%);
 }
 
 /* 메인 콘텐츠: 지도 및 로드뷰 */
 #main-content { 
-    flex: 1; 
+    width: 100%;
+    height: 100%;
     display: flex; 
     flex-direction: column; 
     position: relative; 
@@ -73,48 +75,63 @@ html, body {
 /* =========================================
    3. Buttons & Controls
    ========================================= */
-#toggle-sidebar-btn { 
+#toggle-sidebar-btn-desktop { 
     position: absolute; 
-    top: 15px; 
-    left: 355px; 
-    z-index: 20; 
+    top: 75px; 
+    left: 340px; /* Attach to the sidebar edge */
+    z-index: 1002; /* Ensure it's above the sidebar */
     background: var(--secondary-color); 
     color: white; 
     border: none; 
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 18px;
+    border-radius: 0 8px 8px 0; /* Rounded on the right side */
+    width: 32px; /* Narrower */
+    height: 48px; /* Taller */
     cursor: pointer; 
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     box-shadow: var(--shadow);
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 0;
 }
-#toggle-sidebar-btn:hover {
+#toggle-sidebar-btn-desktop:hover {
     background-color: var(--primary-color);
-    transform: scale(1.05);
 }
-#app-container.sidebar-hidden #toggle-sidebar-btn { 
-    left: 15px; 
+#app-container.sidebar-hidden #toggle-sidebar-btn-desktop { 
+    left: 0px; /* Attach to the left edge */
+}
+
+#app-container.sidebar-hidden #toggle-sidebar-btn-desktop svg {
     transform: rotate(180deg);
 }
 
+#toggle-sidebar-btn-desktop svg {
+    width: 24px;
+    height: 24px;
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 #send-btn { 
-    padding: 8px 16px; 
     background: var(--primary-color); 
     color: white; 
     border: none; 
     border-radius: 8px; 
     cursor: pointer; 
-    font-weight: 500;
     transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    width: 40px;
+    height: 40px;
 }
 #send-btn:hover {
     background: #2980b9;
 }
-
+#send-btn svg {
+    width: 20px;
+    height: 20px;
+}
 
 /* =========================================
    4. Sidebar Components
@@ -131,35 +148,17 @@ html, body {
     border-bottom: 1px solid var(--light-gray);
 }
 
-/* 네비게이션 바 로고 이미지 */
-.nav-logo {
-    height: 32px;
-}
-
-/* --- Tree Menu (시설물 목록) --- */
 #sidebar-main-content {
     flex: 1;
     display: flex;
     flex-direction: column;
-    min-height: 0; /* Prevent flex overflow */
+    min-height: 0;
 }
 
 #tree-container { 
-    height: 50%;
+    flex: 1;
     overflow-y: auto; 
     padding: 0;
-}
-
-/* 사이드바 높이 조절 핸들 */
-.resizer {
-    flex-shrink: 0;
-    height: 5px;
-    background-color: var(--light-gray);
-    cursor: row-resize;
-    transition: background-color 0.2s;
-}
-.resizer:hover {
-    background-color: var(--medium-gray);
 }
 
 .tree-group-header { 
@@ -179,7 +178,7 @@ html, body {
 .line-header {
     position: sticky;
     top: 0;
-    z-index: 6; /* 역 헤더보다 위에 오도록 우선순위 상향 */
+    z-index: 6;
     background-color: var(--sidebar-bg);
     box-shadow: 0 1px 2px rgba(0,0,0,0.05);
 }
@@ -189,9 +188,9 @@ html, body {
 }
 .station-header { 
     position: sticky;
-    top: 50px; /* 노선 헤더의 대략적인 높이만큼 띄워서 고정 */
+    top: 50px;
     z-index: 5;
-    background-color: #fcfcfc; /* 노선 헤더와 구분되도록 아주 연한 회색 배경 */
+    background-color: #fcfcfc;
     box-shadow: 0 1px 2px rgba(0,0,0,0.03);
     padding-left: 45px;
     font-weight: 500;
@@ -229,19 +228,70 @@ html, body {
     background-color: var(--primary-color);
 }
 
-/* --- AI Chat Interface --- */
+.sidebar-footer {
+    padding: 15px;
+    text-align: center;
+    font-size: 12px;
+    color: var(--medium-gray);
+    background-color: var(--sidebar-bg);
+    border-top: 1px solid var(--light-gray);
+}
+
+/* =========================================
+   5. AI Chat Interface (New Floating Style)
+   ========================================= */
+#toggle-chat-btn {
+    position: absolute;
+    bottom: 50px;
+    left: 25px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.3s;
+    z-index: 1002;
+}
+#toggle-chat-btn:hover {
+    background-color: #2980b9;
+    transform: scale(1.05);
+}
+
 #ai-chat-container { 
-    border-top: 1px solid var(--light-gray); 
-    background: #f8f9fa; 
+    position: fixed;
+    bottom: 100px;
+    left: 72px;
+    width: 380px;
+    height: 520px;
+    background: white; 
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     display: flex; 
     flex-direction: column; 
-    height: 50%; 
-    box-shadow: 0 -4px 12px rgba(0,0,0,0.05);
+    z-index: 1001;
+    
+    opacity: 0;
+    transform: translateY(20px) scale(0.95);
+    visibility: hidden;
+    transition: opacity 0.3s, transform 0.3s, visibility 0.3s;
 }
+
+#ai-chat-container.show {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+    visibility: visible;
+}
+
 #chat-history { 
     flex: 1; 
     overflow-y: auto; 
-    padding: 15px; 
+    padding: 20px; 
     font-size: 14px; 
     display: flex;
     flex-direction: column;
@@ -273,6 +323,7 @@ html, body {
     gap: 10px;
     background-color: #fff;
     border-top: 1px solid var(--light-gray);
+    border-radius: 0 0 12px 12px;
 }
 #chat-input { 
     flex: 1; 
@@ -281,6 +332,7 @@ html, body {
     border-radius: 8px; 
     outline: none; 
     transition: border-color 0.2s;
+    background-color: #fdfdfd;
 }
 #chat-input:focus {
     border-color: var(--primary-color);
@@ -301,20 +353,9 @@ html, body {
 }
 @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
-/* --- Footer --- */
-.sidebar-footer {
-    padding: 15px;
-    text-align: center;
-    font-size: 12px;
-    color: var(--medium-gray);
-    background-color: var(--sidebar-bg);
-    border-top: 1px solid var(--light-gray);
-}
-
 /* =========================================
-   5. Map Overlays & Custom Elements
+   6. Map Overlays & Custom Elements
    ========================================= */
-/* 날씨 정보 오버레이 (말풍선 스타일) */
 .weather-overlay {
     display: flex;
     align-items: center;
@@ -328,13 +369,9 @@ html, body {
     color: var(--secondary-color);
     text-align: center;
     box-shadow: var(--shadow);
-    transform: translate(-50%, -15px); /* 오버레이 위치 보정 */
+    transform: translate(-50%, -15px);
 }
-
-.weather-overlay .weather-icon {
-    font-size: 24px;
-}
-
+.weather-overlay .weather-icon { font-size: 24px; }
 .weather-overlay .weather-info {
     display: flex;
     flex-direction: column;
@@ -342,23 +379,16 @@ html, body {
     font-size: 12px;
     gap: 2px;
 }
+.weather-overlay .weather-temp { font-weight: 700; font-size: 14px; }
+.weather-overlay .weather-pcp { color: #555; }
 
-.weather-overlay .weather-temp {
-    font-weight: 700;
-    font-size: 14px;
-}
-
-.weather-overlay .weather-pcp {
-    color: #555;
-}
-
-/* 지도 우측 상단 컨트롤 박스 */
 #map-controls {
     position: absolute;
     top: 15px;
     right: 15px;
     z-index: 10;
-    background-color: var(--secondary-color);
+    background-color: rgba(44, 62, 80, 0.85);
+    backdrop-filter: blur(5px);
     padding: 12px;
     border-radius: 10px;
     box-shadow: var(--shadow);
@@ -377,7 +407,6 @@ html, body {
     color: white;
 }
 
-/* 커스텀 토글 스위치 디자인 */
 #map-controls input[type="checkbox"] {
     appearance: none;
     -webkit-appearance: none;
@@ -411,11 +440,10 @@ html, body {
     font-size: 14px;
     font-weight: 500;
     padding-bottom: 10px;
-    border-bottom: 1px solid var(--medium-gray);
+    border-bottom: 1px solid rgba(255,255,255,0.2);
     text-align: center;
 }
 
-/* 노선 아이콘 (1호선, 2호선) */
 .line-icon {
     display: inline-block;
     width: 20px;
@@ -428,17 +456,11 @@ html, body {
     margin-right: 8px;
     font-size: 12px;
 }
-
-.line-icon.line-1 {
-    background-color: red;
-}
-
-.line-icon.line-2 {
-    background-color: green;
-}
+.line-icon.line-1 { background-color: #e60012; }
+.line-icon.line-2 { background-color: #00a84d; }
 
 /* =========================================
-   6. Navigation Bar
+   7. Navigation Bar
    ========================================= */
 .navbar {
     background-color: var(--secondary-color);
@@ -452,51 +474,40 @@ html, body {
     position: relative;
     z-index: 1000;
 }
-
-/* 로고와 텍스트 그룹 */
 .navbar-brand {
     display: flex;
     align-items: center;
-    gap: 12px; /* 로고와 텍스트 사이 간격 */
+    gap: 12px;
 }
-
+.nav-logo { height: 32px; }
 .navbar .logo {
     font-size: 20px;
     font-weight: bold;
     color: var(--light-gray);
     text-decoration: none;
 }
-
 .menu-list {
     list-style: none;
     display: flex;
-    height: 100%;
     margin: 0;
     padding: 0;
 }
-
 .menu-item {
     position: relative;
-    height: 100%;
-    display: flex;
-    align-items: center;
 }
-
 .menu-link {
     text-decoration: none;
     color: white;
     padding: 0 20px;
-    height: 100%;
+    height: 60px;
     display: flex;
     align-items: center;
     font-size: 16px;
     transition: background-color 0.3s;
 }
-
 .menu-item:hover .menu-link {
     background-color: #34495e;
 }
-
 .dropdown {
     position: absolute;
     top: 60px;
@@ -509,20 +520,12 @@ html, body {
     z-index: 1001;
     padding: 0;
 }
-
-.menu-item:hover .dropdown {
-    display: block;
-}
-
+.menu-item:hover .dropdown { display: block; }
 .dropdown li {
     list-style: none;
     border-bottom: 1px solid #eee;
 }
-
-.dropdown li:last-child {
-    border-bottom: none;
-}
-
+.dropdown li:last-child { border-bottom: none; }
 .dropdown a {
     text-decoration: none;
     color: var(--text-color);
@@ -531,25 +534,23 @@ html, body {
     font-size: 14px;
     transition: background-color 0.2s;
 }
-
 .dropdown a:hover {
     background-color: #f1f2f6;
     color: #2980b9;
 }
-
-/* 모바일 메뉴 토글 버튼 (기본 숨김) */
 .navbar-toggle {
     display: none;
     background: none;
     border: none;
     color: white;
-    font-size: 24px;
+    font-size: 28px;
     cursor: pointer;
     padding: 5px;
+    z-index: 1002;
 }
 
 /* =========================================
-   7. SPA Modal (원페이지 팝업)
+   8. SPA Modal
    ========================================= */
 .modal-overlay {
     position: fixed;
@@ -558,12 +559,11 @@ html, body {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.5);
-    display: none; /* 기본 숨김 */
+    display: none;
     justify-content: center;
     align-items: center;
     z-index: 2000;
 }
-
 .modal-window {
     background-color: white;
     width: 500px;
@@ -573,13 +573,7 @@ html, body {
     overflow: hidden;
     animation: fadeIn 0.2s ease-out;
 }
-
-/* 테이블 등을 보여줄 때 사용할 넓은 모달 스타일 */
-.modal-window.large {
-    width: 900px;
-    max-width: 95%;
-}
-
+.modal-window.large { width: 900px; max-width: 95%; }
 .modal-header {
     padding: 15px 20px;
     background-color: var(--secondary-color);
@@ -588,7 +582,6 @@ html, body {
     justify-content: space-between;
     align-items: center;
 }
-
 .modal-header button {
     background: none;
     border: none;
@@ -596,21 +589,19 @@ html, body {
     font-size: 24px;
     cursor: pointer;
 }
-
 .modal-content {
     padding: 30px;
     min-height: 150px;
+    max-height: 70vh;
+    overflow-y: auto;
     font-size: 16px;
     line-height: 1.6;
     color: var(--text-color);
 }
-
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(-20px); }
     to { opacity: 1; transform: translateY(0); }
 }
-
-/* 데이터 테이블 스타일 */
 .data-table {
     width: 100%;
     border-collapse: collapse;
@@ -627,134 +618,110 @@ html, body {
     color: var(--secondary-color);
     font-weight: bold;
 }
-.data-table tr:nth-child(even) {
-    background-color: #f9f9f9;
-}
-.data-table tr:hover {
-    background-color: #eef6fb;
-}
+.data-table tr:nth-child(even) { background-color: #f9f9f9; }
+.data-table tr:hover { background-color: #eef6fb; }
 
 /* =========================================
-   8. Responsive Design (Mobile)
+   9. Responsive Design (Mobile)
    ========================================= */
 @media (max-width: 768px) {
-    /* --- Navbar --- */
-    .navbar {
-        padding: 0 15px;
+    /* --- Layout --- */
+    body { font-size: 16px; }
+
+    #sidebar {
+        width: 85%;
+    }
+
+    #toggle-sidebar-btn-desktop {
+        left: 85%;
     }
     
-    .navbar .logo {
-        font-size: 16px; /* 로고 폰트 축소 */
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        max-width: 200px;
+    #app-container.sidebar-hidden #toggle-sidebar-btn-desktop {
+        left: 0px;
     }
 
-    .navbar-toggle {
-        display: block; /* 햄버거 버튼 표시 */
-    }
+    /* --- Navbar --- */
+    .navbar { padding: 0 15px; }
+    .navbar-brand { gap: 15px; }
+    .navbar .logo { display: none; }
+    .navbar-toggle { display: block; }
 
     .menu-list {
-        display: none; /* 기본적으로 메뉴 숨김 */
-        position: absolute;
+        display: none;
+        position: fixed;
         top: 60px;
         left: 0;
         width: 100%;
         background-color: var(--secondary-color);
         flex-direction: column;
-        height: auto;
-        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-        z-index: 999;
+        height: calc(100vh - 60px);
+        padding: 10px 0;
     }
-
-    .menu-list.active {
-        display: flex; /* 활성화 시 표시 */
-    }
-
-    .menu-item {
-        width: 100%;
-        height: auto;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .menu-link {
-        padding: 15px 20px;
-        width: 100%;
-    }
-
-    /* 모바일에서 드롭다운 처리 (항상 펼쳐두거나 클릭 시 동작하도록 변경) */
+    .menu-list.active { display: flex; }
+    .menu-item { width: 100%; height: auto; border-bottom: 1px solid rgba(255,255,255,0.1); }
+    .menu-link { padding: 18px 25px; width: 100%; height: auto; font-size: 18px; font-weight: 500; }
     .dropdown {
-        position: static; /* absolute 해제 */
-        display: none; /* JS 없이 CSS 호버만으로는 모바일 불편하므로 일단 숨김 처리 */
+        position: static;
+        display: none;
         width: 100%;
         box-shadow: none;
         background-color: #34495e;
+        border-radius: 0;
     }
-    
-    /* 모바일에서는 메뉴 클릭 시 드롭다운이 바로 보이게 하거나, 
-       단순화를 위해 호버 효과를 active로 대체하는 것이 좋으나
-       여기서는 메뉴 구조 유지를 위해 호버 시 보이게 유지 (터치 시 호버로 인식됨) */
-    .menu-item:hover .dropdown {
-        display: block;
-    }
+    .menu-item.active .dropdown { display: block; }
+    .dropdown a { color: #ecf0f1; font-size: 16px; padding: 15px 25px 15px 40px;}
 
-    /* --- Sidebar --- */
-    #sidebar {
-        position: absolute;
-        width: 85%; /* 화면의 85% 차지 */
+    /* --- Sidebar Components --- */
+    .tree-group-header { font-size: 18px; padding: 18px 25px;}
+    .manhole-item { font-size: 16px; padding: 15px 25px 15px 55px; }
+
+
+    /* --- AI Chat --- */
+    #toggle-chat-btn {
+        width: 55px;
+        height: 55px;
+        bottom: 20px;
+        left: 20px;
+    }
+    #ai-chat-container {
+        width: 100%;
+        max-width: 100%;
+        height: 85vh;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        border-radius: 16px 16px 0 0;
+        transform: translateY(100%);
+        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    #ai-chat-container.show {
+        transform: translateY(0);
+    }
+    #app-container.chat-open::before {
+        content: '';
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
         height: 100%;
-        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+        background: rgba(0,0,0,0.4);
+        z-index: 1000;
     }
+    #chat-history { padding: 15px; }
 
-    /* 모바일에서 사이드바 숨김 상태: 화면 왼쪽 밖으로 이동 */
-    #app-container.sidebar-hidden #sidebar {
-        transform: translateX(-100%);
-    }
-
-    /* 사이드바 토글 버튼 위치 조정 */
-    #toggle-sidebar-btn {
-        left: auto;
-        right: 20px;
-        bottom: 90px; /* 하단에 배치 (엄지손가락 닿기 쉽게) */
-        top: auto;
-        width: 50px;
-        height: 50px;
-        border-radius: 50%;
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    }
-
-    /* 사이드바가 숨겨졌을 때 버튼 위치 (동일하게 유지하거나 변경) */
-    #app-container.sidebar-hidden #toggle-sidebar-btn {
-        left: auto;
-        right: 20px;
-        transform: none; /* 회전 효과 제거 */
-    }
-    
-    /* 버튼 아이콘 변경 (화살표 대신 메뉴 아이콘 느낌으로) */
-    #toggle-sidebar-btn::after {
-        content: "LIST";
-        font-size: 10px;
-    }
-    #toggle-sidebar-btn {
-        font-size: 0; /* 기존 화살표 텍스트 숨김 */
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
 
     /* --- Map Controls --- */
     #map-controls {
         top: 10px;
         right: 10px;
-        padding: 8px;
-        max-width: 160px;
+        padding: 10px 12px;
     }
+    #map-controls label { font-size: 14px; gap: 8px; }
     
     /* --- Modal --- */
     .modal-window, .modal-window.large {
-        width: 95%;
-        max-height: 90vh;
-        overflow-y: auto;
+        width: 92%;
+        max-height: 85vh;
     }
+    .modal-content { padding: 20px; }
 }

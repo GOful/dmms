@@ -1,5 +1,5 @@
 import { initMap, selectManhole, relayoutMap, initMapResizer } from './map-service.js';
-import { renderTree, toggleSidebar, initSidebarResizer } from './ui-manager.js';
+import { renderTree, toggleSidebar, toggleChat, setupMenuEvents } from './ui-manager.js';
 import { askAI } from './ai-service.js';
 
 let rawData = null;
@@ -22,31 +22,38 @@ function updateDateTime() {
 }
 
 async function init() {
-    // UI 이벤트 연결
-    document.getElementById('toggle-sidebar-btn').onclick = () => {
+    // [반응형] 시작 시 모바일이면 사이드바 숨김 처리
+    if (window.innerWidth <= 768) {
+        document.getElementById('app-container').classList.add('sidebar-hidden');
+    }
+
+    document.getElementById('navbar-toggle').addEventListener('click', () => {
+        // 모바일에서는 햄버거 버튼이 상단 메뉴 리스트를 토글
+        document.getElementById('menu-list').classList.toggle('active');
+    });
+
+    document.getElementById('toggle-sidebar-btn-desktop').addEventListener('click', () => {
         toggleSidebar();
-        relayoutMap();
-    };
+    });
+
+    document.getElementById('toggle-chat-btn').onclick = toggleChat;
     
     document.getElementById('send-btn').onclick = () => askAI(rawData);
     document.getElementById('chat-input').onkeypress = (e) => {
-        if (e.key === 'Enter') askAI(rawData);
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            askAI(rawData);
+        }
     };
+    
+    setupMenuEvents();
 
-    // 사이드바 리사이저 초기화
-    initSidebarResizer();
-
-    // 시간 표시 초기화 및 1분마다 업데이트
     updateDateTime();
     setInterval(updateDateTime, 60000);
 
-    // 지도 초기화
     initMap();
-    
-    // 지도-로드뷰 리사이저 초기화
     initMapResizer();
 
-    // 데이터 로드
     try {
         const res = await fetch('manholes.json');
         rawData = await res.json();
@@ -54,12 +61,6 @@ async function init() {
     } catch (e) {
         console.error("데이터 로드 실패:", e);
         document.getElementById('tree-container').innerHTML = "<p style='padding:20px;'>manholes.json 로드 실패</p>";
-    }
-
-    // [반응형] 모바일 화면(768px 이하)이면 시작할 때 사이드바를 숨김
-    if (window.innerWidth <= 768) {
-        toggleSidebar();
-        relayoutMap();
     }
 }
 
