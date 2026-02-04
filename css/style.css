@@ -274,7 +274,7 @@ html, body {
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
     display: flex; 
     flex-direction: column; 
-    z-index: 1001;
+    z-index: 3000;
     
     opacity: 0;
     transform: translateY(20px) scale(0.95);
@@ -620,108 +620,3 @@ html, body {
 }
 .data-table tr:nth-child(even) { background-color: #f9f9f9; }
 .data-table tr:hover { background-color: #eef6fb; }
-
-/* =========================================
-   9. Responsive Design (Mobile)
-   ========================================= */
-@media (max-width: 768px) {
-    /* --- Layout --- */
-    body { font-size: 16px; }
-
-    #sidebar {
-        width: 85%;
-    }
-
-    #toggle-sidebar-btn-desktop {
-        left: 85%;
-    }
-    
-    #app-container.sidebar-hidden #toggle-sidebar-btn-desktop {
-        left: 0px;
-    }
-
-    /* --- Navbar --- */
-    .navbar { padding: 0 15px; }
-    .navbar-brand { gap: 15px; }
-    .navbar .logo { display: none; }
-    .navbar-toggle { display: block; }
-
-    .menu-list {
-        display: none;
-        position: fixed;
-        top: 60px;
-        left: 0;
-        width: 100%;
-        background-color: var(--secondary-color);
-        flex-direction: column;
-        height: calc(100vh - 60px);
-        padding: 10px 0;
-    }
-    .menu-list.active { display: flex; }
-    .menu-item { width: 100%; height: auto; border-bottom: 1px solid rgba(255,255,255,0.1); }
-    .menu-link { padding: 18px 25px; width: 100%; height: auto; font-size: 18px; font-weight: 500; }
-    .dropdown {
-        position: static;
-        display: none;
-        width: 100%;
-        box-shadow: none;
-        background-color: #34495e;
-        border-radius: 0;
-    }
-    .menu-item.active .dropdown { display: block; }
-    .dropdown a { color: #ecf0f1; font-size: 16px; padding: 15px 25px 15px 40px;}
-
-    /* --- Sidebar Components --- */
-    .tree-group-header { font-size: 18px; padding: 18px 25px;}
-    .manhole-item { font-size: 16px; padding: 15px 25px 15px 55px; }
-
-
-    /* --- AI Chat --- */
-    #toggle-chat-btn {
-        width: 55px;
-        height: 55px;
-        bottom: 20px;
-        left: 20px;
-    }
-    #ai-chat-container {
-        width: 100%;
-        max-width: 100%;
-        height: 85vh;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        border-radius: 16px 16px 0 0;
-        transform: translateY(100%);
-        transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    #ai-chat-container.show {
-        transform: translateY(0);
-    }
-    #app-container.chat-open::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.4);
-        z-index: 1000;
-    }
-    #chat-history { padding: 15px; }
-
-
-    /* --- Map Controls --- */
-    #map-controls {
-        top: 10px;
-        right: 10px;
-        padding: 10px 12px;
-    }
-    #map-controls label { font-size: 14px; gap: 8px; }
-    
-    /* --- Modal --- */
-    .modal-window, .modal-window.large {
-        width: 92%;
-        max-height: 85vh;
-    }
-    .modal-content { padding: 20px; }
-}

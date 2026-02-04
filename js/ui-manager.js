@@ -32,14 +32,6 @@ export function selectManholeInSidebar(id) {
         
         // 상단 고정 헤더(Sticky)에 가려지는 것을 방지하기 위해 중앙으로 스크롤
         newSelected.scrollIntoView({ behavior: 'smooth', block: 'center' });
-
-        // [반응형] 모바일 환경에서는 항목 선택 시 사이드바를 자동으로 닫음
-        if (window.innerWidth <= 768) {
-            const container = document.getElementById('app-container');
-            if (!container.classList.contains('sidebar-hidden')) {
-                toggleSidebar();
-            }
-        }
     }
 }
 
@@ -156,22 +148,6 @@ export function setupMenuEvents() {
     const modalBody = document.getElementById('modal-body');
     const closeBtn = document.getElementById('modal-close-btn');
 
-    // 모바일: 메뉴 아이템 클릭 시 드롭다운 토글
-    if (window.innerWidth <= 768) {
-        const menuItems = document.querySelectorAll('.menu-item > .menu-link');
-        menuItems.forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const parentItem = this.parentElement;
-                // 현재 메뉴를 제외한 다른 모든 메뉴의 active 클래스 제거
-                menuList.querySelectorAll('.menu-item').forEach(item => {
-                    if (item !== parentItem) item.classList.remove('active');
-                });
-                parentItem.classList.toggle('active');
-            });
-        });
-    }
-    
     // 공통: SPA 링크 클릭 시 모달 열기
     spaLinks.forEach(link => {
         link.addEventListener('click', (e) => {

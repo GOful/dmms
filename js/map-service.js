@@ -29,6 +29,11 @@ export function initMap() {
         center: new kakao.maps.LatLng(35.8714, 128.6014),
         level: 7
     });
+
+    // 줌 레벨 제한 설정 (1: 최대 확대, 14: 최대 축소)
+    map.setMinLevel(1);
+    map.setMaxLevel(14);
+
     rv = new kakao.maps.Roadview(document.getElementById('roadview'));
     rvClient = new kakao.maps.RoadviewClient();
 

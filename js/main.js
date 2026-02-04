@@ -22,16 +22,6 @@ function updateDateTime() {
 }
 
 async function init() {
-    // [반응형] 시작 시 모바일이면 사이드바 숨김 처리
-    if (window.innerWidth <= 768) {
-        document.getElementById('app-container').classList.add('sidebar-hidden');
-    }
-
-    document.getElementById('navbar-toggle').addEventListener('click', () => {
-        // 모바일에서는 햄버거 버튼이 상단 메뉴 리스트를 토글
-        document.getElementById('menu-list').classList.toggle('active');
-    });
-
     document.getElementById('toggle-sidebar-btn-desktop').addEventListener('click', () => {
         toggleSidebar();
     });
