@@ -35,6 +35,7 @@ export function initMap() {
 function setupMapControls() {
     const trafficCheckbox = document.getElementById('traffic-checkbox');
     const weatherCheckbox = document.getElementById('weather-checkbox');
+    const roadviewCheckbox = document.getElementById('roadview-checkbox');
 
     // 교통정보 레이어 토글
     trafficCheckbox.addEventListener('change', (e) => {
@@ -48,6 +49,19 @@ function setupMapControls() {
     // 날씨 오버레이 토글
     weatherCheckbox.addEventListener('change', (e) => {
         toggleWeather(e.target.checked);
+    });
+
+    // 로드뷰 토글 (추가된 기능)
+    roadviewCheckbox.addEventListener('change', (e) => {
+        const rvContainer = document.getElementById('roadview');
+        if (e.target.checked) {
+            rvContainer.style.display = 'block';
+            map.relayout(); // 지도가 줄어든 영역에 맞게 재조정
+            rv.relayout();  // 로드뷰가 보일 때 렌더링 갱신
+        } else {
+            rvContainer.style.display = 'none';
+            map.relayout(); // 지도가 전체 영역을 차지하도록 재조정
+        }
     });
 }
 
