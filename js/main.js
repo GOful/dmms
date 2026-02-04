@@ -1,4 +1,4 @@
-import { initMap, selectManhole, relayoutMap } from './map-service.js';
+import { initMap, selectManhole, relayoutMap, initMapResizer } from './map-service.js';
 import { renderTree, toggleSidebar, initSidebarResizer } from './ui-manager.js';
 import { askAI } from './ai-service.js';
 
@@ -42,6 +42,9 @@ async function init() {
 
     // 지도 초기화
     initMap();
+    
+    // 지도-로드뷰 리사이저 초기화
+    initMapResizer();
 
     // 데이터 로드
     try {

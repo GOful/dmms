@@ -12,6 +12,12 @@ const starImg = new kakao.maps.MarkerImage(
     new kakao.maps.Size(24, 35)
 );
 
+// 기본 맨홀 마커 이미지 설정 (img/marker1.png)
+const normalImg = new kakao.maps.MarkerImage(
+    'img/marker1.png',
+    new kakao.maps.Size(40, 40)
+);
+
 /**
  * [초기화] 카카오맵 및 로드뷰 객체를 생성하고 초기 설정을 수행합니다.
  * - 지도 중심: 대구광역시 중앙로 인근
@@ -36,6 +42,7 @@ function setupMapControls() {
     const trafficCheckbox = document.getElementById('traffic-checkbox');
     const weatherCheckbox = document.getElementById('weather-checkbox');
     const roadviewCheckbox = document.getElementById('roadview-checkbox');
+    const mapResizer = document.getElementById('map-resizer');
 
     // 교통정보 레이어 토글
     trafficCheckbox.addEventListener('change', (e) => {
@@ -56,10 +63,12 @@ function setupMapControls() {
         const rvContainer = document.getElementById('roadview');
         if (e.target.checked) {
             rvContainer.style.display = 'block';
+            mapResizer.style.display = 'block'; // 리사이저 표시
             map.relayout(); // 지도가 줄어든 영역에 맞게 재조정
             rv.relayout();  // 로드뷰가 보일 때 렌더링 갱신
         } else {
             rvContainer.style.display = 'none';
+            mapResizer.style.display = 'none'; // 리사이저 숨김
             map.relayout(); // 지도가 전체 영역을 차지하도록 재조정
         }
     });
@@ -162,7 +171,7 @@ async function displayWeather() {
  * @param {Function} onSelect - 마커 클릭 시 실행할 콜백 함수
  */
 export function createMarker(mh, pos, stationName, onSelect) {
-    const marker = new kakao.maps.Marker({ position: pos, map: map });
+    const marker = new kakao.maps.Marker({ position: pos, map: map, image: normalImg });
     markersMap[mh.id] = { marker, pos, data: mh, stationName };
     kakao.maps.event.addListener(marker, 'click', () => onSelect(mh.id));
 }
@@ -218,7 +227,7 @@ export function selectManhole(id) {
     map.panTo(target.pos);
 
     // 마커 하이라이트 처리
-    Object.values(markersMap).forEach(m => m.marker.setImage(null));
+    Object.values(markersMap).forEach(m => m.marker.setImage(normalImg));
     target.marker.setImage(starImg);
 
     // 로드뷰 연동: 해당 위치의 가장 가까운 파노라마 ID를 찾아 이동
@@ -231,5 +240,58 @@ export function selectManhole(id) {
  * [유틸] 사이드바 토글 등으로 지도 컨테이너 크기가 변경되었을 때 레이아웃을 갱신합니다.
  */
 export function relayoutMap() {
-    setTimeout(() => { if(map) map.relayout(); }, 300);
+    setTimeout(() => { 
+        if(map) map.relayout();
+        // 로드뷰가 보이는 상태라면 로드뷰도 리레이아웃
+        const rvContainer = document.getElementById('roadview');
+        if(rv && rvContainer && rvContainer.style.display !== 'none') {
+            rv.relayout();
+        }
+    }, 300);
+}
+
+/**
+ * [기능] 지도와 로드뷰 사이의 높이 조절(Resizer) 기능을 초기화합니다.
+ */
+export function initMapResizer() {
+    const resizer = document.getElementById('map-resizer');
+    const roadviewContainer = document.getElementById('roadview');
+    const mainContent = document.getElementById('main-content');
+
+    let isResizing = false;
+
+    resizer.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        isResizing = true;
+        document.body.style.cursor = 'row-resize';
+        document.body.style.userSelect = 'none';
+
+        const mouseMoveHandler = (e) => {
+            if (!isResizing) return;
+
+            const mainRect = mainContent.getBoundingClientRect();
+            // 로드뷰 높이 = 전체 높이 - 마우스 Y 좌표 (하단 기준 계산)
+            let newHeight = mainRect.bottom - e.clientY;
+            
+            // 최소 100px, 최대 (전체 - 100px) 제한
+            newHeight = Math.max(100, Math.min(newHeight, mainRect.height - 100));
+
+            roadviewContainer.style.height = `${newHeight}px`;
+        };
+
+        const mouseUpHandler = () => {
+            isResizing = false;
+            document.removeEventListener('mousemove', mouseMoveHandler);
+            document.removeEventListener('mouseup', mouseUpHandler);
+            document.body.style.cursor = 'default';
+            document.body.style.userSelect = 'auto';
+            
+            // 리사이징 종료 후 지도/로드뷰 레이아웃 갱신 (딜레이 없이 즉시 호출)
+            if(map) map.relayout();
+            if(rv) rv.relayout();
+        };
+
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
+    });
 }
