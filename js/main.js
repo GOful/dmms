@@ -52,6 +52,12 @@ async function init() {
         console.error("데이터 로드 실패:", e);
         document.getElementById('tree-container').innerHTML = "<p style='padding:20px;'>manholes.json 로드 실패</p>";
     }
+
+    // [반응형] 모바일 화면(768px 이하)이면 시작할 때 사이드바를 숨김
+    if (window.innerWidth <= 768) {
+        toggleSidebar();
+        relayoutMap();
+    }
 }
 
 init();

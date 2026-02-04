@@ -536,6 +536,17 @@ html, body {
     color: #2980b9;
 }
 
+/* 모바일 메뉴 토글 버튼 (기본 숨김) */
+.navbar-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+    padding: 5px;
+}
+
 /* =========================================
    7. SPA Modal (원페이지 팝업)
    ========================================= */
@@ -620,4 +631,129 @@ html, body {
 }
 .data-table tr:hover {
     background-color: #eef6fb;
+}
+
+/* =========================================
+   8. Responsive Design (Mobile)
+   ========================================= */
+@media (max-width: 768px) {
+    /* --- Navbar --- */
+    .navbar {
+        padding: 0 15px;
+    }
+    
+    .navbar .logo {
+        font-size: 16px; /* 로고 폰트 축소 */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 200px;
+    }
+
+    .navbar-toggle {
+        display: block; /* 햄버거 버튼 표시 */
+    }
+
+    .menu-list {
+        display: none; /* 기본적으로 메뉴 숨김 */
+        position: absolute;
+        top: 60px;
+        left: 0;
+        width: 100%;
+        background-color: var(--secondary-color);
+        flex-direction: column;
+        height: auto;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        z-index: 999;
+    }
+
+    .menu-list.active {
+        display: flex; /* 활성화 시 표시 */
+    }
+
+    .menu-item {
+        width: 100%;
+        height: auto;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .menu-link {
+        padding: 15px 20px;
+        width: 100%;
+    }
+
+    /* 모바일에서 드롭다운 처리 (항상 펼쳐두거나 클릭 시 동작하도록 변경) */
+    .dropdown {
+        position: static; /* absolute 해제 */
+        display: none; /* JS 없이 CSS 호버만으로는 모바일 불편하므로 일단 숨김 처리 */
+        width: 100%;
+        box-shadow: none;
+        background-color: #34495e;
+    }
+    
+    /* 모바일에서는 메뉴 클릭 시 드롭다운이 바로 보이게 하거나, 
+       단순화를 위해 호버 효과를 active로 대체하는 것이 좋으나
+       여기서는 메뉴 구조 유지를 위해 호버 시 보이게 유지 (터치 시 호버로 인식됨) */
+    .menu-item:hover .dropdown {
+        display: block;
+    }
+
+    /* --- Sidebar --- */
+    #sidebar {
+        position: absolute;
+        width: 85%; /* 화면의 85% 차지 */
+        height: 100%;
+        box-shadow: 2px 0 10px rgba(0,0,0,0.2);
+    }
+
+    /* 모바일에서 사이드바 숨김 상태: 화면 왼쪽 밖으로 이동 */
+    #app-container.sidebar-hidden #sidebar {
+        transform: translateX(-100%);
+    }
+
+    /* 사이드바 토글 버튼 위치 조정 */
+    #toggle-sidebar-btn {
+        left: auto;
+        right: 20px;
+        bottom: 90px; /* 하단에 배치 (엄지손가락 닿기 쉽게) */
+        top: auto;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    }
+
+    /* 사이드바가 숨겨졌을 때 버튼 위치 (동일하게 유지하거나 변경) */
+    #app-container.sidebar-hidden #toggle-sidebar-btn {
+        left: auto;
+        right: 20px;
+        transform: none; /* 회전 효과 제거 */
+    }
+    
+    /* 버튼 아이콘 변경 (화살표 대신 메뉴 아이콘 느낌으로) */
+    #toggle-sidebar-btn::after {
+        content: "LIST";
+        font-size: 10px;
+    }
+    #toggle-sidebar-btn {
+        font-size: 0; /* 기존 화살표 텍스트 숨김 */
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* --- Map Controls --- */
+    #map-controls {
+        top: 10px;
+        right: 10px;
+        padding: 8px;
+        max-width: 160px;
+    }
+    
+    /* --- Modal --- */
+    .modal-window, .modal-window.large {
+        width: 95%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
 }

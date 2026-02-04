@@ -55,6 +55,14 @@ export function selectManholeInSidebar(id) {
         }
         // 상단 고정 헤더(Sticky)에 가려지는 것을 방지하기 위해 중앙으로 스크롤
         newSelected.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+        // [반응형] 모바일 환경에서는 항목 선택 시 사이드바를 자동으로 닫음
+        if (window.innerWidth <= 768) {
+            const container = document.getElementById('app-container');
+            if (!container.classList.contains('sidebar-hidden')) {
+                toggleSidebar();
+            }
+        }
     }
 }
 

@@ -14,6 +14,7 @@
             <img src="img/logo.svg" alt="DMMS 로고" class="nav-logo">
             <a href="#" class="logo">대구교통공사 맨홀관리 시스템 (DMMS)</a>
         </div>
+        <button class="navbar-toggle" id="navbar-toggle">☰</button>
         <ul class="menu-list">
             <li class="menu-item">
                 <a href="#" class="menu-link">시스템 관리</a>
@@ -111,6 +112,11 @@
     <script type="module">
         import { setupMenuEvents } from './js/ui-manager.js';
         setupMenuEvents(); // 메뉴 이벤트 리스너 등록
+
+        // 모바일 메뉴 토글 스크립트 추가
+        document.getElementById('navbar-toggle').addEventListener('click', () => {
+            document.getElementById('menu-list').classList.toggle('active');
+        });
     </script>
 </body>
 </html>
