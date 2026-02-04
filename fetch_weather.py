@@ -1,22 +1,16 @@
 import requests
 import json
 import urllib3
-import os
 import time
 from datetime import datetime, timedelta
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 # SSL 경고 무시
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
-"""
-기상청 APIHub를 통해 대구 지하철 역 인근의 실시간 기상 데이터를 수집하고
-JSON 파일로 저장하는 스크립트입니다.
-"""
-
 def fetch_and_save_as_json():
     auth_key = "-MBhNUogT9uAYTVKIL_bWA"
-
-    # 1. 수집 대상 지점 정의 (대구 지하철 역 좌표)
     stations = {
         "대구역": {"lat": 35.8759, "lon": 128.5961},
         "중앙로역": {"lat": 35.8711, "lon": 128.5939},
@@ -40,14 +34,17 @@ def fetch_and_save_as_json():
         "용산역": {"lat": 35.8505, "lon": 128.5235}
     }
 
-    # 2. 조회 시간 설정 (최근 30분 데이터 조회)
+    # 세션 관리 및 재시도 로직 (443 에러 방지)
+    session = requests.Session()
+    retries = Retry(total=3, backoff_factor=1, status_forcelist=[429, 500, 502, 503, 504])
+    session.mount("https://", HTTPAdapter(max_retries=retries))
+
     now = datetime.now()
-    # API는 약 10분 단위로 갱신되므로, 누락 방지를 위해 30분 전부터 현재까지 조회
     tm2 = now.strftime('%Y%m%d%H%M')
-    tm1 = (now - timedelta(minutes=30)).strftime('%Y%m%d%H%M') # 30분 전부터 조회
+    tm1 = (now - timedelta(minutes=30)).strftime('%Y%m%d%H%M')
 
     final_data_dict = {}
-    print(f"[{now.strftime('%H:%M:%S')}] 총 {len(stations)}개 지점 데이터 수집 시작...")
+    print(f"[{now.strftime('%H:%M:%S')}] 데이터 수집 및 Raw Data 출력 시작...\n")
 
     for station_name, coords in stations.items():
         url = (
@@ -57,23 +54,25 @@ def fetch_and_save_as_json():
         )
         
         try:
-            # API 호출 (SSL 인증서 검증 무시, 타임아웃 5초)
-            response = requests.get(url, verify=False, timeout=5)
+            # 타임아웃을 넉넉히 주어 연결 안정성 확보
+            response = session.get(url, verify=False, timeout=(5, 10))
             
+            # --- 터미널에 Raw Data 출력 영역 ---
+            print(f"DEBUG [{station_name}] Response Status: {response.status_code}")
+            print(f"DEBUG [{station_name}] URL: {url}")
+            print(f"--- Raw Data Start ---")
+            print(response.text.strip())
+            print(f"--- Raw Data End ---\n")
+            # -----------------------------------
+
             if response.status_code != 200:
-                print(f" - {station_name}: API 호출 실패 (상태 코드: {response.status_code})")
                 continue
 
             lines = response.text.strip().split('\n')
-            
-            # 3. 응답 데이터 파싱
-            # API 응답이 텍스트 형식이므로 헤더를 직접 매핑 (순서: 시간, 기온, 강수유무, 강수량, 시정)
             headers = ['tm', 'ta', 'rn_ox', 'rn_60m', 'vs']
 
-            # 최신 데이터부터 순회하며 유효한 첫 번째 데이터를 사용
             for line in lines:
                 line = line.strip()
-                # 주석('#'), 빈 줄, 결측값('77777', 'No data')은 무시합니다.
                 if line.startswith('#') or not line or "77777" in line:
                     continue
 
@@ -82,32 +81,25 @@ def fetch_and_save_as_json():
                 
                 if len(row) == len(headers):
                     item = dict(zip(headers, row))
-                    # 필수 데이터 필드가 모두 존재하는지 검증
-                    if all(k in item for k in ['ta', 'rn_ox', 'rn_60m', 'vs']):
-                        final_data_dict[station_name] = {
-                            "LAT": coords['lat'],
-                            "LON": coords['lon'],
-                            "TA": item.get('ta', 'N/A'),
-                            "RN_OX": item.get('rn_ox', 'N/A'),
-                            "RN_60M": item.get('rn_60m', 'N/A'),
-                            "VS": item.get('vs', 'N/A')
-                        }
-                        # 유효 데이터를 찾으면 해당 역 처리를 종료하고 다음 역으로 이동
-                        print(f" - {station_name}: 데이터 수집 성공")
-                        break
+                    final_data_dict[station_name] = {
+                        "LAT": coords['lat'],
+                        "LON": coords['lon'],
+                        "TA": item.get('ta'),
+                        "RN_OX": item.get('rn_ox'),
+                        "RN_60M": item.get('rn_60m'),
+                        "VS": item.get('vs')
+                    }
+                    break
             
-            # API 서버 부하 방지를 위한 대기
-            time.sleep(0.1)
+            time.sleep(0.5) # 서버 부하 방지 및 안정적인 출력을 위해 0.5초 대기
 
         except Exception as e:
-            print(f" - {station_name}: 수집 중 오류: {e}")
+            print(f"ERROR [{station_name}]: {e}\n")
 
-
-    # 4. 결과 JSON 파일 저장
     with open("weather_data.json", "w", encoding="utf-8") as f:
         json.dump(final_data_dict, f, ensure_ascii=False, indent=4)
     
-    print(f"수집 완료: {len(final_data_dict)}개 데이터 저장됨.")
+    print(f"최종 수집 완료: {len(final_data_dict)}개 지점 데이터 저장됨.")
 
 if __name__ == "__main__":
     fetch_and_save_as_json()
