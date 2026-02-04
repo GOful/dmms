@@ -433,3 +433,96 @@ html, body {
 .line-icon.line-2 {
     background-color: green;
 }
+
+/* =========================================
+   6. Navigation Bar
+   ========================================= */
+.navbar {
+    background-color: var(--secondary-color);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    height: 60px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    position: relative;
+    z-index: 1000;
+}
+
+.navbar .logo {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--light-gray);
+    text-decoration: none;
+}
+
+.menu-list {
+    list-style: none;
+    display: flex;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.menu-item {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.menu-link {
+    text-decoration: none;
+    color: white;
+    padding: 0 20px;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    transition: background-color 0.3s;
+}
+
+.menu-item:hover .menu-link {
+    background-color: #34495e;
+}
+
+.dropdown {
+    position: absolute;
+    top: 60px;
+    left: 0;
+    background-color: white;
+    min-width: 180px;
+    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    display: none;
+    border-radius: 0 0 4px 4px;
+    z-index: 1001;
+    padding: 0;
+}
+
+.menu-item:hover .dropdown {
+    display: block;
+}
+
+.dropdown li {
+    list-style: none;
+    border-bottom: 1px solid #eee;
+}
+
+.dropdown li:last-child {
+    border-bottom: none;
+}
+
+.dropdown a {
+    text-decoration: none;
+    color: var(--text-color);
+    padding: 12px 20px;
+    display: block;
+    font-size: 14px;
+    transition: background-color 0.2s;
+}
+
+.dropdown a:hover {
+    background-color: #f1f2f6;
+    color: #2980b9;
+}

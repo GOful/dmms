@@ -9,7 +9,52 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-    <div id="app-container">
+    <nav class="navbar">
+        <a href="#" class="logo">DMMS</a>
+        <ul class="menu-list">
+            <li class="menu-item">
+                <a href="#" class="menu-link">시스템 관리</a>
+                <ul class="dropdown">
+                    <li><a href="#">사용자 계정 관리</a></li>
+                    <li><a href="#">권한 설정</a></li>
+                    <li><a href="#">접속 로그 조회</a></li>
+                </ul>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">데이터 조회</a>
+                <ul class="dropdown">
+                    <li><a href="#">실시간 모니터링</a></li>
+                    <li><a href="#">이력 데이터 검색</a></li>
+                    <li><a href="#">데이터 내보내기</a></li>
+                </ul>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">장비 제어</a>
+                <ul class="dropdown">
+                    <li><a href="#">장비 등록/수정</a></li>
+                    <li><a href="#">원격 제어 명령</a></li>
+                    <li><a href="#">상태 점검</a></li>
+                </ul>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">통계/리포트</a>
+                <ul class="dropdown">
+                    <li><a href="#">일별/월별 통계</a></li>
+                    <li><a href="#">에러 리포트</a></li>
+                    <li><a href="#">성과 지표(KPI)</a></li>
+                </ul>
+            </li>
+            <li class="menu-item">
+                <a href="#" class="menu-link">환경 설정</a>
+                <ul class="dropdown">
+                    <li><a href="#">알림 설정</a></li>
+                    <li><a href="#">테마 변경</a></li>
+                    <li><a href="#">시스템 정보</a></li>
+                </ul>
+            </li>
+        </ul>
+    </nav>
+    <div id="app-container" style="height: calc(100vh - 60px);">
         <button id="toggle-sidebar-btn">◀</button>
         <div id="sidebar">
             <div class="sidebar-header">
