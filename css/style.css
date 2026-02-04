@@ -22,6 +22,8 @@ html, body {
     background-color: var(--background-color);
     color: var(--text-color);
     font-size: 15px;
+    display: flex;
+    flex-direction: column;
 }
 
 /* =========================================
@@ -29,7 +31,9 @@ html, body {
    ========================================= */
 #app-container { 
     width: 100%; 
-    height: 100%; 
+    height: auto !important;
+    flex: 1;
+    overflow: hidden;
     position: relative; 
 }
 
@@ -473,6 +477,7 @@ html, body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     position: relative;
     z-index: 1000;
+    flex: 0 0 auto;
 }
 .navbar-brand {
     display: flex;
