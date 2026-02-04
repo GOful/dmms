@@ -130,8 +130,9 @@ html, body {
     font-weight: 700; 
 }
 
-#sidebar-logo {
-    height: 30px;
+/* 네비게이션 바 로고 이미지 */
+.nav-logo {
+    height: 32px;
 }
 
 /* --- Tree Menu (시설물 목록) --- */
@@ -449,6 +450,13 @@ html, body {
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
     position: relative;
     z-index: 1000;
+}
+
+/* 로고와 텍스트 그룹 */
+.navbar-brand {
+    display: flex;
+    align-items: center;
+    gap: 12px; /* 로고와 텍스트 사이 간격 */
 }
 
 .navbar .logo {
