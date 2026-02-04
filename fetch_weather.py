@@ -41,7 +41,7 @@ def fetch_and_save_as_json():
 
     now = datetime.now()
     tm2 = now.strftime('%Y%m%d%H%M')
-    tm1 = (now - timedelta(minutes=30)).strftime('%Y%m%d%H%M')
+    tm1 = (now - timedelta(minutes=12)).strftime('%Y%m%d%H%M')
 
     final_data_dict = {}
     print(f"[{now.strftime('%H:%M:%S')}] 데이터 수집 및 Raw Data 출력 시작...\n")
