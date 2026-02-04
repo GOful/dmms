@@ -535,3 +535,89 @@ html, body {
     background-color: #f1f2f6;
     color: #2980b9;
 }
+
+/* =========================================
+   7. SPA Modal (원페이지 팝업)
+   ========================================= */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none; /* 기본 숨김 */
+    justify-content: center;
+    align-items: center;
+    z-index: 2000;
+}
+
+.modal-window {
+    background-color: white;
+    width: 500px;
+    max-width: 90%;
+    border-radius: 8px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    overflow: hidden;
+    animation: fadeIn 0.2s ease-out;
+}
+
+/* 테이블 등을 보여줄 때 사용할 넓은 모달 스타일 */
+.modal-window.large {
+    width: 900px;
+    max-width: 95%;
+}
+
+.modal-header {
+    padding: 15px 20px;
+    background-color: var(--secondary-color);
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-header button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.modal-content {
+    padding: 30px;
+    min-height: 150px;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-color);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* 데이터 테이블 스타일 */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    font-size: 14px;
+}
+.data-table th, .data-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+.data-table th {
+    background-color: #f1f2f6;
+    color: var(--secondary-color);
+    font-weight: bold;
+}
+.data-table tr:nth-child(even) {
+    background-color: #f9f9f9;
+}
+.data-table tr:hover {
+    background-color: #eef6fb;
+}
