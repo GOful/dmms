@@ -53,7 +53,8 @@ export function selectManholeInSidebar(id) {
             }
             parent = parent.parentElement;
         }
-        newSelected.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        // 상단 고정 헤더(Sticky)에 가려지는 것을 방지하기 위해 중앙으로 스크롤
+        newSelected.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }
 }
 
@@ -101,10 +102,13 @@ export function renderTree(data, onSelect) {
     container.innerHTML = ""; 
 
     data.lines.forEach(line => {
+        // 노선별 전체 맨홀 개수 계산
+        const lineTotal = line.stations.reduce((acc, st) => acc + st.manholes.length, 0);
+
         const div = document.createElement('div');
         div.innerHTML = `
             <div class="tree-group-header line-header" id="header-${line.lineId}">
-                <span>${getLineIcon(line.lineTitle)} ${line.lineTitle}</span> <span id="arrow-${line.lineId}">▼</span>
+                <span>${getLineIcon(line.lineTitle)} ${line.lineTitle} <span style="font-size:0.9em; color:#555; font-weight:normal; margin-left:4px;">(${lineTotal})</span></span> <span id="arrow-${line.lineId}">▼</span>
             </div>
             <div id="${line.lineId}" class="tree-group-content"></div>
         `;
@@ -113,10 +117,12 @@ export function renderTree(data, onSelect) {
         
         const lineContent = document.getElementById(line.lineId);
         line.stations.forEach(st => {
+            // 역별 맨홀 개수
+            const stCount = st.manholes.length;
             const stDiv = document.createElement('div');
             stDiv.innerHTML = `
                 <div class="tree-group-header station-header" id="header-${st.stationId}">
-                    <span>${st.stationName}</span> <span id="arrow-${st.stationId}">▼</span>
+                    <span>${st.stationName} <span style="font-size:0.9em; color:#777; font-weight:normal;">(${stCount})</span></span> <span id="arrow-${st.stationId}">▼</span>
                 </div>
                 <div id="${st.stationId}" class="tree-group-content"></div>
             `;
