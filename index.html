@@ -9,19 +9,39 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { font-family: 'Noto Sans KR', sans-serif; }
-        /* 스크롤바 커스텀 */
-        ::-webkit-scrollbar { width: 6px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
-        /* 애니메이션 정의 추가 */
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes slideUp { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
-    </style>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans KR"', 'sans-serif'],
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            'from': { opacity: '0', transform: 'translateY(-10px)' },
+                            'to': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        slideUp: {
+                            'from': { opacity: '0', transform: 'translate(-50%, 20px)' },
+                            'to': { opacity: '1', transform: 'translate(-50%, 0)' },
+                        }
+                    }
+                }
+            },
+            plugins: [
+                function({ addBase }) {
+                    addBase({
+                        '::-webkit-scrollbar': { width: '6px' },
+                        '::-webkit-scrollbar-track': { background: 'transparent' },
+                        '::-webkit-scrollbar-thumb': { backgroundColor: '#cbd5e1', borderRadius: '3px' },
+                        '::-webkit-scrollbar-thumb:hover': { backgroundColor: '#94a3b8' },
+                    })
+                }
+            ]
+        }
+    </script>
 </head>
-<body class="h-screen w-screen overflow-hidden bg-slate-50 text-slate-800 flex flex-col">
+<body class="h-screen w-screen overflow-hidden bg-slate-50 text-slate-800 flex flex-col font-sans">
     <!-- 네비게이션 바 -->
     <nav class="bg-slate-900 text-white h-16 flex items-center justify-between px-4 shadow-lg z-[60] shrink-0 relative">
         <div class="flex items-center gap-3">
