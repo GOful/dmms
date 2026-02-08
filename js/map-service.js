@@ -5,6 +5,7 @@ let currentCircle = null; // 현재 그려진 원을 저장
 let centerMarker = null;  // 중심점 마커를 저장
 const markersMap = {};    // 맨홀 ID를 키로 하는 마커 객체 저장소
 let weatherOverlays = []; // 날씨 오버레이(원, 커스텀오버레이) 객체 배열
+let currentOverlay = null; // 현재 표시된 맨홀 정보 오버레이
 
 // 지도에 표시할 별 모양 마커 이미지 설정
 const starImg = new kakao.maps.MarkerImage(
@@ -239,6 +240,81 @@ export function selectManhole(id) {
     rvClient.getNearestPanoId(target.pos, 50, (pId) => {
         if(pId) rv.setPanoId(pId, target.pos);
     });
+
+    // 맨홀 정보 오버레이 표시 (네임카드)
+    showManholeOverlay(target.data, target.stationName, target.pos);
+}
+
+/**
+ * [기능] 지도 상의 마커 위에 맨홀 정보 오버레이(네임카드)를 표시합니다.
+ */
+function showManholeOverlay(mh, stationName, position) {
+    // 기존 오버레이가 있다면 제거
+    if (currentOverlay) {
+        currentOverlay.setMap(null);
+    }
+
+    // 임의의 수위 데이터 생성 (데모용)
+    const waterLevel = Math.floor(Math.random() * 300) + 200; 
+
+    // 오버레이 컨텐츠 생성 (DOM Element 방식)
+    const content = document.createElement('div');
+    content.className = 'absolute bottom-10 left-1/2 -translate-x-1/2 w-auto min-w-[300px] max-w-[90vw] bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-slate-200 overflow-hidden animate-[fadeIn_0.2s_ease-out] z-50';
+    
+    content.innerHTML = `
+        <div class="p-4 relative">
+            <div class="absolute top-2 right-2">
+                <button class="close-overlay-btn text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                </button>
+            </div>
+            <div class="flex justify-between items-start mb-3">
+                <div class="flex-1 pr-8">
+                    <h3 class="text-lg font-bold text-slate-800 flex flex-wrap items-center gap-2">
+                        ${mh.name}
+                        <span class="text-xs font-normal px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full">${stationName}</span>
+                    </h3>
+                    <p class="text-xs text-slate-500 mt-1">ID: ${mh.id} | 좌표: ${mh.lat.toFixed(4)}, ${mh.lng.toFixed(4)}</p>
+                </div>
+            </div>
+            <div class="grid grid-cols-3 gap-2 text-center">
+                <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 group hover:border-blue-200 transition-colors">
+                    <div class="text-xs text-slate-500 mb-1">민원</div>
+                    <div class="font-bold text-slate-700 text-lg">${mh.complaint_cnt || 0}<span class="text-xs font-normal text-slate-400 ml-0.5">회</span></div>
+                </div>
+                <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 group hover:border-blue-200 transition-colors">
+                    <div class="text-xs text-slate-500 mb-1">수선</div>
+                    <div class="font-bold text-blue-600 text-lg">${mh.repair_cnt || 0}<span class="text-xs font-normal text-slate-400 ml-0.5">회</span></div>
+                </div>
+                <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 group hover:border-blue-200 transition-colors">
+                    <div class="text-xs text-slate-500 mb-1">침수빈도</div>
+                    <div class="font-bold text-red-500 text-lg">${mh.flood_freq || 0}<span class="text-xs font-normal text-slate-400 ml-0.5">회</span></div>
+                </div>
+            </div>
+            <div class="mt-3 pt-3 border-t border-slate-100 flex justify-between items-center">
+                    <div class="text-xs text-slate-500 flex items-center gap-1">
+                        평균수위 <span class="font-bold text-slate-700 text-sm">${waterLevel}mm</span> 
+                        <span class="w-2 h-2 rounded-full bg-green-500 ml-1"></span><span class="text-green-600">정상</span>
+                    </div>
+                    <button class="text-xs bg-slate-800 text-white px-3 py-1.5 rounded-lg hover:bg-slate-700 transition-colors shadow-sm">상세보기</button>
+            </div>
+        </div>
+    `;
+
+    // 닫기 버튼 이벤트 연결
+    const closeBtn = content.querySelector('.close-overlay-btn');
+    closeBtn.addEventListener('click', () => {
+        if (currentOverlay) currentOverlay.setMap(null);
+    });
+
+    // 커스텀 오버레이 생성 및 지도 표시
+    currentOverlay = new kakao.maps.CustomOverlay({
+        position: position,
+        content: content,
+        yAnchor: 1, // 마커 바로 위에 위치하도록 설정
+        zIndex: 100
+    });
+    currentOverlay.setMap(map);
 }
 
 /**

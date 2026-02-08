@@ -16,16 +16,18 @@
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
         ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        /* 애니메이션 정의 추가 */
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideUp { from { opacity: 0; transform: translate(-50%, 20px); } to { opacity: 1; transform: translate(-50%, 0); } }
     </style>
 </head>
 <body class="h-screen w-screen overflow-hidden bg-slate-50 text-slate-800 flex flex-col">
     <!-- 네비게이션 바 -->
-    <nav class="bg-slate-900 text-white h-16 flex items-center justify-between px-4 shadow-lg z-50 shrink-0">
+    <nav class="bg-slate-900 text-white h-16 flex items-center justify-between px-4 shadow-lg z-[60] shrink-0 relative">
         <div class="flex items-center gap-3">
-            <button class="md:hidden text-2xl p-1" id="navbar-toggle">☰</button>
             <img src="img/logo.svg" alt="DMMS" class="h-8 w-auto">
             <a href="#" class="text-lg font-bold tracking-tight text-slate-100 hover:text-white transition-colors">
-                DTRO <span class="font-light text-slate-400">DMMS</span>
+                대구교통공사 맨홀관리 시스템 <span class="font-light text-slate-400">(DMMS)</span>
             </a>
         </div>
         <ul class="hidden md:flex gap-1 h-full" id="menu-list">
@@ -63,13 +65,44 @@
                 </ul>
             </li>
         </ul>
+
+        <!-- 모바일 햄버거 버튼 (우측 이동) -->
+        <button class="md:hidden text-2xl p-1 text-slate-300 hover:text-white transition-colors" id="navbar-toggle">☰</button>
     </nav>
+
+    <!-- 모바일 플로팅 메뉴 (nav 밖으로 이동, fixed 포지션 적용) -->
+    <div id="mobile-menu" class="fixed top-16 right-4 w-64 bg-white rounded-xl shadow-2xl border border-slate-100 hidden flex-col z-[70] overflow-hidden">
+        <div class="max-h-[70vh] overflow-y-auto py-2">
+            <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase bg-slate-50">데이터 조회</div>
+            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="realtime-monitor">모니터링</a>
+            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="history-search">이력 데이터 검색</a>
+            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="data-export">데이터 내보내기</a>
+            
+            <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase bg-slate-50 mt-2">장비 관리</div>
+            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="device-reg">복합가스측정기</a>
+            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="remote-control">비상구조</a>
+            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="status-check">공기호흡기</a>
+
+            <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase bg-slate-50 mt-2">매뉴얼</div>
+            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="stats-daily">작업절차서</a>
+            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="error-report">작업 전 안전교육</a>
+            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="kpi">비상복구절차</a>
+            
+            <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase bg-slate-50 mt-2">환경 설정</div>
+            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="noti-setting">알림 설정</a>
+            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="theme-change">테마 변경</a>
+            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 spa-link" data-target="sys-info">시스템 정보</a>
+        </div>
+        <div class="bg-slate-50 p-3 border-t border-slate-100 text-center text-xs text-slate-400">
+            DMMS Mobile v1.0
+        </div>
+    </div>
 
     <!-- 메인 앱 컨테이너 (Sidebar Toggle을 위한 group 클래스 사용) -->
     <div id="app-container" class="flex flex-1 overflow-hidden relative group">
         
         <!-- 사이드바 -->
-        <div id="sidebar" class="w-80 bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 absolute z-40 h-full group-[.sidebar-hidden]:-translate-x-full md:relative shadow-xl md:shadow-none">
+        <div id="sidebar" class="w-80 bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 absolute z-40 h-full group-[.sidebar-hidden]:-translate-x-full shadow-xl">
             <div class="p-4 border-b border-slate-100 flex items-center gap-2 bg-slate-50">
                 <span class="w-2 h-6 bg-blue-600 rounded-full"></span>
                 <span class="font-bold text-slate-700">관리맨홀 목록</span>
@@ -86,7 +119,7 @@
         <div id="main-content" class="flex-1 flex flex-col relative w-full bg-slate-200">
             
             <!-- 사이드바 토글 버튼 (데스크탑) -->
-            <button id="toggle-sidebar-btn-desktop" class="absolute top-4 left-4 z-20 bg-white p-2 rounded-lg shadow-md border border-slate-200 text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition-all group-[.sidebar-hidden]:left-4 group-[.sidebar-hidden]:rotate-180">
+            <button id="toggle-sidebar-btn-desktop" class="absolute top-4 left-80 z-50 bg-white p-2 rounded-lg shadow-md border border-slate-200 text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition-all duration-300 group-[.sidebar-hidden]:left-4 group-[.sidebar-hidden]:rotate-180">
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
             </button>
 

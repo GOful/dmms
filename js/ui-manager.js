@@ -156,6 +156,39 @@ export function setupMenuEvents() {
     const modalTitle = document.getElementById('modal-title');
     const modalBody = document.getElementById('modal-body');
     const closeBtn = document.getElementById('modal-close-btn');
+    
+    // 모바일 메뉴 토글 로직 추가
+    const navToggle = document.getElementById('navbar-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (navToggle && mobileMenu) {
+        navToggle.addEventListener('click', (e) => {
+            e.stopPropagation(); // 버블링 방지
+            console.log('Navbar toggle clicked'); // 디버깅용 로그
+
+            // hidden 클래스 유무로 상태 판단
+            const isHidden = mobileMenu.classList.contains('hidden') || mobileMenu.style.display === 'none';
+            
+            if (isHidden) {
+                mobileMenu.classList.remove('hidden');
+                mobileMenu.classList.add('flex');
+                mobileMenu.style.display = 'flex'; // 확실하게 display 속성 적용
+            } else {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                mobileMenu.style.display = 'none'; // 확실하게 숨김
+            }
+        });
+
+        // 메뉴 외부 클릭 시 닫기
+        document.addEventListener('click', (e) => {
+            if (!mobileMenu.contains(e.target) && !navToggle.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                mobileMenu.style.display = 'none';
+            }
+        });
+    }
 
     // 공통: SPA 링크 클릭 시 모달 열기
     spaLinks.forEach(link => {
@@ -186,8 +219,10 @@ export function setupMenuEvents() {
             modalOverlay.style.display = 'flex';
             
             // 모바일에서 메뉴 클릭 후 전체 메뉴 닫기
-            if (window.innerWidth <= 768) {
-                menuList.classList.remove('active');
+            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('flex');
+                mobileMenu.style.display = 'none';
             }
         });
     });
