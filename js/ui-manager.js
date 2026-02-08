@@ -157,38 +157,39 @@ export function setupMenuEvents() {
     const modalBody = document.getElementById('modal-body');
     const closeBtn = document.getElementById('modal-close-btn');
     
-    // 모바일 메뉴 토글 로직 추가
+    // [리팩토링] 모바일 메뉴 제어 로직 (Drawer 방식)
     const navToggle = document.getElementById('navbar-toggle');
-    const mobileMenu = document.getElementById('mobile-menu');
+    const menuContainer = document.getElementById('mobile-menu-container');
+    const menuBackdrop = document.getElementById('mobile-menu-backdrop');
+    const menuPanel = document.getElementById('mobile-menu-panel');
+    const menuCloseBtn = document.getElementById('mobile-menu-close-btn');
 
-    if (navToggle && mobileMenu) {
-        navToggle.addEventListener('click', (e) => {
-            e.stopPropagation(); // 버블링 방지
-            console.log('Navbar toggle clicked'); // 디버깅용 로그
-
-            // hidden 클래스 유무로 상태 판단
-            const isHidden = mobileMenu.classList.contains('hidden') || mobileMenu.style.display === 'none';
-            
-            if (isHidden) {
-                mobileMenu.classList.remove('hidden');
-                mobileMenu.classList.add('flex');
-                mobileMenu.style.display = 'flex'; // 확실하게 display 속성 적용
-            } else {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.classList.remove('flex');
-                mobileMenu.style.display = 'none'; // 확실하게 숨김
-            }
-        });
-
-        // 메뉴 외부 클릭 시 닫기
-        document.addEventListener('click', (e) => {
-            if (!mobileMenu.contains(e.target) && !navToggle.contains(e.target)) {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.classList.remove('flex');
-                mobileMenu.style.display = 'none';
-            }
-        });
+    // 메뉴 열기
+    function openMobileMenu() {
+        if(!menuContainer) return;
+        menuContainer.style.display = 'block';
+        // 트랜지션 효과를 위해 약간의 지연 후 클래스 변경
+        setTimeout(() => {
+            menuBackdrop.classList.remove('opacity-0');
+            menuPanel.classList.remove('translate-x-full');
+        }, 10);
     }
+
+    // 메뉴 닫기
+    function closeMobileMenu() {
+        if(!menuContainer) return;
+        menuBackdrop.classList.add('opacity-0');
+        menuPanel.classList.add('translate-x-full');
+        // 애니메이션(300ms) 종료 후 숨김 처리
+        setTimeout(() => {
+            menuContainer.style.display = 'none';
+        }, 300);
+    }
+
+    // 이벤트 리스너 등록
+    if (navToggle) navToggle.addEventListener('click', (e) => { e.stopPropagation(); openMobileMenu(); });
+    if (menuCloseBtn) menuCloseBtn.addEventListener('click', closeMobileMenu);
+    if (menuBackdrop) menuBackdrop.addEventListener('click', closeMobileMenu);
 
     // 공통: SPA 링크 클릭 시 모달 열기
     spaLinks.forEach(link => {
@@ -219,11 +220,7 @@ export function setupMenuEvents() {
             modalOverlay.style.display = 'flex';
             
             // 모바일에서 메뉴 클릭 후 전체 메뉴 닫기
-            if (mobileMenu && !mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.classList.remove('flex');
-                mobileMenu.style.display = 'none';
-            }
+            closeMobileMenu();
         });
     });
 

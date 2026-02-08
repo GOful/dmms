@@ -70,34 +70,6 @@
         <button class="md:hidden text-2xl p-1 text-slate-300 hover:text-white transition-colors" id="navbar-toggle">☰</button>
     </nav>
 
-    <!-- 모바일 플로팅 메뉴 (nav 밖으로 이동, fixed 포지션 적용) -->
-    <div id="mobile-menu" class="fixed top-16 right-4 w-64 bg-white rounded-xl shadow-2xl border border-slate-100 hidden flex-col z-[70] overflow-hidden">
-        <div class="max-h-[70vh] overflow-y-auto py-2">
-            <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase bg-slate-50">데이터 조회</div>
-            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="realtime-monitor">모니터링</a>
-            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="history-search">이력 데이터 검색</a>
-            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="data-export">데이터 내보내기</a>
-            
-            <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase bg-slate-50 mt-2">장비 관리</div>
-            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="device-reg">복합가스측정기</a>
-            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="remote-control">비상구조</a>
-            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="status-check">공기호흡기</a>
-
-            <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase bg-slate-50 mt-2">매뉴얼</div>
-            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="stats-daily">작업절차서</a>
-            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="error-report">작업 전 안전교육</a>
-            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="kpi">비상복구절차</a>
-            
-            <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase bg-slate-50 mt-2">환경 설정</div>
-            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="noti-setting">알림 설정</a>
-            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 border-b border-slate-50 spa-link" data-target="theme-change">테마 변경</a>
-            <a href="#" class="block px-4 py-3 text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-600 spa-link" data-target="sys-info">시스템 정보</a>
-        </div>
-        <div class="bg-slate-50 p-3 border-t border-slate-100 text-center text-xs text-slate-400">
-            DMMS Mobile v1.0
-        </div>
-    </div>
-
     <!-- 메인 앱 컨테이너 (Sidebar Toggle을 위한 group 클래스 사용) -->
     <div id="app-container" class="flex flex-1 overflow-hidden relative group">
         
@@ -202,5 +174,54 @@
         import { setupMenuEvents } from './js/ui-manager.js';
         setupMenuEvents(); // 메뉴 이벤트 리스너 등록
     </script>
+
+    <!-- [새로 설계된 모바일 메뉴] 슬라이딩 드로어 방식 -->
+    <div id="mobile-menu-container" class="relative z-[100]" style="display: none;">
+        <!-- 배경 (Backdrop) -->
+        <div id="mobile-menu-backdrop" class="fixed inset-0 bg-black/50 transition-opacity duration-300 opacity-0"></div>
+        
+        <!-- 슬라이딩 메뉴 패널 -->
+        <div id="mobile-menu-panel" class="fixed inset-y-0 right-0 w-72 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col h-full">
+            <!-- 헤더 -->
+            <div class="flex items-center justify-between p-4 border-b border-slate-100 bg-slate-50">
+                <h2 class="text-lg font-bold text-slate-800">전체 메뉴</h2>
+                <button id="mobile-menu-close-btn" class="p-2 text-slate-500 hover:text-slate-700 rounded-full hover:bg-slate-200 transition-colors">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                </button>
+            </div>
+            
+            <!-- 메뉴 목록 -->
+            <div class="flex-1 overflow-y-auto py-4 px-2 space-y-1">
+                <!-- 데이터 조회 -->
+                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-2">데이터 조회</div>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="realtime-monitor">모니터링</a>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="history-search">이력 데이터 검색</a>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="data-export">데이터 내보내기</a>
+
+                <!-- 장비 관리 -->
+                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-4">장비 관리</div>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="device-reg">복합가스측정기</a>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="remote-control">비상구조</a>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="status-check">공기호흡기</a>
+
+                <!-- 매뉴얼 -->
+                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-4">매뉴얼</div>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="stats-daily">작업절차서</a>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="error-report">작업 전 안전교육</a>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="kpi">비상복구절차</a>
+
+                <!-- 환경 설정 -->
+                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-4">환경 설정</div>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="noti-setting">알림 설정</a>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="theme-change">테마 변경</a>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="sys-info">시스템 정보</a>
+            </div>
+            
+            <!-- 푸터 -->
+            <div class="p-4 border-t border-slate-100 bg-slate-50 text-center">
+                <p class="text-xs text-slate-400">DMMS Mobile v1.0</p>
+            </div>
+        </div>
+    </div>
 </body>
 </html>
