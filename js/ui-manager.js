@@ -11,19 +11,22 @@ export function selectManholeInSidebar(id) {
     if (currentSelectedItemId) {
         const prevSelected = document.getElementById(`manhole-item-${currentSelectedItemId}`);
         if (prevSelected) {
-            prevSelected.classList.remove('selected');
+            // 이전 선택 스타일 제거
+            prevSelected.classList.remove('bg-blue-50', 'text-blue-700', 'font-bold', 'border-l-4', 'border-blue-600');
         }
     }
 
     const newSelected = document.getElementById(`manhole-item-${id}`);
     if (newSelected) {
-        newSelected.classList.add('selected');
+        // 새로운 선택 스타일 적용 (Tailwind)
+        newSelected.classList.add('bg-blue-50', 'text-blue-700', 'font-bold', 'border-l-4', 'border-blue-600');
         currentSelectedItemId = id;
 
         // 선택된 항목의 부모 그룹들이 닫혀있다면 모두 열어줌
         let parent = newSelected.parentElement;
         while(parent && parent.id !== 'tree-container') {
-            if (parent.classList.contains('tree-group-content') && !parent.classList.contains('show')) {
+            // hidden 클래스가 있으면(닫혀있으면) 제거해서 열어줌
+            if (parent.classList.contains('hidden')) {
                 const header = document.getElementById(`header-${parent.id}`);
                 if(header) header.click();
             }
@@ -68,8 +71,9 @@ export function toggleGroup(id) {
     const el = document.getElementById(id);
     const arrow = document.getElementById('arrow-' + id);
     if(el) {
-        el.classList.toggle('show');
-        if(arrow) arrow.innerText = el.classList.contains('show') ? '▲' : '▼';
+        // Tailwind의 hidden 클래스를 토글 (hidden이 없으면 보임)
+        const isHidden = el.classList.toggle('hidden');
+        if(arrow) arrow.innerText = isHidden ? '▼' : '▲';
     }
 }
 
@@ -77,11 +81,13 @@ export function toggleGroup(id) {
  * [유틸] 노선 이름에 따른 아이콘 HTML을 반환합니다.
  */
 function getLineIcon(lineTitle) {
+    // Tailwind 클래스로 아이콘 스타일링
+    const baseClass = "inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold text-white mr-2 shadow-sm";
     if (lineTitle === '1호선') {
-        return '<span class="line-icon line-1">1</span>';
+        return `<span class="${baseClass} bg-[#e60012]">1</span>`;
     }
     if (lineTitle === '2호선') {
-        return '<span class="line-icon line-2">2</span>';
+        return `<span class="${baseClass} bg-[#00a84d]">2</span>`;
     }
     return '🚇'; // 기본 아이콘
 }
@@ -100,10 +106,11 @@ export function renderTree(data, onSelect) {
 
         const div = document.createElement('div');
         div.innerHTML = `
-            <div class="tree-group-header line-header" id="header-${line.lineId}">
-                <span>${getLineIcon(line.lineTitle)} ${line.lineTitle} <span style="font-size:0.9em; color:#555; font-weight:normal; margin-left:4px;">(${lineTotal})</span></span> <span id="arrow-${line.lineId}">▼</span>
+            <div class="flex justify-between items-center p-3 cursor-pointer hover:bg-slate-50 border-b border-slate-100 font-bold text-slate-700 select-none transition-colors sticky top-0 bg-white z-10 shadow-sm" id="header-${line.lineId}">
+                <span class="flex items-center">${getLineIcon(line.lineTitle)} ${line.lineTitle} <span class="text-sm text-slate-400 font-normal ml-1">(${lineTotal})</span></span> 
+                <span id="arrow-${line.lineId}" class="text-slate-400 text-xs">▼</span>
             </div>
-            <div id="${line.lineId}" class="tree-group-content"></div>
+            <div id="${line.lineId}" class="hidden"></div>
         `;
         container.appendChild(div);
         document.getElementById(`header-${line.lineId}`).onclick = () => toggleGroup(line.lineId);
@@ -113,10 +120,11 @@ export function renderTree(data, onSelect) {
             const stCount = st.manholes.length;
             const stDiv = document.createElement('div');
             stDiv.innerHTML = `
-                <div class="tree-group-header station-header" id="header-${st.stationId}">
-                    <span>${st.stationName} <span style="font-size:0.9em; color:#777; font-weight:normal;">(${stCount})</span></span> <span id="arrow-${st.stationId}">▼</span>
+                <div class="flex justify-between items-center p-2 pl-8 cursor-pointer hover:bg-slate-50 border-b border-slate-50 text-sm font-medium text-slate-600 select-none transition-colors sticky top-[45px] bg-slate-50/95 backdrop-blur-sm z-0" id="header-${st.stationId}">
+                    <span>${st.stationName} <span class="text-xs text-slate-400 font-normal">(${stCount})</span></span> 
+                    <span id="arrow-${st.stationId}" class="text-slate-400 text-xs">▼</span>
                 </div>
-                <div id="${st.stationId}" class="tree-group-content"></div>
+                <div id="${st.stationId}" class="hidden"></div>
             `;
             lineContent.appendChild(stDiv);
             document.getElementById(`header-${st.stationId}`).onclick = () => toggleGroup(st.stationId);
@@ -128,7 +136,8 @@ export function renderTree(data, onSelect) {
 
                 const item = document.createElement('div');
                 item.id = `manhole-item-${mh.id}`;
-                item.className = 'manhole-item';
+                // Tailwind 클래스 적용 (기본 상태)
+                item.className = 'pl-12 py-2 pr-4 cursor-pointer text-sm text-slate-500 border-b border-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent';
                 item.innerText = `[${mh.id}] ${mh.name}`;
                 item.onclick = () => onSelect(mh.id);
                 stContent.appendChild(item);
@@ -157,18 +166,20 @@ export function setupMenuEvents() {
             const menuName = link.innerText;
 
             const modalWindow = document.querySelector('.modal-window');
-            modalWindow.classList.remove('large');
+            // Tailwind에서는 클래스 조작 대신 스타일을 직접 변경하거나 상태 클래스 사용
+            // 여기서는 간단히 내용만 교체
 
             modalTitle.innerText = menuName;
 
             if (target === 'device-reg' || target === 'realtime-monitor') {
-                modalWindow.classList.add('large');
                 modalBody.innerHTML = generateDummyTableHTML(menuName);
             } else {
                 modalBody.innerHTML = `
-                    <p><strong>'${menuName}'</strong> 메뉴를 선택하셨습니다.</p>
-                    <p>현재 페이지를 유지한 상태로 기능이 실행됩니다.</p>
-                    <p style="color:#888; font-size:0.9em; margin-top:10px;">(Target ID: ${target})</p>
+                    <div class="space-y-2">
+                        <p class="font-bold text-slate-800 text-lg">'${menuName}' 메뉴를 선택하셨습니다.</p>
+                        <p class="text-slate-600">현재 페이지를 유지한 상태로 기능이 실행됩니다.</p>
+                        <p class="text-slate-400 text-xs mt-4 font-mono bg-slate-100 inline-block px-2 py-1 rounded">(Target ID: ${target})</p>
+                    </div>
                 `;
             }
 
@@ -193,21 +204,31 @@ export function setupMenuEvents() {
  */
 function generateDummyTableHTML(title) {
     return `
-        <div style="margin-bottom: 15px; display: flex; flex-direction: column; gap: 10px; align-items: flex-start;">
-            <span>총 <strong>5</strong>건의 데이터가 조회되었습니다.</span>
-            <button style="padding: 8px 12px; background: #27ae60; color: white; border: none; border-radius: 4px; cursor: pointer;">엑셀 다운로드</button>
+        <div class="flex flex-col gap-4 mb-6">
+            <div class="flex justify-between items-center">
+                <span class="text-sm text-slate-600">총 <strong class="text-blue-600">5</strong>건의 데이터가 조회되었습니다.</span>
+                <button class="px-3 py-1.5 bg-green-600 hover:bg-green-700 text-white text-sm rounded-lg shadow-sm transition-colors flex items-center gap-1">
+                    <span>엑셀 다운로드</span>
+                </button>
+            </div>
         </div>
-        <div style="overflow-x: auto;">
-            <table class="data-table">
-                <thead>
-                    <tr><th>ID</th><th>시설물명</th><th>위치</th><th>상태</th><th>최종 점검일</th></tr>
+        <div class="overflow-x-auto border border-slate-200 rounded-lg">
+            <table class="w-full text-sm text-left text-slate-600">
+                <thead class="text-xs text-slate-700 uppercase bg-slate-50 border-b border-slate-200">
+                    <tr>
+                        <th class="px-4 py-3 font-bold">ID</th>
+                        <th class="px-4 py-3 font-bold">시설물명</th>
+                        <th class="px-4 py-3 font-bold">위치</th>
+                        <th class="px-4 py-3 font-bold">상태</th>
+                        <th class="px-4 py-3 font-bold">최종 점검일</th>
+                    </tr>
                 </thead>
-                <tbody>
-                    <tr><td>MH-001</td><td>반월당역 1번 맨홀</td><td>35.87, 128.60</td><td><span style="color:green">정상</span></td><td>2026-02-01</td></tr>
-                    <tr><td>MH-002</td><td>중앙로역 2번 맨홀</td><td>35.87, 128.60</td><td><span style="color:orange">점검요망</span></td><td>2026-01-15</td></tr>
-                    <tr><td>MH-003</td><td>대구역 3번 맨홀</td><td>35.87, 128.60</td><td><span style="color:red">수리중</span></td><td>2026-02-03</td></tr>
-                    <tr><td>MH-004</td><td>동대구역 4번 맨홀</td><td>35.87, 128.61</td><td><span style="color:green">정상</span></td><td>2026-01-20</td></tr>
-                    <tr><td>MH-005</td><td>범어역 5번 맨홀</td><td>35.86, 128.62</td><td><span style="color:green">정상</span></td><td>2026-02-04</td></tr>
+                <tbody class="divide-y divide-slate-100">
+                    <tr class="bg-white hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-medium text-slate-900">MH-001</td><td class="px-4 py-3">반월당역 1번 맨홀</td><td class="px-4 py-3">35.87, 128.60</td><td class="px-4 py-3"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">정상</span></td><td class="px-4 py-3">2026-02-01</td></tr>
+                    <tr class="bg-white hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-medium text-slate-900">MH-002</td><td class="px-4 py-3">중앙로역 2번 맨홀</td><td class="px-4 py-3">35.87, 128.60</td><td class="px-4 py-3"><span class="bg-orange-100 text-orange-800 text-xs font-medium px-2.5 py-0.5 rounded">점검요망</span></td><td class="px-4 py-3">2026-01-15</td></tr>
+                    <tr class="bg-white hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-medium text-slate-900">MH-003</td><td class="px-4 py-3">대구역 3번 맨홀</td><td class="px-4 py-3">35.87, 128.60</td><td class="px-4 py-3"><span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">수리중</span></td><td class="px-4 py-3">2026-02-03</td></tr>
+                    <tr class="bg-white hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-medium text-slate-900">MH-004</td><td class="px-4 py-3">동대구역 4번 맨홀</td><td class="px-4 py-3">35.87, 128.61</td><td class="px-4 py-3"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">정상</span></td><td class="px-4 py-3">2026-01-20</td></tr>
+                    <tr class="bg-white hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-medium text-slate-900">MH-005</td><td class="px-4 py-3">범어역 5번 맨홀</td><td class="px-4 py-3">35.86, 128.62</td><td class="px-4 py-3"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">정상</span></td><td class="px-4 py-3">2026-02-04</td></tr>
                 </tbody>
             </table>
         </div>

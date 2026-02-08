@@ -7,92 +7,142 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { font-family: 'Noto Sans KR', sans-serif; }
+        /* 스크롤바 커스텀 */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
 </head>
-<body>
-    <nav class="navbar">
-        <div class="navbar-brand">
-            <button class="navbar-toggle" id="navbar-toggle">☰</button>
-            <img src="img/logo.svg" alt="DMMS 로고" class="nav-logo">
-            <a href="#" class="logo">대구교통공사 맨홀관리 시스템 (DMMS)</a>
+<body class="h-screen w-screen overflow-hidden bg-slate-50 text-slate-800 flex flex-col">
+    <!-- 네비게이션 바 -->
+    <nav class="bg-slate-900 text-white h-16 flex items-center justify-between px-4 shadow-lg z-50 shrink-0">
+        <div class="flex items-center gap-3">
+            <button class="md:hidden text-2xl p-1" id="navbar-toggle">☰</button>
+            <img src="img/logo.svg" alt="DMMS" class="h-8 w-auto">
+            <a href="#" class="text-lg font-bold tracking-tight text-slate-100 hover:text-white transition-colors">
+                DTRO <span class="font-light text-slate-400">DMMS</span>
+            </a>
         </div>
-        <ul class="menu-list" id="menu-list">
+        <ul class="hidden md:flex gap-1 h-full" id="menu-list">
        
-            <li class="menu-item">
-                <a href="#" class="menu-link">데이터 조회</a>
-                <ul class="dropdown">
-                    <li><a href="#" class="spa-link" data-target="realtime-monitor">모니터링</a></li>
-                    <li><a href="#" class="spa-link" data-target="history-search">이력 데이터 검색</a></li>
-                    <li><a href="#" class="spa-link" data-target="data-export">데이터 내보내기</a></li>
+            <li class="relative group h-full flex items-center">
+                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">데이터 조회</a>
+                <ul class="absolute top-14 left-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="realtime-monitor">모니터링</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="history-search">이력 데이터 검색</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="data-export">데이터 내보내기</a></li>
                 </ul>
             </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">장비 관리</a>
-                <ul class="dropdown">
-                    <li><a href="#" class="spa-link" data-target="device-reg">복합가스측정기</a></li>
-                    <li><a href="#" class="spa-link" data-target="remote-control">비상구조</a></li>
-                    <li><a href="#" class="spa-link" data-target="status-check">공기호흡기</a></li>
+            <li class="relative group h-full flex items-center">
+                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">장비 관리</a>
+                <ul class="absolute top-14 left-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="device-reg">복합가스측정기</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="remote-control">비상구조</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="status-check">공기호흡기</a></li>
                 </ul>
             </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">매뉴얼</a>
-                <ul class="dropdown">
-                    <li><a href="#" class="spa-link" data-target="stats-daily">작업절차서</a></li>
-                    <li><a href="#" class="spa-link" data-target="error-report">작업 전 안전교육</a></li>
-                    <li><a href="#" class="spa-link" data-target="kpi">비상복구절차</a></li>
+            <li class="relative group h-full flex items-center">
+                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">매뉴얼</a>
+                <ul class="absolute top-14 left-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="stats-daily">작업절차서</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="error-report">작업 전 안전교육</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="kpi">비상복구절차</a></li>
                 </ul>
             </li>
-            <li class="menu-item">
-                <a href="#" class="menu-link">환경 설정</a>
-                <ul class="dropdown">
-                    <li><a href="#" class="spa-link" data-target="noti-setting">알림 설정</a></li>
-                    <li><a href="#" class="spa-link" data-target="theme-change">테마 변경</a></li>
-                    <li><a href="#" class="spa-link" data-target="sys-info">시스템 정보</a></li>
+            <li class="relative group h-full flex items-center">
+                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">환경 설정</a>
+                <ul class="absolute top-14 right-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="noti-setting">알림 설정</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="theme-change">테마 변경</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="sys-info">시스템 정보</a></li>
                 </ul>
             </li>
         </ul>
     </nav>
-    <div id="app-container">
-        <button id="toggle-sidebar-btn-desktop">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-        </button>
-        <div id="sidebar">
-            <div class="sidebar-header">
-                
-                <span>관리맨홀</span>
+
+    <!-- 메인 앱 컨테이너 (Sidebar Toggle을 위한 group 클래스 사용) -->
+    <div id="app-container" class="flex flex-1 overflow-hidden relative group">
+        
+        <!-- 사이드바 -->
+        <div id="sidebar" class="w-80 bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 absolute z-40 h-full group-[.sidebar-hidden]:-translate-x-full md:relative shadow-xl md:shadow-none">
+            <div class="p-4 border-b border-slate-100 flex items-center gap-2 bg-slate-50">
+                <span class="w-2 h-6 bg-blue-600 rounded-full"></span>
+                <span class="font-bold text-slate-700">관리맨홀 목록</span>
             </div>
-            <div id="sidebar-main-content">
-                <div id="tree-container"></div>
+            <div id="sidebar-main-content" class="flex-1 overflow-hidden flex flex-col">
+                <div id="tree-container" class="flex-1 overflow-y-auto p-2"></div>
             </div>
-            <footer class="sidebar-footer">
+            <footer class="p-3 text-center text-xs text-slate-400 border-t border-slate-100 bg-slate-50">
                 &copy; 2026 Copyright Electric Conversion Team
             </footer>
         </div>
-        <div id="main-content">
-            <div id="map"></div>
-            <div class="resizer" id="map-resizer" style="display: none;"></div>
-            <div id="map-controls">
-                <div id="datetime-display"></div>
-                <label><input type="checkbox" id="traffic-checkbox"> 실시간 교통</label>
-                <label><input type="checkbox" id="weather-checkbox"> 역별 날씨</label>
-                <label><input type="checkbox" id="roadview-checkbox"> 로드뷰</label>
+
+        <!-- 메인 콘텐츠 (지도) -->
+        <div id="main-content" class="flex-1 flex flex-col relative w-full bg-slate-200">
+            
+            <!-- 사이드바 토글 버튼 (데스크탑) -->
+            <button id="toggle-sidebar-btn-desktop" class="absolute top-4 left-4 z-20 bg-white p-2 rounded-lg shadow-md border border-slate-200 text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition-all group-[.sidebar-hidden]:left-4 group-[.sidebar-hidden]:rotate-180">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            </button>
+
+            <!-- 지도 컨트롤 패널 -->
+            <div id="map-controls" class="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-md p-3 rounded-xl shadow-lg border border-slate-200 flex flex-col gap-3 min-w-[180px]">
+                <div id="datetime-display" class="text-center text-sm font-bold text-slate-700 border-b border-slate-200 pb-2 tabular-nums"></div>
+                <div class="flex flex-col gap-2">
+                    <label class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-blue-600 transition-colors">
+                        <input type="checkbox" id="traffic-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300"> 실시간 교통
+                    </label>
+                    <label class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-blue-600 transition-colors">
+                        <input type="checkbox" id="weather-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300"> 역별 날씨
+                    </label>
+                    <label class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-blue-600 transition-colors">
+                        <input type="checkbox" id="roadview-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300"> 로드뷰
+                    </label>
+                </div>
             </div>
-            <div id="roadview"></div>
+
+            <div id="map" class="flex-1 w-full h-full"></div>
+            
+            <!-- 리사이저 -->
+            <div id="map-resizer" class="hidden h-2 bg-slate-300 hover:bg-blue-400 cursor-row-resize z-30 transition-colors"></div>
+            
+            <!-- 로드뷰 -->
+            <div id="roadview" class="hidden h-1/3 w-full bg-slate-800 relative z-20 border-t border-slate-300"></div>
         </div>
         
-        <!-- AI Chat Elements -->
-        <div id="ai-chat-container">
-            <div id="chat-history">
-                <div class="chat-msg ai-msg">안녕하세요! 맨홀관리 AI입니다.</div>
+        <!-- AI 챗봇 컨테이너 -->
+        <div id="ai-chat-container" class="fixed bottom-24 right-6 w-96 max-w-[90vw] h-[500px] max-h-[70vh] bg-white rounded-2xl shadow-2xl border border-slate-100 flex flex-col z-50 transition-all duration-300 opacity-0 translate-y-4 scale-95 invisible [&.show]:opacity-100 [&.show]:translate-y-0 [&.show]:scale-100 [&.show]:visible">
+            <div class="bg-slate-900 p-4 rounded-t-2xl flex justify-between items-center text-white">
+                <div class="flex items-center gap-2">
+                    <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                    <span class="font-medium">AI Assistant</span>
+                </div>
+                <button onclick="document.getElementById('toggle-chat-btn').click()" class="text-slate-400 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button>
             </div>
-            <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="맨홀 정보 물어보기..." autocomplete="off">
-                <button id="send-btn">
+            
+            <div id="chat-history" class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50 flex flex-col">
+                <div class="self-start bg-white border border-slate-200 text-slate-600 px-4 py-3 rounded-2xl rounded-tl-none shadow-sm max-w-[85%] text-sm">
+                    안녕하세요! 맨홀관리 AI입니다. 무엇을 도와드릴까요?
+                </div>
+            </div>
+            
+            <div class="p-3 bg-white border-t border-slate-100 rounded-b-2xl">
+                <div class="flex gap-2">
+                    <input type="text" id="chat-input" placeholder="질문을 입력하세요..." autocomplete="off" class="flex-1 bg-slate-100 border-0 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none">
+                    <button id="send-btn" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-xl transition-colors shadow-sm">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
                 </button>
+                </div>
             </div>
         </div>
-        <button id="toggle-chat-btn">
+
+        <!-- 챗봇 토글 버튼 -->
+        <button id="toggle-chat-btn" class="fixed bottom-6 right-6 z-50 bg-blue-600 hover:bg-blue-700 text-white w-14 h-14 rounded-full shadow-lg shadow-blue-600/30 transition-all hover:scale-105 active:scale-95 flex items-center justify-center">
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
                 <text x="12" y="14" font-size="10" text-anchor="middle" stroke="none" fill="currentColor" font-weight="bold" style="font-family: sans-serif;">AI</text>
@@ -100,14 +150,14 @@
         </button>
     </div>
 
-    <!-- SPA 동작 확인용 공통 모달 -->
-    <div id="spa-modal-overlay" class="modal-overlay">
-        <div class="modal-window">
-            <div class="modal-header">
-                <h3 id="modal-title">제목</h3>
-                <button id="modal-close-btn">&times;</button>
+    <!-- SPA 모달 -->
+    <div id="spa-modal-overlay" class="fixed inset-0 bg-black/50 z-[60] hidden justify-center items-center backdrop-blur-sm">
+        <div class="bg-white w-[500px] max-w-[90%] rounded-xl shadow-2xl overflow-hidden animate-[fadeIn_0.2s_ease-out]">
+            <div class="bg-slate-900 text-white px-5 py-4 flex justify-between items-center">
+                <h3 id="modal-title" class="font-bold text-lg">제목</h3>
+                <button id="modal-close-btn" class="text-slate-400 hover:text-white text-2xl leading-none">&times;</button>
             </div>
-            <div class="modal-content" id="modal-body">
+            <div class="p-6 max-h-[70vh] overflow-y-auto text-slate-700 leading-relaxed" id="modal-body">
                 내용이 들어갑니다.
             </div>
         </div>

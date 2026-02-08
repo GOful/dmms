@@ -144,11 +144,11 @@ async function displayWeather() {
 
             // 4. 시각화: 정보창(커스텀 오버레이) 생성
             const content = `
-                <div class="weather-overlay">
-                    <div class="weather-icon">${weatherIcon}</div>
-                    <div class="weather-info">
-                        <div class="weather-temp">${tempText}</div>
-                        <div class="weather-pcp">${pcpText}</div>
+                <div class="flex items-center gap-3 bg-white/90 backdrop-blur-sm border border-slate-300 rounded-xl px-4 py-2 shadow-lg -translate-y-4 -translate-x-1/2 transform transition-transform hover:scale-105">
+                    <div class="text-2xl filter drop-shadow-sm">${weatherIcon}</div>
+                    <div class="flex flex-col items-start text-xs">
+                        <div class="font-bold text-sm text-slate-800">${tempText}</div>
+                        <div class="text-slate-500 font-medium">${pcpText}</div>
                     </div>
                 </div>
             `;

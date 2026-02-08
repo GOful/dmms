@@ -18,7 +18,7 @@ export async function askAI(rawData) {
     if (!userMsg || !rawData) return;
 
     // UI 업데이트: 메시지 추가 및 입력창 비활성화
-    history.innerHTML += `<div class="chat-msg user-msg">${userMsg}</div>`;
+    history.innerHTML += `<div class="self-end bg-blue-600 text-white px-4 py-2.5 rounded-2xl rounded-tr-none shadow-sm max-w-[85%] text-sm leading-relaxed break-words animate-[fadeIn_0.3s_ease-out]">${userMsg}</div>`;
     input.value = "";
     input.disabled = true;
     sendBtn.disabled = true;
@@ -26,9 +26,9 @@ export async function askAI(rawData) {
     // 로딩 인디케이터 표시
     const loadingId = "loading-" + Date.now();
     history.innerHTML += `
-        <div id="${loadingId}" class="chat-msg ai-msg loading-msg">
-            <div class="loading-spinner"></div>
-            <span>생각 중...</span>
+        <div id="${loadingId}" class="self-start bg-white border border-slate-200 text-slate-600 px-4 py-2.5 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-2 text-sm animate-[fadeIn_0.3s_ease-out]">
+            <div class="w-4 h-4 border-2 border-slate-300 border-t-blue-600 rounded-full animate-spin"></div>
+            <span class="font-medium">분석 중...</span>
         </div>`;
     history.scrollTop = history.scrollHeight;
 
@@ -80,7 +80,7 @@ Question: ${userMsg}`;
         if (loadingEl) loadingEl.remove();
         
         // 결과 표시
-        history.innerHTML += `<div class="chat-msg ai-msg">${response.text()}</div>`;
+        history.innerHTML += `<div class="self-start bg-white border border-slate-200 text-slate-800 px-4 py-3 rounded-2xl rounded-tl-none shadow-sm max-w-[90%] text-sm leading-relaxed prose prose-sm break-words animate-[fadeIn_0.3s_ease-out]">${response.text()}</div>`;
     } catch (error) {
         console.error("AI 응답 오류:", error);
         const loadingEl = document.getElementById(loadingId);
