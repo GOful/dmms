@@ -4,6 +4,18 @@ let currentSelectedItemId = null;
 let equipmentData = null; // 장비 데이터 캐싱용 변수
 let currentMenuTarget = null; // 현재 활성화된 메뉴 타겟 저장
 let lastPdfRenderId = 0; // PDF 렌더링 중복 방지용 ID
+let currentPdfDoc = null; // 현재 로드된 PDF 문서 객체
+let currentPdfScale = 1.5; // PDF 렌더링 배율
+
+// PDF 뷰어로 바로 연결되는 메뉴 타겟 목록 (안전작업 및 점검표)
+const PDF_MENU_TARGETS = [
+    'confined_space_program', 
+    'work_permit', 
+    'cpr', 
+    'related_laws',
+    'inspection_6m', 
+    'inspection_1y'
+];
 
 /**
  * [기능] 장비 데이터를 JSON 파일에서 비동기로 로드합니다.
@@ -235,7 +247,7 @@ export function setupMenuEvents() {
                 modalBody.innerHTML = generateEmergencyRescueTableHTML(equipmentData?.emergency_rescue || { headers: [], items: [] });
             } else if (target === 'status-check') {
                 modalBody.innerHTML = generateAirRespiratorTableHTML(equipmentData?.air_respirator || { headers: [], items: [] });
-            } else if (['confined_space_program', 'work_permit', 'cpr', 'related_laws'].includes(target)) {
+            } else if (PDF_MENU_TARGETS.includes(target)) {
                 viewPdfManual(target);
             } else if (target === 'realtime-monitor') {
                 modalBody.innerHTML = generateDummyTableHTML(menuName);
@@ -275,11 +287,15 @@ window.viewPdfManual = async function(type) {
     const pdfPath = `manuals/${type}.pdf`; 
 
     // 안전작업 메뉴인지 확인 (목록으로 돌아가기 vs 닫기 버튼 구분)
-    const isSafetyMenu = ['confined_space_program', 'work_permit', 'cpr', 'related_laws'].includes(currentMenuTarget);
+    const isSafetyMenu = PDF_MENU_TARGETS.includes(currentMenuTarget);
     const btnText = isSafetyMenu ? '닫기' : '목록으로 돌아가기';
     const btnTextMobile = isSafetyMenu ? '닫기' : '목록';
     const btnIconPath = isSafetyMenu ? 'M6 18L18 6M6 6l12 12' : 'M10 19l-7-7m0 0l7-7m-7 7h18';
     
+    // 초기 배율 설정 (모바일 1.2, 데스크탑 1.5)
+    currentPdfScale = window.innerWidth < 640 ? 1.2 : 1.5;
+    currentPdfDoc = null;
+
     modalBody.innerHTML = `
         <div class="flex flex-col h-full min-h-[600px]">
             <div class="flex justify-between items-center mb-4">
@@ -289,6 +305,16 @@ window.viewPdfManual = async function(type) {
                     </svg>
                     사용 매뉴얼
                 </h4>
+                <!-- 줌 컨트롤 버튼 추가 -->
+                <div class="flex items-center gap-1 bg-slate-100 rounded-lg p-1 mr-2">
+                    <button onclick="changePdfZoom(-0.2)" class="p-1 hover:bg-white rounded-md text-slate-600 transition-colors" title="축소">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
+                    </button>
+                    <span id="pdf-zoom-level" class="text-xs font-mono w-12 text-center text-slate-500">${Math.round(currentPdfScale * 100)}%</span>
+                    <button onclick="changePdfZoom(0.2)" class="p-1 hover:bg-white rounded-md text-slate-600 transition-colors" title="확대">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
+                    </button>
+                </div>
                 <div class="flex gap-2">
                     <a href="${pdfPath}" download class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-sm transition-colors shadow-sm flex items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
@@ -303,7 +329,7 @@ window.viewPdfManual = async function(type) {
                 </div>
             </div>
             <!-- PDF 뷰어 컨테이너 (PDF.js 렌더링 영역) -->
-            <div id="pdf-viewer-container" class="flex-1 bg-slate-200/50 rounded-xl border border-slate-200 overflow-y-auto p-2 sm:p-4 flex flex-col items-center gap-4 relative min-h-[400px]">
+            <div id="pdf-viewer-container" class="flex-1 bg-slate-200/50 rounded-xl border border-slate-200 overflow-auto p-2 sm:p-4 flex flex-col items-center gap-4 relative min-h-[400px]">
                 <div id="pdf-loading-spinner" class="absolute inset-0 flex flex-col items-center justify-center z-10">
                     <div class="w-10 h-10 border-4 border-slate-300 border-t-blue-600 rounded-full animate-spin mb-3"></div>
                     <span class="text-slate-500 font-medium animate-pulse">PDF 문서를 불러오는 중...</span>
@@ -315,38 +341,11 @@ window.viewPdfManual = async function(type) {
     try {
         // PDF 문서 로드
         const loadingTask = window.pdfjsLib.getDocument(pdfPath);
-        const pdf = await loadingTask.promise;
+        currentPdfDoc = await loadingTask.promise;
         
-        // 최신 요청이 아니면 중단 (중복 렌더링 방지)
-        if (lastPdfRenderId !== currentRenderId) return;
-
-        const container = document.getElementById('pdf-viewer-container');
-        container.innerHTML = ''; // 컨테이너 초기화 (스피너 제거)
-
-        // 모든 페이지 렌더링
-        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
-            if (lastPdfRenderId !== currentRenderId) return; // 렌더링 중 다른 요청 발생 시 중단
-            const page = await pdf.getPage(pageNum);
-            
-            // 모바일 화면에 맞춰 1.5배율로 렌더링 (CSS로 max-width 조정)
-            const viewport = page.getViewport({ scale: 1.5 });
-            
-            const canvas = document.createElement('canvas');
-            const context = canvas.getContext('2d');
-            canvas.height = viewport.height;
-            canvas.width = viewport.width;
-            
-            // 반응형 스타일 적용 (너비 꽉 차게, 높이 자동)
-            canvas.className = "w-full max-w-3xl h-auto shadow-lg rounded-lg bg-white mb-4 last:mb-0";
-            
-            const renderContext = {
-                canvasContext: context,
-                viewport: viewport
-            };
-            
-            container.appendChild(canvas);
-            await page.render(renderContext).promise;
-        }
+        // 렌더링 실행
+        await renderCurrentPdf(currentRenderId);
+        
     } catch (error) {
         if (lastPdfRenderId !== currentRenderId) return;
         console.error('PDF Rendering Error:', error);
@@ -366,13 +365,62 @@ window.viewPdfManual = async function(type) {
 };
 
 /**
+ * [기능] 현재 로드된 PDF 문서를 설정된 배율로 렌더링합니다.
+ */
+async function renderCurrentPdf(renderId) {
+    if (!currentPdfDoc || lastPdfRenderId !== renderId) return;
+
+    const container = document.getElementById('pdf-viewer-container');
+    container.innerHTML = ''; // 기존 내용 초기화
+
+    // 줌 레벨 표시 업데이트
+    const zoomLabel = document.getElementById('pdf-zoom-level');
+    if(zoomLabel) zoomLabel.innerText = `${Math.round(currentPdfScale * 100)}%`;
+
+    for (let pageNum = 1; pageNum <= currentPdfDoc.numPages; pageNum++) {
+        if (lastPdfRenderId !== renderId) return;
+        
+        const page = await currentPdfDoc.getPage(pageNum);
+        const viewport = page.getViewport({ scale: currentPdfScale });
+        
+        const canvas = document.createElement('canvas');
+        const context = canvas.getContext('2d');
+        canvas.height = viewport.height;
+        canvas.width = viewport.width;
+        
+        // 스타일: 원본 크기를 유지하되, 컨테이너보다 크면 스크롤되도록 설정
+        // w-full 클래스를 제거하여 줌인 시 실제로 커지게 함
+        canvas.className = "shadow-lg rounded-lg bg-white mb-4 last:mb-0 max-w-none";
+        canvas.style.maxWidth = 'none'; // Tailwind max-w-3xl 오버라이드
+        
+        const renderContext = {
+            canvasContext: context,
+            viewport: viewport
+        };
+        
+        container.appendChild(canvas);
+        await page.render(renderContext).promise;
+    }
+}
+
+/**
+ * [기능] PDF 줌 레벨을 변경하고 다시 렌더링합니다.
+ */
+window.changePdfZoom = function(delta) {
+    const newScale = currentPdfScale + delta;
+    if (newScale < 0.5 || newScale > 5.0) return; // 최소/최대 배율 제한
+    currentPdfScale = newScale;
+    renderCurrentPdf(lastPdfRenderId);
+};
+
+/**
  * [기능] PDF 뷰어를 닫고 이전 테이블 화면으로 복귀합니다.
  */
 window.closePdfManual = async function() {
     const modalBody = document.getElementById('modal-body');
     
     // 안전작업 메뉴인 경우 모달 닫기
-    if (['confined_space_program', 'work_permit', 'cpr', 'related_laws'].includes(currentMenuTarget)) {
+    if (PDF_MENU_TARGETS.includes(currentMenuTarget)) {
         document.getElementById('spa-modal-overlay').style.display = 'none';
         return;
     }

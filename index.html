@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
     <meta charset="utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>대구교통공사 맨홀관리 시스템(DMMS)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -58,11 +58,10 @@
         <ul class="hidden md:flex gap-1 h-full" id="menu-list">
        
             <li class="relative group h-full flex items-center">
-                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">데이터 조회</a>
+                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">점검업무</a>
                 <ul class="absolute top-14 left-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="realtime-monitor">모니터링</a></li>
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="history-search">이력 데이터 검색</a></li>
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="data-export">데이터 내보내기</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="inspection_6m">6개월 검사표</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="inspection_1y">1년 검사표</a></li>
                 </ul>
             </li>
             <li class="relative group h-full flex items-center">
@@ -75,19 +74,11 @@
             </li>
             <li class="relative group h-full flex items-center">
                 <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">안전작업</a>
-                <ul class="absolute top-14 left-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
+                <ul class="absolute top-14 right-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
                     <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="confined_space_program">밀폐공간 작업프로그램</a></li>
                     <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="work_permit">작업허가서</a></li>
                     <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="cpr">인공호흡 및 심폐소생술</a></li>
                     <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="related_laws">관계법령</a></li>
-                </ul>
-            </li>
-            <li class="relative group h-full flex items-center">
-                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">환경 설정</a>
-                <ul class="absolute top-14 right-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="noti-setting">알림 설정</a></li>
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="theme-change">테마 변경</a></li>
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="sys-info">시스템 정보</a></li>
                 </ul>
             </li>
         </ul>
@@ -218,11 +209,10 @@
             
             <!-- 메뉴 목록 -->
             <div class="flex-1 overflow-y-auto py-4 px-2 space-y-1">
-                <!-- 데이터 조회 -->
-                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-2">데이터 조회</div>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="realtime-monitor">모니터링</a>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="history-search">이력 데이터 검색</a>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="data-export">데이터 내보내기</a>
+                <!-- 점검업무 -->
+                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-2">점검업무</div>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="inspection_6m">6개월 검사표</a>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="inspection_1y">1년 검사표</a>
 
                 <!-- 장비 관리 -->
                 <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-4">장비 관리</div>
@@ -236,12 +226,6 @@
                 <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="work_permit">작업허가서</a>
                 <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="cpr">인공호흡 및 심폐소생술</a>
                 <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="related_laws">관계법령</a>
-
-                <!-- 환경 설정 -->
-                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-4">환경 설정</div>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="noti-setting">알림 설정</a>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="theme-change">테마 변경</a>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="sys-info">시스템 정보</a>
             </div>
             
             <!-- 푸터 -->
