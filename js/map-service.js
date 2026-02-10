@@ -1,4 +1,4 @@
-import { selectManholeInSidebar } from './ui-manager.js';
+import { selectManholeInSidebar, openManholeDetailModal } from './ui-manager.js';
 
 let map, rv, rvClient;
 let currentCircle = null; // 현재 그려진 원을 저장
@@ -300,7 +300,7 @@ function showManholeOverlay(mh, stationName, position) {
                         평균수위 <span class="font-bold text-slate-700 text-sm">${waterLevel}mm</span> 
                         <span class="w-2 h-2 rounded-full bg-green-500 ml-1"></span><span class="text-green-600">정상</span>
                     </div>
-                    <button class="text-xs bg-slate-800 text-white px-3 py-1.5 rounded-lg hover:bg-slate-700 transition-colors shadow-sm">상세보기</button>
+                    <button class="detail-view-btn text-xs bg-slate-800 text-white px-3 py-1.5 rounded-lg hover:bg-slate-700 transition-colors shadow-sm">상세보기</button>
             </div>
         </div>
     `;
@@ -310,6 +310,12 @@ function showManholeOverlay(mh, stationName, position) {
     closeBtn.addEventListener('click', () => {
         if (currentOverlay) currentOverlay.setMap(null);
     });
+
+    // 상세보기 버튼 이벤트 연결
+    const detailBtn = content.querySelector('.detail-view-btn');
+    if(detailBtn) {
+        detailBtn.addEventListener('click', () => openManholeDetailModal(mh));
+    }
 
     // 커스텀 오버레이 생성 및 지도 표시
     currentOverlay = new kakao.maps.CustomOverlay({

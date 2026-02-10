@@ -88,7 +88,7 @@
     </nav>
 
     <!-- 메인 앱 컨테이너 (Sidebar Toggle을 위한 group 클래스 사용) -->
-    <div id="app-container" class="flex flex-1 overflow-hidden relative group">
+    <div id="app-container" class="flex flex-1 overflow-hidden relative group sidebar-hidden">
         
         <!-- 사이드바 -->
         <div id="sidebar" class="w-80 bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 absolute z-40 h-full group-[.sidebar-hidden]:-translate-x-full shadow-xl">
@@ -108,12 +108,15 @@
         <div id="main-content" class="flex-1 flex flex-col relative w-full bg-slate-200">
             
             <!-- 사이드바 토글 버튼 (데스크탑) -->
-            <button id="toggle-sidebar-btn-desktop" class="absolute top-4 left-80 z-50 bg-white p-2 rounded-lg shadow-md border border-slate-200 text-slate-600 hover:text-blue-600 hover:bg-slate-50 transition-all duration-300 group-[.sidebar-hidden]:left-4 group-[.sidebar-hidden]:rotate-180">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+            <button id="toggle-sidebar-btn-desktop" class="absolute top-4 left-80 z-50 bg-slate-800 p-2 rounded-lg shadow-lg border border-slate-700 text-white hover:bg-slate-700 hover:text-blue-300 transition-all duration-300 group-[.sidebar-hidden]:left-4">
+                <!-- 열려있을 때: 접기 아이콘 -->
+                <svg class="group-[.sidebar-hidden]:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+                <!-- 닫혀있을 때: 목록펼치기 텍스트 -->
+                <span class="hidden group-[.sidebar-hidden]:block text-xs font-bold px-1 whitespace-nowrap">목록펼치기</span>
             </button>
 
             <!-- 지도 컨트롤 패널 -->
-            <div id="map-controls" class="absolute top-4 right-4 z-20 bg-white/90 backdrop-blur-md p-3 rounded-xl shadow-lg border border-slate-200 flex flex-col gap-3 min-w-[180px]">
+            <div id="map-controls" class="absolute top-4 right-4 z-20 bg-white p-3 rounded-xl shadow-xl border border-slate-300 flex flex-col gap-3 min-w-[180px]">
                 <div id="datetime-display" class="text-center text-sm font-bold text-slate-700 border-b border-slate-200 pb-2 tabular-nums"></div>
                 <div class="flex flex-col gap-2">
                     <label class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-blue-600 transition-colors">

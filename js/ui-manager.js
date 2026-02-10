@@ -605,3 +605,123 @@ function generateGasDetectorTableHTML(dataObj) {
         </div>
     `;
 }
+
+/**
+ * [기능] 맨홀 상세 정보 모달을 열고 더미 데이터를 표시합니다.
+ * @param {Object} mh - 맨홀 데이터 객체
+ */
+export function openManholeDetailModal(mh) {
+    const modalOverlay = document.getElementById('spa-modal-overlay');
+    const modalTitle = document.getElementById('modal-title');
+    const modalBody = document.getElementById('modal-body');
+
+    modalTitle.innerText = `${mh.name} 상세 정보`;
+    
+    // 더미 데이터 생성
+    const historyData = generateDummyHistory();
+    const waterLevelData = generateDummyWaterLevel();
+
+    modalBody.innerHTML = `
+        <div class="space-y-6">
+            <!-- 기본 정보 -->
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <h4 class="font-bold text-slate-700 mb-2 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    기본 정보
+                </h4>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div><span class="text-slate-500">ID:</span> <span class="font-medium">${mh.id}</span></div>
+                    <div><span class="text-slate-500">위치:</span> <span class="font-medium">${mh.lat.toFixed(5)}, ${mh.lng.toFixed(5)}</span></div>
+                    <div><span class="text-slate-500">설치년도:</span> <span class="font-medium">2005년</span></div>
+                </div>
+            </div>
+
+            <!-- 이력 정보 (민원, 수선, 침수) -->
+            <div>
+                <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    유지보수 및 이슈 이력
+                </h4>
+                <div class="overflow-hidden border border-slate-200 rounded-lg">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">날짜</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">구분</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">내용</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">조치결과</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-slate-200 text-sm">
+                            ${historyData.map(item => `
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-4 py-3 whitespace-nowrap text-slate-600">${item.date}</td>
+                                    <td class="px-4 py-3 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full ${item.type === '민원' ? 'bg-yellow-100 text-yellow-800' : item.type === '침수' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'}">
+                                            ${item.type}
+                                        </span>
+                                    </td>
+                                    <td class="px-4 py-3 text-slate-700">${item.content}</td>
+                                    <td class="px-4 py-3 text-slate-600">${item.result}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 연간 수위 정보 -->
+            <div>
+                <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+                    연간 수위 데이터 (최근 5년)
+                </h4>
+                <div class="overflow-hidden border border-slate-200 rounded-lg">
+                    <table class="min-w-full divide-y divide-slate-200">
+                        <thead class="bg-slate-50">
+                            <tr>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">년도</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">수위</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">상태</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-slate-200 text-sm">
+                            ${waterLevelData.map(item => `
+                                <tr class="hover:bg-slate-50">
+                                    <td class="px-4 py-3 whitespace-nowrap font-medium text-slate-700">${item.year}년</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-slate-600">${item.level}mm</td>
+                                    <td class="px-4 py-3 whitespace-nowrap">
+                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">정상</span>
+                                    </td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    `;
+
+    modalOverlay.style.display = 'flex';
+}
+
+/** [헬퍼] 이력 더미 데이터 생성 */
+function generateDummyHistory() {
+    return [
+        { date: '2025-01-15', type: '점검', content: '정기 안전 점검 수행', result: '이상 없음' },
+        { date: '2024-08-23', type: '침수', content: '집중호우로 인한 일시적 수위 상승', result: '배수 조치 완료' },
+        { date: '2024-05-10', type: '수선', content: '맨홀 뚜껑 소음 관련 민원 조치', result: '고무 패킹 교체' },
+        { date: '2023-11-05', type: '민원', content: '주변 보도블럭 침하 신고', result: '현장 확인 후 보수' }
+    ];
+}
+
+/** [헬퍼] 수위 더미 데이터 생성 */
+function generateDummyWaterLevel() {
+    return [
+        { year: 2025, level: 210 },
+        { year: 2024, level: 205 },
+        { year: 2023, level: 215 },
+        { year: 2022, level: 200 },
+        { year: 2021, level: 208 }
+    ];
+}
