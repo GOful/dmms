@@ -642,27 +642,27 @@ export function openManholeDetailModal(mh) {
                     <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     유지보수 및 이슈 이력
                 </h4>
-                <div class="overflow-hidden border border-slate-200 rounded-lg">
+                <div class="overflow-x-auto border border-slate-200 rounded-lg">
                     <table class="min-w-full divide-y divide-slate-200">
                         <thead class="bg-slate-50">
                             <tr>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">날짜</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">구분</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">내용</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">조치결과</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider whitespace-nowrap">날짜</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider whitespace-nowrap">구분</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider whitespace-nowrap">내용</th>
+                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider whitespace-nowrap">조치결과</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-slate-200 text-sm">
                             ${historyData.map(item => `
                                 <tr class="hover:bg-slate-50">
-                                    <td class="px-4 py-3 whitespace-nowrap text-slate-600">${item.date}</td>
+                                    <td class="px-4 py-3 whitespace-nowrap text-slate-600 text-xs">${item.date.substring(2)}</td>
                                     <td class="px-4 py-3 whitespace-nowrap">
                                         <span class="px-2 py-1 text-xs font-semibold rounded-full ${item.type === '민원' ? 'bg-yellow-100 text-yellow-800' : item.type === '침수' ? 'bg-red-100 text-red-800' : 'bg-blue-100 text-blue-800'}">
                                             ${item.type}
                                         </span>
                                     </td>
-                                    <td class="px-4 py-3 text-slate-700">${item.content}</td>
-                                    <td class="px-4 py-3 text-slate-600">${item.result}</td>
+                                    <td class="px-4 py-3 text-slate-700 min-w-[160px]">${item.content}</td>
+                                    <td class="px-4 py-3 text-slate-600 whitespace-nowrap">${item.result}</td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -676,7 +676,7 @@ export function openManholeDetailModal(mh) {
                     <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                     연간 수위 데이터 (최근 5년)
                 </h4>
-                <div class="overflow-hidden border border-slate-200 rounded-lg">
+                <div class="overflow-x-auto border border-slate-200 rounded-lg">
                     <table class="min-w-full divide-y divide-slate-200">
                         <thead class="bg-slate-50">
                             <tr>
