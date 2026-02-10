@@ -9,7 +9,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- PDF.js (모바일 PDF 뷰어용) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
     <script>
+        // PDF.js Worker 설정
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
         tailwind.config = {
             theme: {
                 extend: {
@@ -69,11 +74,12 @@
                 </ul>
             </li>
             <li class="relative group h-full flex items-center">
-                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">매뉴얼</a>
+                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">안전작업</a>
                 <ul class="absolute top-14 left-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="stats-daily">작업절차서</a></li>
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="error-report">작업 전 안전교육</a></li>
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="kpi">비상복구절차</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="confined_space_program">밀폐공간 작업프로그램</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="work_permit">작업허가서</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="cpr">인공호흡 및 심폐소생술</a></li>
+                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="related_laws">관계법령</a></li>
                 </ul>
             </li>
             <li class="relative group h-full flex items-center">
@@ -224,11 +230,12 @@
                 <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="remote-control">비상구조</a>
                 <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="status-check">공기호흡기</a>
 
-                <!-- 매뉴얼 -->
-                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-4">매뉴얼</div>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="stats-daily">작업절차서</a>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="error-report">작업 전 안전교육</a>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="kpi">비상복구절차</a>
+                <!-- 안전작업 -->
+                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-4">안전작업</div>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="confined_space_program">밀폐공간 작업프로그램</a>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="work_permit">작업허가서</a>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="cpr">인공호흡 및 심폐소생술</a>
+                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="related_laws">관계법령</a>
 
                 <!-- 환경 설정 -->
                 <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-4">환경 설정</div>

@@ -3,6 +3,7 @@ import { createMarker, relayoutMap } from './map-service.js';
 let currentSelectedItemId = null;
 let equipmentData = null; // 장비 데이터 캐싱용 변수
 let currentMenuTarget = null; // 현재 활성화된 메뉴 타겟 저장
+let lastPdfRenderId = 0; // PDF 렌더링 중복 방지용 ID
 
 /**
  * [기능] 장비 데이터를 JSON 파일에서 비동기로 로드합니다.
@@ -234,6 +235,8 @@ export function setupMenuEvents() {
                 modalBody.innerHTML = generateEmergencyRescueTableHTML(equipmentData?.emergency_rescue || { headers: [], items: [] });
             } else if (target === 'status-check') {
                 modalBody.innerHTML = generateAirRespiratorTableHTML(equipmentData?.air_respirator || { headers: [], items: [] });
+            } else if (['confined_space_program', 'work_permit', 'cpr', 'related_laws'].includes(target)) {
+                viewPdfManual(target);
             } else if (target === 'realtime-monitor') {
                 modalBody.innerHTML = generateDummyTableHTML(menuName);
             } else {
@@ -263,10 +266,19 @@ export function setupMenuEvents() {
  * [기능] 모달 내부에 PDF 뷰어를 렌더링합니다.
  * @param {string} type - 매뉴얼 타입 (파일명으로 사용)
  */
-window.viewPdfManual = function(type) {
+window.viewPdfManual = async function(type) {
+    const currentRenderId = Date.now();
+    lastPdfRenderId = currentRenderId;
+
     const modalBody = document.getElementById('modal-body');
     // 실제 파일은 프로젝트 루트의 manuals 폴더에 위치해야 합니다 (예: manuals/gas_detector.pdf)
     const pdfPath = `manuals/${type}.pdf`; 
+
+    // 안전작업 메뉴인지 확인 (목록으로 돌아가기 vs 닫기 버튼 구분)
+    const isSafetyMenu = ['confined_space_program', 'work_permit', 'cpr', 'related_laws'].includes(currentMenuTarget);
+    const btnText = isSafetyMenu ? '닫기' : '목록으로 돌아가기';
+    const btnTextMobile = isSafetyMenu ? '닫기' : '목록';
+    const btnIconPath = isSafetyMenu ? 'M6 18L18 6M6 6l12 12' : 'M10 19l-7-7m0 0l7-7m-7 7h18';
     
     modalBody.innerHTML = `
         <div class="flex flex-col h-full min-h-[600px]">
@@ -277,21 +289,80 @@ window.viewPdfManual = function(type) {
                     </svg>
                     사용 매뉴얼
                 </h4>
-                <button onclick="closePdfManual()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-sm transition-colors shadow-sm flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
-                    목록으로 돌아가기
-                </button>
+                <div class="flex gap-2">
+                    <a href="${pdfPath}" download class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-sm transition-colors shadow-sm flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
+                        <span class="hidden sm:inline">다운로드</span>
+                        <span class="sm:hidden">저장</span>
+                    </a>
+                    <button onclick="closePdfManual()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-sm transition-colors shadow-sm flex items-center gap-1">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${btnIconPath}" /></svg>
+                        <span class="hidden sm:inline">${btnText}</span>
+                        <span class="sm:hidden">${btnTextMobile}</span>
+                    </button>
+                </div>
             </div>
-            <div class="flex-1 bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative">
-                <iframe src="${pdfPath}" class="w-full h-full absolute inset-0" frameborder="0">
-                    <div class="flex flex-col items-center justify-center h-full text-slate-500">
-                        <p>PDF 미리보기를 지원하지 않습니다.</p>
-                        <a href="${pdfPath}" target="_blank" class="text-blue-600 underline mt-2">파일 다운로드</a>
-                    </div>
-                </iframe>
+            <!-- PDF 뷰어 컨테이너 (PDF.js 렌더링 영역) -->
+            <div id="pdf-viewer-container" class="flex-1 bg-slate-200/50 rounded-xl border border-slate-200 overflow-y-auto p-2 sm:p-4 flex flex-col items-center gap-4 relative min-h-[400px]">
+                <div id="pdf-loading-spinner" class="absolute inset-0 flex flex-col items-center justify-center z-10">
+                    <div class="w-10 h-10 border-4 border-slate-300 border-t-blue-600 rounded-full animate-spin mb-3"></div>
+                    <span class="text-slate-500 font-medium animate-pulse">PDF 문서를 불러오는 중...</span>
+                </div>
             </div>
         </div>
     `;
+
+    try {
+        // PDF 문서 로드
+        const loadingTask = window.pdfjsLib.getDocument(pdfPath);
+        const pdf = await loadingTask.promise;
+        
+        // 최신 요청이 아니면 중단 (중복 렌더링 방지)
+        if (lastPdfRenderId !== currentRenderId) return;
+
+        const container = document.getElementById('pdf-viewer-container');
+        container.innerHTML = ''; // 컨테이너 초기화 (스피너 제거)
+
+        // 모든 페이지 렌더링
+        for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+            if (lastPdfRenderId !== currentRenderId) return; // 렌더링 중 다른 요청 발생 시 중단
+            const page = await pdf.getPage(pageNum);
+            
+            // 모바일 화면에 맞춰 1.5배율로 렌더링 (CSS로 max-width 조정)
+            const viewport = page.getViewport({ scale: 1.5 });
+            
+            const canvas = document.createElement('canvas');
+            const context = canvas.getContext('2d');
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+            
+            // 반응형 스타일 적용 (너비 꽉 차게, 높이 자동)
+            canvas.className = "w-full max-w-3xl h-auto shadow-lg rounded-lg bg-white mb-4 last:mb-0";
+            
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            
+            container.appendChild(canvas);
+            await page.render(renderContext).promise;
+        }
+    } catch (error) {
+        if (lastPdfRenderId !== currentRenderId) return;
+        console.error('PDF Rendering Error:', error);
+        const container = document.getElementById('pdf-viewer-container');
+        container.innerHTML = `
+            <div class="flex flex-col items-center justify-center h-full text-slate-500 p-8 text-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-slate-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <p class="font-bold text-lg text-slate-700 mb-2">문서를 표시할 수 없습니다.</p>
+                <a href="${pdfPath}" download class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors shadow-sm mt-4">
+                    파일 직접 다운로드
+                </a>
+            </div>
+        `;
+    }
 };
 
 /**
@@ -300,6 +371,12 @@ window.viewPdfManual = function(type) {
 window.closePdfManual = async function() {
     const modalBody = document.getElementById('modal-body');
     
+    // 안전작업 메뉴인 경우 모달 닫기
+    if (['confined_space_program', 'work_permit', 'cpr', 'related_laws'].includes(currentMenuTarget)) {
+        document.getElementById('spa-modal-overlay').style.display = 'none';
+        return;
+    }
+
     // 데이터가 없으면 다시 로드
     if (!equipmentData) await loadEquipmentData();
 
