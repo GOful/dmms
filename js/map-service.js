@@ -111,6 +111,9 @@ async function displayWeather() {
             const lat = parseFloat(data.LAT);
             const lng = parseFloat(data.LON);
             const position = new kakao.maps.LatLng(lat, lng);
+            
+            // 오버레이를 원의 상단(북쪽 약 500m) 지점에 고정 (위도 1도 ≈ 111km, 500m ≈ 0.0045도)
+            const overlayPosition = new kakao.maps.LatLng(lat + 0.0040, lng);
 
             // 데이터 파싱 (기온, 강수유무, 1시간 강수량, 시정)
             const ta = parseFloat(data.TA);
@@ -145,7 +148,7 @@ async function displayWeather() {
 
             // 4. 시각화: 정보창(커스텀 오버레이) 생성
             const content = `
-                <div class="flex items-center gap-3 bg-white/90 backdrop-blur-sm border border-slate-300 rounded-xl px-4 py-2 shadow-lg -translate-y-4 -translate-x-1/2 transform transition-transform hover:scale-105">
+                <div class="pointer-events-none flex items-center gap-3 bg-white/90 backdrop-blur-sm border border-slate-300 rounded-xl px-4 py-2 shadow-lg">
                     <div class="text-2xl filter drop-shadow-sm">${weatherIcon}</div>
                     <div class="flex flex-col items-start text-xs">
                         <div class="font-bold text-sm text-slate-800">${tempText}</div>
@@ -154,10 +157,11 @@ async function displayWeather() {
                 </div>
             `;
             const customOverlay = new kakao.maps.CustomOverlay({
-                position: position,
+                position: overlayPosition,
                 content: content,
                 map: map,
-                yAnchor: 1.2
+                yAnchor: 0.5,
+                xAnchor: 0.5
             });
             
             // 생성된 객체를 배열에 저장하여 추후 토글 시 사용
