@@ -7,16 +7,34 @@ const markersMap = {};    // 맨홀 ID를 키로 하는 마커 객체 저장소
 let weatherOverlays = []; // 날씨 오버레이(원, 커스텀오버레이) 객체 배열
 let currentOverlay = null; // 현재 표시된 맨홀 정보 오버레이
 
-// 지도에 표시할 별 모양 마커 이미지 설정
+// [수정] 선택된 맨홀 마커 이미지 설정 (SVG Data URI 사용)
+// 디자인: 기본 마커와 통일성 유지하되 파란색 배경으로 강조
+const svgSelectedMarkerHtml = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs><filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/></filter></defs>
+  <circle cx="32" cy="32" r="28" fill="#2563eb" stroke="#ffffff" stroke-width="3" filter="url(#shadow)"/>
+  <circle cx="32" cy="32" r="22" fill="none" stroke="#93c5fd" stroke-width="1" stroke-dasharray="4 2"/>
+  <path d="M34 14L20 34H30L28 50L42 30H32L34 14Z" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>`;
+
 const starImg = new kakao.maps.MarkerImage(
-    'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png', 
-    new kakao.maps.Size(24, 35)
+    `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgSelectedMarkerHtml.trim())}`,
+    new kakao.maps.Size(50, 50)
 );
 
-// 기본 맨홀 마커 이미지 설정 (img/marker1.png)
+// [수정] 기본 맨홀 마커 이미지 설정 (SVG Data URI 사용)
+// 디자인: 슬레이트 색상의 원형 맨홀 뚜껑 + 노란색 번개 아이콘 + 그림자 효과
+const svgMarkerHtml = `
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <defs><filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/></filter></defs>
+  <circle cx="32" cy="32" r="28" fill="#334155" stroke="#cbd5e1" stroke-width="3" filter="url(#shadow)"/>
+  <circle cx="32" cy="32" r="22" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="4 2"/>
+  <path d="M34 14L20 34H30L28 50L42 30H32L34 14Z" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>`;
+
 const normalImg = new kakao.maps.MarkerImage(
-    'img/marker1.png',
-    new kakao.maps.Size(40, 40)
+    `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgMarkerHtml.trim())}`,
+    new kakao.maps.Size(44, 44)
 );
 
 /**
@@ -263,7 +281,7 @@ function showManholeOverlay(mh, stationName, position) {
 
     // 오버레이 컨텐츠 생성 (DOM Element 방식)
     const content = document.createElement('div');
-    content.className = 'absolute bottom-10 left-1/2 -translate-x-1/2 w-auto min-w-[300px] max-w-[90vw] bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-slate-200 overflow-hidden animate-[fadeIn_0.2s_ease-out] z-50';
+    content.className = 'absolute bottom-14 left-1/2 -translate-x-1/2 w-auto min-w-[300px] max-w-[90vw] bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-slate-200 overflow-hidden animate-[fadeIn_0.2s_ease-out] z-50';
     
     content.innerHTML = `
         <div class="p-4 relative">
