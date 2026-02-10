@@ -1,0 +1,23 @@
+{
+  "gas_detector": {
+    "headers": ["연번", "보유부서", "자산번호", "규격", "상태", "취득일자", "최근교정일자"],
+    "items": [
+      { "dept": "아양교변전", "assetNo": "3-010504-00646-0004", "spec": "휴대형(O2, CO, H2S, CH4)", "status": "양호", "acquireDate": "2018-03-20", "calibDate": "2025-12-03" },
+      { "dept": "대구은행변전", "assetNo": "3-010504-00563-0022", "spec": "MINIMAX-X4", "status": "양호", "acquireDate": "2022-02-24", "calibDate": "2025-12-03" }
+    ]
+  },
+  "emergency_rescue": {
+    "headers": ["연번", "보유부서", "자산명", "자산번호", "규격", "취득일자", "상태"],
+    "items": [
+      { "dept": "아양교변전", "name": "삼각구조대", "assetNo": "3-010405-00045-0001", "spec": "윈치식", "acquireDate": "2018-03-12", "status": "양호" },
+      { "dept": "대구은행변전", "name": "삼각구조대", "assetNo": "3-010405-00045-0002", "spec": "윈치식", "acquireDate": "2018-03-12", "status": "양호" }
+    ]
+  },
+  "air_respirator": {
+    "headers": ["연번", "보유부서", "자산명", "자산번호", "규격", "취득일자", "상태"],
+    "items": [
+      { "dept": "아양교변전", "name": "공기호흡기", "assetNo": "3-010405-00009-0158", "spec": "SCA-680", "acquireDate": "2017-03-10", "status": "양호" },
+      { "dept": "대구은행변전", "name": "공기호흡기", "assetNo": "3-010405-00009-0159", "spec": "SCA-680", "acquireDate": "2017-03-10", "status": "양호" }
+    ]
+  }
+}

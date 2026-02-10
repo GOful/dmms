@@ -1,6 +1,23 @@
 import { createMarker, relayoutMap } from './map-service.js';
 
 let currentSelectedItemId = null;
+let equipmentData = null; // 장비 데이터 캐싱용 변수
+let currentMenuTarget = null; // 현재 활성화된 메뉴 타겟 저장
+
+/**
+ * [기능] 장비 데이터를 JSON 파일에서 비동기로 로드합니다.
+ */
+async function loadEquipmentData() {
+    if (equipmentData) return equipmentData;
+    try {
+        const response = await fetch('equipment_data.json');
+        equipmentData = await response.json();
+        return equipmentData;
+    } catch (error) {
+        console.error('장비 데이터 로드 실패:', error);
+        return null;
+    }
+}
 
 /**
  * [기능] 사이드바 트리 메뉴에서 특정 맨홀 항목을 선택(하이라이트)하고,
@@ -193,10 +210,11 @@ export function setupMenuEvents() {
 
     // 공통: SPA 링크 클릭 시 모달 열기
     spaLinks.forEach(link => {
-        link.addEventListener('click', (e) => {
+        link.addEventListener('click', async (e) => {
             e.preventDefault();
             
             const target = link.getAttribute('data-target');
+            currentMenuTarget = target; // 현재 메뉴 타겟 저장
             const menuName = link.innerText;
 
             const modalWindow = document.querySelector('.modal-window');
@@ -205,7 +223,18 @@ export function setupMenuEvents() {
 
             modalTitle.innerText = menuName;
 
-            if (target === 'device-reg' || target === 'realtime-monitor') {
+            // 장비 관련 메뉴일 경우 데이터 로드
+            if (['device-reg', 'remote-control', 'status-check'].includes(target)) {
+                await loadEquipmentData();
+            }
+
+            if (target === 'device-reg') {
+                modalBody.innerHTML = generateGasDetectorTableHTML(equipmentData?.gas_detector || { headers: [], items: [] });
+            } else if (target === 'remote-control') {
+                modalBody.innerHTML = generateEmergencyRescueTableHTML(equipmentData?.emergency_rescue || { headers: [], items: [] });
+            } else if (target === 'status-check') {
+                modalBody.innerHTML = generateAirRespiratorTableHTML(equipmentData?.air_respirator || { headers: [], items: [] });
+            } else if (target === 'realtime-monitor') {
                 modalBody.innerHTML = generateDummyTableHTML(menuName);
             } else {
                 modalBody.innerHTML = `
@@ -230,6 +259,59 @@ export function setupMenuEvents() {
     });
 }
 
+/**
+ * [기능] 모달 내부에 PDF 뷰어를 렌더링합니다.
+ * @param {string} type - 매뉴얼 타입 (파일명으로 사용)
+ */
+window.viewPdfManual = function(type) {
+    const modalBody = document.getElementById('modal-body');
+    // 실제 파일은 프로젝트 루트의 manuals 폴더에 위치해야 합니다 (예: manuals/gas_detector.pdf)
+    const pdfPath = `manuals/${type}.pdf`; 
+    
+    modalBody.innerHTML = `
+        <div class="flex flex-col h-full min-h-[600px]">
+            <div class="flex justify-between items-center mb-4">
+                <h4 class="font-bold text-slate-700 flex items-center gap-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
+                    </svg>
+                    사용 매뉴얼
+                </h4>
+                <button onclick="closePdfManual()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-sm transition-colors shadow-sm flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" /></svg>
+                    목록으로 돌아가기
+                </button>
+            </div>
+            <div class="flex-1 bg-slate-100 rounded-xl border border-slate-200 overflow-hidden relative">
+                <iframe src="${pdfPath}" class="w-full h-full absolute inset-0" frameborder="0">
+                    <div class="flex flex-col items-center justify-center h-full text-slate-500">
+                        <p>PDF 미리보기를 지원하지 않습니다.</p>
+                        <a href="${pdfPath}" target="_blank" class="text-blue-600 underline mt-2">파일 다운로드</a>
+                    </div>
+                </iframe>
+            </div>
+        </div>
+    `;
+};
+
+/**
+ * [기능] PDF 뷰어를 닫고 이전 테이블 화면으로 복귀합니다.
+ */
+window.closePdfManual = async function() {
+    const modalBody = document.getElementById('modal-body');
+    
+    // 데이터가 없으면 다시 로드
+    if (!equipmentData) await loadEquipmentData();
+
+    // 저장된 타겟에 따라 테이블 다시 렌더링
+    if (currentMenuTarget === 'device-reg') {
+        modalBody.innerHTML = generateGasDetectorTableHTML(equipmentData?.gas_detector || { headers: [], items: [] });
+    } else if (currentMenuTarget === 'remote-control') {
+        modalBody.innerHTML = generateEmergencyRescueTableHTML(equipmentData?.emergency_rescue || { headers: [], items: [] });
+    } else if (currentMenuTarget === 'status-check') {
+        modalBody.innerHTML = generateAirRespiratorTableHTML(equipmentData?.air_respirator || { headers: [], items: [] });
+    }
+};
 
 /**
  * [유틸] 테스트용 더미 데이터 테이블 HTML을 생성합니다.
@@ -261,6 +343,138 @@ function generateDummyTableHTML(title) {
                     <tr class="bg-white hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-medium text-slate-900">MH-003</td><td class="px-4 py-3">대구역 3번 맨홀</td><td class="px-4 py-3">35.87, 128.60</td><td class="px-4 py-3"><span class="bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded">수리중</span></td><td class="px-4 py-3">2026-02-03</td></tr>
                     <tr class="bg-white hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-medium text-slate-900">MH-004</td><td class="px-4 py-3">동대구역 4번 맨홀</td><td class="px-4 py-3">35.87, 128.61</td><td class="px-4 py-3"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">정상</span></td><td class="px-4 py-3">2026-01-20</td></tr>
                     <tr class="bg-white hover:bg-slate-50 transition-colors"><td class="px-4 py-3 font-medium text-slate-900">MH-005</td><td class="px-4 py-3">범어역 5번 맨홀</td><td class="px-4 py-3">35.86, 128.62</td><td class="px-4 py-3"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">정상</span></td><td class="px-4 py-3">2026-02-04</td></tr>
+                </tbody>
+            </table>
+        </div>
+    `;
+}
+
+/**
+ * [기능] 공기호흡기 관리 테이블 및 매뉴얼 버튼 HTML을 생성합니다.
+ */
+function generateAirRespiratorTableHTML(dataObj) {
+    const headers = dataObj.headers.map(h => `<th class="px-4 py-3 font-bold whitespace-nowrap">${h}</th>`).join('');
+    
+    const rows = dataObj.items.map((item, index) => `
+        <tr class="bg-white hover:bg-slate-50 transition-colors">
+            <td class="px-4 py-3 whitespace-nowrap">${index + 1}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.dept}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.name}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.assetNo}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.spec}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.acquireDate}</td>
+            <td class="px-4 py-3 whitespace-nowrap"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">${item.status}</span></td>
+        </tr>
+    `).join('');
+
+    return `
+        <div class="flex flex-col gap-4 mb-6">
+            <div class="flex justify-end items-center">
+                <button onclick="viewPdfManual('air_respirator')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg shadow-sm transition-colors flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                    </svg>
+                    <span>사용매뉴얼</span>
+                </button>
+            </div>
+        </div>
+        <div class="overflow-x-auto border border-slate-200 rounded-lg">
+            <table class="w-full text-sm text-left text-slate-600">
+                <thead class="text-xs text-slate-700 uppercase bg-slate-50 border-b border-slate-200">
+                    <tr>
+                        ${headers}
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    ${rows}
+                </tbody>
+            </table>
+        </div>
+    `;
+}
+
+/**
+ * [기능] 비상구조 장비 관리 테이블 및 매뉴얼 버튼 HTML을 생성합니다.
+ */
+function generateEmergencyRescueTableHTML(dataObj) {
+    const headers = dataObj.headers.map(h => `<th class="px-4 py-3 font-bold whitespace-nowrap">${h}</th>`).join('');
+
+    const rows = dataObj.items.map((item, index) => `
+        <tr class="bg-white hover:bg-slate-50 transition-colors">
+            <td class="px-4 py-3 whitespace-nowrap">${index + 1}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.dept}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.name}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.assetNo}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.spec}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.acquireDate}</td>
+            <td class="px-4 py-3 whitespace-nowrap"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">${item.status}</span></td>
+        </tr>
+    `).join('');
+
+    return `
+        <div class="flex flex-col gap-4 mb-6">
+            <div class="flex justify-end items-center">
+                <button onclick="viewPdfManual('emergency_rescue')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg shadow-sm transition-colors flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                    </svg>
+                    <span>사용매뉴얼</span>
+                </button>
+            </div>
+        </div>
+        <div class="overflow-x-auto border border-slate-200 rounded-lg">
+            <table class="w-full text-sm text-left text-slate-600">
+                <thead class="text-xs text-slate-700 uppercase bg-slate-50 border-b border-slate-200">
+                    <tr>
+                        ${headers}
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    ${rows}
+                </tbody>
+            </table>
+        </div>
+    `;
+}
+
+/**
+ * [기능] 복합가스측정기 관리 테이블 및 매뉴얼 버튼 HTML을 생성합니다.
+ */
+function generateGasDetectorTableHTML(dataObj) {
+    const headers = dataObj.headers.map(h => `<th class="px-4 py-3 font-bold whitespace-nowrap">${h}</th>`).join('');
+
+    const rows = dataObj.items.map((item, index) => `
+        <tr class="bg-white hover:bg-slate-50 transition-colors">
+            <td class="px-4 py-3 whitespace-nowrap">${index + 1}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.dept}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.assetNo}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.spec}</td>
+            <td class="px-4 py-3 whitespace-nowrap"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">${item.status}</span></td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.acquireDate}</td>
+            <td class="px-4 py-3 whitespace-nowrap">${item.calibDate}</td>
+        </tr>
+    `).join('');
+
+    return `
+        <div class="flex flex-col gap-4 mb-6">
+            <div class="flex justify-end items-center">
+                <button onclick="viewPdfManual('gas_detector')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg shadow-sm transition-colors flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                    </svg>
+                    <span>사용매뉴얼</span>
+                </button>
+            </div>
+        </div>
+        <div class="overflow-x-auto border border-slate-200 rounded-lg">
+            <table class="w-full text-sm text-left text-slate-600">
+                <thead class="text-xs text-slate-700 uppercase bg-slate-50 border-b border-slate-200">
+                    <tr>
+                        ${headers}
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-slate-100">
+                    ${rows}
                 </tbody>
             </table>
         </div>
