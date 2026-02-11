@@ -143,7 +143,7 @@ async function displayWeather() {
             let weatherIcon = '☀️'; // 기본값: 맑음
             if (rn_ox_val > 0 || rn_60m > 0) {
                 weatherIcon = '☔️'; // 비 또는 눈
-            } else if (vs < 5000) { // 시정이 5km 미만이면
+            } else if (vs < 12) { // 시정이 5km 미만이면
                 weatherIcon = '🌫️'; // 안개
             }
 
