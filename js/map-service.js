@@ -168,6 +168,38 @@ export function createMarker(mh, pos, stationName, onSelect) {
 }
 
 /**
+ * [기능] 조건에 맞는 맨홀들을 지도에 하이라이트하고, 전체가 보이도록 bounds를 조정합니다.
+ * @param {string[]} ids - 하이라이트할 맨홀 ID 배열
+ */
+export function highlightManholes(ids) {
+    const idSet = new Set(ids);
+    const bounds = new kakao.maps.LatLngBounds();
+    let hasMatch = false;
+
+    Object.entries(markersMap).forEach(([id, m]) => {
+        if (idSet.has(id)) {
+            m.marker.setImage(starImg);
+            bounds.extend(m.pos);
+            hasMatch = true;
+        } else {
+            m.marker.setImage(normalImg);
+        }
+    });
+
+    // 매칭된 마커가 있으면 전체가 보이도록 지도 영역 조정
+    if (hasMatch) {
+        map.setBounds(bounds);
+    }
+}
+
+/**
+ * [기능] 모든 마커를 기본 상태로 되돌립니다.
+ */
+export function resetMarkerHighlights() {
+    Object.values(markersMap).forEach(m => m.marker.setImage(normalImg));
+}
+
+/**
  * [기능] 특정 맨홀을 선택했을 때의 동작을 처리합니다.
  * - 사이드바 항목 활성화
  * - 지도 중심 이동 및 확대
