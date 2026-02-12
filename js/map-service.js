@@ -1,5 +1,9 @@
 import { selectManholeInSidebar, openManholeDetailModal } from './ui-manager.js';
 
+// ========================================
+// 상태 변수 & 상수
+// ========================================
+
 let map, rv, rvClient;
 let currentCircle = null; // 현재 그려진 원을 저장
 let centerMarker = null;  // 중심점 마커를 저장
@@ -7,8 +11,7 @@ const markersMap = {};    // 맨홀 ID를 키로 하는 마커 객체 저장소
 let weatherOverlays = []; // 날씨 오버레이(원, 커스텀오버레이) 객체 배열
 let currentOverlay = null; // 현재 표시된 맨홀 정보 오버레이
 
-// [수정] 선택된 맨홀 마커 이미지 설정 (SVG Data URI 사용)
-// 디자인: 기본 마커와 통일성 유지하되 파란색 배경으로 강조
+// 선택된 맨홀 마커 이미지 (파란색 강조)
 const svgSelectedMarkerHtml = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs><filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/></filter></defs>
@@ -22,8 +25,7 @@ const starImg = new kakao.maps.MarkerImage(
     new kakao.maps.Size(50, 50)
 );
 
-// [수정] 기본 맨홀 마커 이미지 설정 (SVG Data URI 사용)
-// 디자인: 슬레이트 색상의 원형 맨홀 뚜껑 + 노란색 번개 아이콘 + 그림자 효과
+// 기본 맨홀 마커 이미지 (슬레이트 색상 + 번개 아이콘)
 const svgMarkerHtml = `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs><filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/></filter></defs>
@@ -36,6 +38,10 @@ const normalImg = new kakao.maps.MarkerImage(
     `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgMarkerHtml.trim())}`,
     new kakao.maps.Size(44, 44)
 );
+
+// ========================================
+// 초기화
+// ========================================
 
 /**
  * [초기화] 카카오맵 및 로드뷰 객체를 생성하고 초기 설정을 수행합니다.
@@ -60,7 +66,7 @@ export function initMap() {
 }
 
 /**
- * [이벤트] 지도 상단 컨트롤(교통정보, 날씨)의 체크박스 이벤트를 설정합니다.
+ * [초기화] 지도 상단 컨트롤(교통정보, 날씨, 로드뷰) 체크박스 이벤트를 설정합니다.
  */
 function setupMapControls() {
     const trafficCheckbox = document.getElementById('traffic-checkbox');
@@ -82,114 +88,71 @@ function setupMapControls() {
         toggleWeather(e.target.checked);
     });
 
-    // 로드뷰 토글 (추가된 기능)
+    // 로드뷰 토글
     roadviewCheckbox.addEventListener('change', (e) => {
         const rvContainer = document.getElementById('roadview');
         if (e.target.checked) {
             rvContainer.style.display = 'block';
-            mapResizer.style.display = 'block'; // 리사이저 표시
-            map.relayout(); // 지도가 줄어든 영역에 맞게 재조정
-            rv.relayout();  // 로드뷰가 보일 때 렌더링 갱신
+            mapResizer.style.display = 'block';
+            map.relayout();
+            rv.relayout();
         } else {
             rvContainer.style.display = 'none';
-            mapResizer.style.display = 'none'; // 리사이저 숨김
-            map.relayout(); // 지도가 전체 영역을 차지하도록 재조정
+            mapResizer.style.display = 'none';
+            map.relayout();
         }
     });
 }
 
 /**
- * [기능] 날씨 정보 오버레이를 켜거나 끕니다.
- * @param {boolean} show - 날씨 정보를 표시할지 여부
+ * [초기화] 지도와 로드뷰 사이의 높이 조절(Resizer) 기능을 초기화합니다.
  */
-function toggleWeather(show) {
-    if (show && weatherOverlays.length === 0) {
-        // 최초 활성화 시 데이터를 로드하여 표시
-        displayWeather();
-    } else {
-        // 이미 로드된 오버레이들의 표시 여부만 변경 (성능 최적화)
-        weatherOverlays.forEach(overlay => overlay.setMap(show ? map : null));
-    }
+export function initMapResizer() {
+    const resizer = document.getElementById('map-resizer');
+    const roadviewContainer = document.getElementById('roadview');
+    const mainContent = document.getElementById('main-content');
+
+    let isResizing = false;
+
+    resizer.addEventListener('mousedown', (e) => {
+        e.preventDefault();
+        isResizing = true;
+        document.body.style.cursor = 'row-resize';
+        document.body.style.userSelect = 'none';
+
+        const mouseMoveHandler = (e) => {
+            if (!isResizing) return;
+
+            const mainRect = mainContent.getBoundingClientRect();
+            // 로드뷰 높이 = 전체 높이 - 마우스 Y 좌표 (하단 기준 계산)
+            let newHeight = mainRect.bottom - e.clientY;
+
+            // 최소 100px, 최대 (전체 - 100px) 제한
+            newHeight = Math.max(100, Math.min(newHeight, mainRect.height - 100));
+
+            roadviewContainer.style.height = `${newHeight}px`;
+        };
+
+        const mouseUpHandler = () => {
+            isResizing = false;
+            document.removeEventListener('mousemove', mouseMoveHandler);
+            document.removeEventListener('mouseup', mouseUpHandler);
+            document.body.style.cursor = 'default';
+            document.body.style.userSelect = 'auto';
+
+            // 리사이징 종료 후 지도/로드뷰 레이아웃 갱신
+            if(map) map.relayout();
+            if(rv) rv.relayout();
+        };
+
+        document.addEventListener('mousemove', mouseMoveHandler);
+        document.addEventListener('mouseup', mouseUpHandler);
+    });
 }
 
-/**
- * [기능] weather_data.json 파일을 읽어 각 역 위치에 날씨 정보를 시각화합니다.
- * - 반경 500m 원 표시
- * - 기온 및 강수량 커스텀 오버레이 표시
- */
-async function displayWeather() {
-    if (weatherOverlays.length > 0) return; // 이미 데이터가 있으면 실행하지 않음
-
-    try {
-        const response = await fetch('weather_data.json');
-        const weatherData = await response.json();
-
-        for (const stationName in weatherData) {
-            const data = weatherData[stationName];
-            const lat = parseFloat(data.LAT);
-            const lng = parseFloat(data.LON);
-            const position = new kakao.maps.LatLng(lat, lng);
-            
-            // 오버레이를 원의 상단(북쪽 약 500m) 지점에 고정 (위도 1도 ≈ 111km, 500m ≈ 0.0045도)
-            const overlayPosition = new kakao.maps.LatLng(lat + 0.0040, lng);
-
-            // 데이터 파싱 (기온, 강수유무, 1시간 강수량, 시정)
-            const ta = parseFloat(data.TA);
-            const rn_ox_val = parseFloat(data.RN_OX);
-            const rn_60m = parseFloat(data.RN_60M);
-            const vs = parseInt(data.VS, 10);
-
-            // 1. 날씨 아이콘 결정 로직 (우선순위: 강수 > 안개 > 맑음)
-            let weatherIcon = '☀️'; // 기본값: 맑음
-            if (rn_ox_val > 0 || rn_60m > 0) {
-                weatherIcon = '☔️'; // 비 또는 눈
-            } else if (vs < 12) { // 시정이 5km 미만이면
-                weatherIcon = '🌫️'; // 안개
-            }
-
-            // 2. 텍스트 정보 구성
-            const tempText = `${ta.toFixed(1)}°C`;
-            const pcpText = rn_60m > 0 ? `강수: ${rn_60m}mm` : "강수 없음";
-
-            // 3. 시각화: 반경 500m 원 생성
-            const circle = new kakao.maps.Circle({
-                center: position,
-                radius: 500,
-                strokeWeight: 2,
-                strokeColor: '#1E90FF',
-                strokeOpacity: 0.8,
-                strokeStyle: 'solid',
-                fillColor: '#87CEFA',
-                fillOpacity: 0.3,
-                map: map
-            });
-
-            // 4. 시각화: 정보창(커스텀 오버레이) 생성
-            const content = `
-                <div class="pointer-events-none flex items-center gap-3 bg-white/90 backdrop-blur-sm border border-slate-300 rounded-xl px-4 py-2 shadow-lg">
-                    <div class="text-2xl filter drop-shadow-sm">${weatherIcon}</div>
-                    <div class="flex flex-col items-start text-xs">
-                        <div class="font-bold text-sm text-slate-800">${tempText}</div>
-                        <div class="text-slate-500 font-medium">${pcpText}</div>
-                    </div>
-                </div>
-            `;
-            const customOverlay = new kakao.maps.CustomOverlay({
-                position: overlayPosition,
-                content: content,
-                map: map,
-                yAnchor: 0.5,
-                xAnchor: 0.5
-            });
-            
-            // 생성된 객체를 배열에 저장하여 추후 토글 시 사용
-            weatherOverlays.push(circle);
-            weatherOverlays.push(customOverlay);
-        }
-    } catch (e) {
-        console.error("날씨 데이터 로드 또는 표시에 실패했습니다:", e);
-    }
-}
+// ========================================
+// 마커 & 맨홀 선택
+// ========================================
 
 /**
  * [기능] 개별 맨홀 마커를 생성하고 클릭 이벤트를 등록합니다.
@@ -205,39 +168,6 @@ export function createMarker(mh, pos, stationName, onSelect) {
 }
 
 /**
- * [디버그] 특정 좌표에 테스트용 마커와 반경 원을 그립니다.
- * @param {number} lat - 위도
- * @param {number} lng - 경도
- * @param {number} radiusMeter - 반경 (미터 단위, 5km = 5000)
- */
-export function drawTestCircle(lat, lng, radiusMeter = 5000) {
-    const position = new kakao.maps.LatLng(lat, lng);
-
-    // 기존 테스트 객체 제거
-    if (currentCircle) currentCircle.setMap(null);
-    if (centerMarker) centerMarker.setMap(null);
-
-    centerMarker = new kakao.maps.Marker({
-        position: position,
-        map: map
-    });
-
-    currentCircle = new kakao.maps.Circle({
-        center: position,         // 원의 중심좌표
-        radius: radiusMeter,      // 미터 단위의 반경 (5000 = 5km)
-        strokeWeight: 2,          // 선의 두께
-        strokeColor: '#75B8FA',   // 선의 색깔
-        strokeOpacity: 0.8,       // 선의 불투명도
-        strokeStyle: 'solid',     // 선의 스타일
-        fillColor: '#CFE7FF',      // 채우기 색깔
-        fillOpacity: 0.3          // 채우기 불투명도 (지도가 비쳐 보이도록 설정)
-    });
-
-    currentCircle.setMap(map);
-    map.panTo(position);
-}
-
-/**
  * [기능] 특정 맨홀을 선택했을 때의 동작을 처리합니다.
  * - 사이드바 항목 활성화
  * - 지도 중심 이동 및 확대
@@ -246,7 +176,7 @@ export function drawTestCircle(lat, lng, radiusMeter = 5000) {
  * @param {string} id - 선택된 맨홀 ID
  */
 export function selectManhole(id) {
-    selectManholeInSidebar(id); // 사이드바 선택 동기화
+    selectManholeInSidebar(id);
     const target = markersMap[id];
     if(!target) return;
 
@@ -277,12 +207,12 @@ function showManholeOverlay(mh, stationName, position) {
     }
 
     // 임의의 수위 데이터 생성 (데모용)
-    const waterLevel = Math.floor(Math.random() * 300) + 200; 
+    const waterLevel = Math.floor(Math.random() * 300) + 200;
 
     // 오버레이 컨텐츠 생성 (DOM Element 방식)
     const content = document.createElement('div');
     content.className = 'absolute bottom-14 left-1/2 -translate-x-1/2 w-auto min-w-[300px] max-w-[90vw] bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-slate-200 overflow-hidden animate-[fadeIn_0.2s_ease-out] z-50';
-    
+
     content.innerHTML = `
         <div class="p-4 relative">
             <div class="absolute top-2 right-2">
@@ -315,7 +245,7 @@ function showManholeOverlay(mh, stationName, position) {
             </div>
             <div class="mt-3 pt-3 border-t border-slate-100 flex justify-between items-center">
                     <div class="text-xs text-slate-500 flex items-center gap-1">
-                        평균수위 <span class="font-bold text-slate-700 text-sm">${waterLevel}mm</span> 
+                        평균수위 <span class="font-bold text-slate-700 text-sm">${waterLevel}mm</span>
                         <span class="w-2 h-2 rounded-full bg-green-500 ml-1"></span><span class="text-green-600">정상</span>
                     </div>
                     <button class="detail-view-btn text-xs bg-slate-800 text-white px-3 py-1.5 rounded-lg hover:bg-slate-700 transition-colors shadow-sm">상세보기</button>
@@ -339,17 +269,116 @@ function showManholeOverlay(mh, stationName, position) {
     currentOverlay = new kakao.maps.CustomOverlay({
         position: position,
         content: content,
-        yAnchor: 1, // 마커 바로 위에 위치하도록 설정
+        yAnchor: 1,
         zIndex: 100
     });
     currentOverlay.setMap(map);
 }
 
+// ========================================
+// 날씨 오버레이
+// ========================================
+
+/**
+ * [기능] 날씨 정보 오버레이를 켜거나 끕니다.
+ * @param {boolean} show - 날씨 정보를 표시할지 여부
+ */
+function toggleWeather(show) {
+    if (show && weatherOverlays.length === 0) {
+        // 최초 활성화 시 데이터를 로드하여 표시
+        displayWeather();
+    } else {
+        // 이미 로드된 오버레이들의 표시 여부만 변경 (성능 최적화)
+        weatherOverlays.forEach(overlay => overlay.setMap(show ? map : null));
+    }
+}
+
+/**
+ * [기능] weather_data.json 파일을 읽어 각 역 위치에 날씨 정보를 시각화합니다.
+ * - 반경 500m 원 표시
+ * - 기온 및 강수량 커스텀 오버레이 표시
+ */
+async function displayWeather() {
+    if (weatherOverlays.length > 0) return;
+
+    try {
+        const response = await fetch('weather_data.json');
+        const weatherData = await response.json();
+
+        for (const stationName in weatherData) {
+            const data = weatherData[stationName];
+            const lat = parseFloat(data.LAT);
+            const lng = parseFloat(data.LON);
+            const position = new kakao.maps.LatLng(lat, lng);
+
+            // 오버레이를 원의 상단(북쪽 약 500m) 지점에 고정 (위도 1도 ≈ 111km, 500m ≈ 0.0045도)
+            const overlayPosition = new kakao.maps.LatLng(lat + 0.0040, lng);
+
+            // 데이터 파싱 (기온, 강수유무, 1시간 강수량, 시정)
+            const ta = parseFloat(data.TA);
+            const rn_ox_val = parseFloat(data.RN_OX);
+            const rn_60m = parseFloat(data.RN_60M);
+            const vs = parseInt(data.VS, 10);
+
+            // 날씨 아이콘 결정 (우선순위: 강수 > 안개 > 맑음)
+            let weatherIcon = '☀️';
+            if (rn_ox_val > 0 || rn_60m > 0) {
+                weatherIcon = '☔️';
+            } else if (vs < 12) {
+                weatherIcon = '🌫️';
+            }
+
+            const tempText = `${ta.toFixed(1)}°C`;
+            const pcpText = rn_60m > 0 ? `강수: ${rn_60m}mm` : "강수 없음";
+
+            // 반경 500m 원 생성
+            const circle = new kakao.maps.Circle({
+                center: position,
+                radius: 500,
+                strokeWeight: 2,
+                strokeColor: '#1E90FF',
+                strokeOpacity: 0.8,
+                strokeStyle: 'solid',
+                fillColor: '#87CEFA',
+                fillOpacity: 0.3,
+                map: map
+            });
+
+            // 정보창(커스텀 오버레이) 생성
+            const content = `
+                <div class="pointer-events-none flex items-center gap-3 bg-white/90 backdrop-blur-sm border border-slate-300 rounded-xl px-4 py-2 shadow-lg">
+                    <div class="text-2xl filter drop-shadow-sm">${weatherIcon}</div>
+                    <div class="flex flex-col items-start text-xs">
+                        <div class="font-bold text-sm text-slate-800">${tempText}</div>
+                        <div class="text-slate-500 font-medium">${pcpText}</div>
+                    </div>
+                </div>
+            `;
+            const customOverlay = new kakao.maps.CustomOverlay({
+                position: overlayPosition,
+                content: content,
+                map: map,
+                yAnchor: 0.5,
+                xAnchor: 0.5
+            });
+
+            weatherOverlays.push(circle);
+            weatherOverlays.push(customOverlay);
+        }
+    } catch (e) {
+        console.error("날씨 데이터 로드 또는 표시에 실패했습니다:", e);
+    }
+}
+
+// ========================================
+// 유틸리티
+// ========================================
+
 /**
  * [유틸] 사이드바 토글 등으로 지도 컨테이너 크기가 변경되었을 때 레이아웃을 갱신합니다.
  */
 export function relayoutMap() {
-    setTimeout(() => { 
+    setTimeout(() => {
         if(map) map.relayout();
         // 로드뷰가 보이는 상태라면 로드뷰도 리레이아웃
         const rvContainer = document.getElementById('roadview');
@@ -360,47 +389,34 @@ export function relayoutMap() {
 }
 
 /**
- * [기능] 지도와 로드뷰 사이의 높이 조절(Resizer) 기능을 초기화합니다.
+ * [디버그] 특정 좌표에 테스트용 마커와 반경 원을 그립니다.
+ * @param {number} lat - 위도
+ * @param {number} lng - 경도
+ * @param {number} radiusMeter - 반경 (미터 단위, 5km = 5000)
  */
-export function initMapResizer() {
-    const resizer = document.getElementById('map-resizer');
-    const roadviewContainer = document.getElementById('roadview');
-    const mainContent = document.getElementById('main-content');
+export function drawTestCircle(lat, lng, radiusMeter = 5000) {
+    const position = new kakao.maps.LatLng(lat, lng);
 
-    let isResizing = false;
+    // 기존 테스트 객체 제거
+    if (currentCircle) currentCircle.setMap(null);
+    if (centerMarker) centerMarker.setMap(null);
 
-    resizer.addEventListener('mousedown', (e) => {
-        e.preventDefault();
-        isResizing = true;
-        document.body.style.cursor = 'row-resize';
-        document.body.style.userSelect = 'none';
-
-        const mouseMoveHandler = (e) => {
-            if (!isResizing) return;
-
-            const mainRect = mainContent.getBoundingClientRect();
-            // 로드뷰 높이 = 전체 높이 - 마우스 Y 좌표 (하단 기준 계산)
-            let newHeight = mainRect.bottom - e.clientY;
-            
-            // 최소 100px, 최대 (전체 - 100px) 제한
-            newHeight = Math.max(100, Math.min(newHeight, mainRect.height - 100));
-
-            roadviewContainer.style.height = `${newHeight}px`;
-        };
-
-        const mouseUpHandler = () => {
-            isResizing = false;
-            document.removeEventListener('mousemove', mouseMoveHandler);
-            document.removeEventListener('mouseup', mouseUpHandler);
-            document.body.style.cursor = 'default';
-            document.body.style.userSelect = 'auto';
-            
-            // 리사이징 종료 후 지도/로드뷰 레이아웃 갱신 (딜레이 없이 즉시 호출)
-            if(map) map.relayout();
-            if(rv) rv.relayout();
-        };
-
-        document.addEventListener('mousemove', mouseMoveHandler);
-        document.addEventListener('mouseup', mouseUpHandler);
+    centerMarker = new kakao.maps.Marker({
+        position: position,
+        map: map
     });
+
+    currentCircle = new kakao.maps.Circle({
+        center: position,
+        radius: radiusMeter,
+        strokeWeight: 2,
+        strokeColor: '#75B8FA',
+        strokeOpacity: 0.8,
+        strokeStyle: 'solid',
+        fillColor: '#CFE7FF',
+        fillOpacity: 0.3
+    });
+
+    currentCircle.setMap(map);
+    map.panTo(position);
 }

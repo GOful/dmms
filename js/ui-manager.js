@@ -339,6 +339,9 @@ window.viewPdfManual = async function(type) {
     `;
 
     try {
+        // PDF.js Worker 설정
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+
         // PDF 문서 로드
         const loadingTask = window.pdfjsLib.getDocument(pdfPath);
         currentPdfDoc = await loadingTask.promise;

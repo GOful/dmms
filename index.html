@@ -11,10 +11,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- PDF.js (모바일 PDF 뷰어용) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- Tailwind 커스텀 설정 (폰트, 애니메이션, 스크롤바) -->
     <script>
-        // PDF.js Worker 설정
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-
         tailwind.config = {
             theme: {
                 extend: {
@@ -55,6 +53,7 @@
                 대구교통공사 맨홀관리 시스템 <span class="font-light text-slate-400">(DMMS)</span>
             </a>
         </div>
+        <!-- 데스크탑 메뉴 -->
         <ul class="hidden md:flex gap-1 h-full" id="menu-list">
        
             <li class="relative group h-full flex items-center">
@@ -131,6 +130,7 @@
                 </div>
             </div>
 
+            <!-- 카카오맵 -->
             <div id="map" class="flex-1 w-full h-full"></div>
             
             <!-- 리사이저 -->
@@ -188,12 +188,11 @@
         </div>
     </div>
 
+    <!-- 카카오맵 SDK -->
     <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=bfdc537ae38f2581f61b334ea4034de6&libraries=services"></script>
+    <!-- 앱 진입점 -->
     <script type="module" src="js/main.js"></script>
-    <script type="module">
-        import { setupMenuEvents } from './js/ui-manager.js';
-        setupMenuEvents(); // 메뉴 이벤트 리스너 등록
-    </script>
+
 
     <!-- [새로 설계된 모바일 메뉴] 슬라이딩 드로어 방식 -->
     <div id="mobile-menu-container" class="relative z-[100]" style="display: none;">

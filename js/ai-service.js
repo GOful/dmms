@@ -1,8 +1,8 @@
+// Google Generative AI (Gemma 3) - AI 챗봇 서비스
 import { GoogleGenerativeAI } from "https://esm.run/@google/generative-ai";
 
-const API_KEY = "AIzaSyDZfCjhWW4PNJ3R1EkbkHrm6nhjG_IuPuI"; 
+const API_KEY = "AIzaSyDZfCjhWW4PNJ3R1EkbkHrm6nhjG_IuPuI";
 const genAI = new GoogleGenerativeAI(API_KEY);
-// 사용 중인 Gemma 3 모델 설정
 const model = genAI.getGenerativeModel({ model: "gemma-3-27b-it" });
 
 /**
@@ -82,10 +82,12 @@ Question: ${userMsg}`;
         // 결과 표시
         history.innerHTML += `<div class="self-start bg-white border border-slate-200 text-slate-800 px-4 py-3 rounded-2xl rounded-tl-none shadow-sm max-w-[90%] text-sm leading-relaxed prose prose-sm break-words animate-[fadeIn_0.3s_ease-out]">${response.text()}</div>`;
     } catch (error) {
+        // 오류 처리 (할당량 초과, 네트워크 등)
         console.error("AI 응답 오류:", error);
         const loadingEl = document.getElementById(loadingId);
         if (loadingEl) loadingEl.innerText = "오류가 발생했습니다. 할당량(Quota)이나 네트워크를 확인하세요.";
     } finally {
+        // 입력 UI 복원
         input.disabled = false;
         sendBtn.disabled = false;
         history.scrollTop = history.scrollHeight;
