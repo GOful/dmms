@@ -57,8 +57,9 @@ export async function askAI(rawData) {
 
 <Instruction>
 1. 제공된 [Data]에 있는 내용에 기반해서만 답변하세요. 정보가 없으면 솔직하게 모른다고 답하세요.
-2. 특정 맨홀의 정보를 나열할 때는 가독성이 좋게 해주세요
-3. 침수 빈도나 민원 횟수가 높은 위험 시설물에 대해서는 주의를 당부하는 멘트를 추가하세요.
+2. 순위(1등, 2등 등)를 묻는 질문에는 데이터를 정렬하여 해당 순위의 항목만 명확히 답변하세요. 질문하지 않은 다른 순위의 항목들은 나열하지 마세요.
+3. 특정 맨홀의 정보를 나열할 때는 가독성이 좋게 해주세요.
+4. 침수 빈도나 민원 횟수가 높은 위험 시설물에 대해서는 주의를 당부하는 멘트를 추가하세요.
 </Instruction>
 
 <Data>
@@ -75,12 +76,16 @@ Question: ${userMsg}`;
         // AI 응답 생성 요청
         const result = await model.generateContent(finalPrompt);
         const response = await result.response;
+        const text = response.text();
+
+        // 마크다운 파싱 (marked 라이브러리 사용, 없으면 줄바꿈만 처리)
+        const htmlContent = window.marked ? window.marked.parse(text) : text.replace(/\n/g, '<br>');
         
         const loadingEl = document.getElementById(loadingId);
         if (loadingEl) loadingEl.remove();
         
         // 결과 표시
-        history.innerHTML += `<div class="self-start bg-white border border-slate-200 text-slate-800 px-4 py-3 rounded-2xl rounded-tl-none shadow-sm max-w-[90%] text-sm leading-relaxed prose prose-sm break-words animate-[fadeIn_0.3s_ease-out]">${response.text()}</div>`;
+        history.innerHTML += `<div class="self-start bg-white border border-slate-200 text-slate-800 px-4 py-3 rounded-2xl rounded-tl-none shadow-sm max-w-[90%] text-sm leading-relaxed prose prose-sm break-words animate-[fadeIn_0.3s_ease-out]">${htmlContent}</div>`;
     } catch (error) {
         console.error("AI 응답 오류:", error);
         const loadingEl = document.getElementById(loadingId);

@@ -292,8 +292,8 @@ window.viewPdfManual = async function(type) {
     const btnTextMobile = isSafetyMenu ? '닫기' : '목록';
     const btnIconPath = isSafetyMenu ? 'M6 18L18 6M6 6l12 12' : 'M10 19l-7-7m0 0l7-7m-7 7h18';
     
-    // 초기 배율 설정 (모바일 1.2, 데스크탑 1.5)
-    currentPdfScale = window.innerWidth < 640 ? 1.2 : 1.5;
+    // 초기 배율 설정 (100%)
+    currentPdfScale = 1.0;
     currentPdfDoc = null;
 
     modalBody.innerHTML = `

@@ -8,9 +8,11 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
     <!-- PDF.js (모바일 PDF 뷰어용) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <!-- Marked.js (마크다운 렌더링용) -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
     <script>
         // PDF.js Worker 설정
         pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
@@ -61,7 +63,6 @@
                 <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">점검업무</a>
                 <ul class="absolute top-14 left-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
                     <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="inspection_6m">6개월 검사표</a></li>
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="inspection_1y">1년 검사표</a></li>
                 </ul>
             </li>
             <li class="relative group h-full flex items-center">
@@ -93,7 +94,7 @@
         <!-- 사이드바 -->
         <div id="sidebar" class="w-80 bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 absolute z-40 h-full group-[.sidebar-hidden]:-translate-x-full shadow-xl">
             <div class="p-4 border-b border-slate-100 flex items-center gap-2 bg-slate-50">
-                <span class="w-2 h-6 bg-blue-600 rounded-full"></span>
+                <span class="w-2 h-0 bg-blue-600 rounded-full"></span>
                 <span class="font-bold text-slate-700">관리맨홀 목록</span>
             </div>
             <div id="sidebar-main-content" class="flex-1 overflow-hidden flex flex-col">
@@ -215,8 +216,7 @@
                 <!-- 점검업무 -->
                 <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-2">점검업무</div>
                 <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="inspection_6m">6개월 검사표</a>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="inspection_1y">1년 검사표</a>
-
+                
                 <!-- 장비 관리 -->
                 <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-4">장비 관리</div>
                 <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="device-reg">복합가스측정기</a>
