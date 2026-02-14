@@ -360,11 +360,11 @@ export function setupMenuEvents() {
             }
 
             if (target === 'device-reg') {
-                modalBody.innerHTML = generateGasDetectorTableHTML(equipmentData?.gas_detector || { headers: [], items: [] });
+                generateGasDetectorTableHTML(equipmentData?.gas_detector || { headers: [], items: [] });
             } else if (target === 'remote-control') {
-                modalBody.innerHTML = generateEmergencyRescueTableHTML(equipmentData?.emergency_rescue || { headers: [], items: [] });
+                generateEmergencyRescueTableHTML(equipmentData?.emergency_rescue || { headers: [], items: [] });
             } else if (target === 'status-check') {
-                modalBody.innerHTML = generateAirRespiratorTableHTML(equipmentData?.air_respirator || { headers: [], items: [] });
+                generateAirRespiratorTableHTML(equipmentData?.air_respirator || { headers: [], items: [] });
             } else if (PDF_MENU_TARGETS.includes(target)) {
                 viewPdfManual(target);
             } else if (target === 'realtime-monitor') {
@@ -542,11 +542,11 @@ async function closePdfManual() {
     if (!equipmentData) await loadEquipmentData();
 
     if (currentMenuTarget === 'device-reg') {
-        modalBody.innerHTML = generateGasDetectorTableHTML(equipmentData?.gas_detector || { headers: [], items: [] });
+        generateGasDetectorTableHTML(equipmentData?.gas_detector || { headers: [], items: [] });
     } else if (currentMenuTarget === 'remote-control') {
-        modalBody.innerHTML = generateEmergencyRescueTableHTML(equipmentData?.emergency_rescue || { headers: [], items: [] });
+        generateEmergencyRescueTableHTML(equipmentData?.emergency_rescue || { headers: [], items: [] });
     } else if (currentMenuTarget === 'status-check') {
-        modalBody.innerHTML = generateAirRespiratorTableHTML(equipmentData?.air_respirator || { headers: [], items: [] });
+        generateAirRespiratorTableHTML(equipmentData?.air_respirator || { headers: [], items: [] });
     }
 }
 
