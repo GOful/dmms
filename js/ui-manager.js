@@ -92,26 +92,141 @@ export function toggleChat() {
     }
 }
 
+// ========================================
+// AI 채팅 UI 관리
+// ========================================
+const getChatElements = () => ({
+    history: document.getElementById('chat-history'),
+    input: document.getElementById('chat-input'),
+    sendBtn: document.getElementById('send-btn')
+});
+
+let loadingIndicatorId = null;
+
+/**
+ * [AI 채팅] 사용자 메시지를 채팅창에 추가합니다.
+ * @param {string} message - 사용자가 입력한 메시지
+ */
+export function appendUserMessage(message) {
+    const { history } = getChatElements();
+    if (!history) return;
+    
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'self-end bg-blue-600 text-white px-4 py-2.5 rounded-2xl rounded-tr-none shadow-sm max-w-[85%] text-sm leading-relaxed break-words animate-[fadeIn_0.3s_ease-out]';
+    messageDiv.textContent = message;
+    history.appendChild(messageDiv);
+    history.scrollTop = history.scrollHeight;
+}
+
+/**
+ * [AI 채팅] AI의 응답 메시지를 채팅창에 추가합니다.
+ * @param {string} htmlContent - AI가 생성한 HTML 응답
+ */
+export function appendBotMessage(htmlContent) {
+    const { history } = getChatElements();
+    if (!history) return;
+
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'self-start bg-white border border-slate-200 text-slate-800 px-4 py-3 rounded-2xl rounded-tl-none shadow-sm max-w-[90%] text-sm leading-relaxed prose prose-sm break-words animate-[fadeIn_0.3s_ease-out]';
+    messageDiv.innerHTML = htmlContent;
+    history.appendChild(messageDiv);
+    history.scrollTop = history.scrollHeight;
+}
+
+/**
+ * [AI 채팅] '분석 중...' 로딩 인디케이터를 표시합니다.
+ */
+export function showBotLoadingIndicator() {
+    const { history } = getChatElements();
+    if (!history) return;
+
+    loadingIndicatorId = "loading-" + Date.now();
+    const loadingDiv = document.createElement('div');
+    loadingDiv.id = loadingIndicatorId;
+    loadingDiv.className = 'self-start bg-white border border-slate-200 text-slate-600 px-4 py-2.5 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-2 text-sm animate-[fadeIn_0.3s_ease-out]';
+    loadingDiv.innerHTML = `
+        <div class="w-4 h-4 border-2 border-slate-300 border-t-blue-600 rounded-full animate-spin"></div>
+        <span class="font-medium">분석 중...</span>
+    `;
+    history.appendChild(loadingDiv);
+    history.scrollTop = history.scrollHeight;
+}
+
+/**
+ * [AI 채팅] 로딩 인디케이터를 제거합니다.
+ */
+export function removeBotLoadingIndicator() {
+    if (loadingIndicatorId) {
+        const loadingEl = document.getElementById(loadingIndicatorId);
+        if (loadingEl) {
+            loadingEl.remove();
+        }
+        loadingIndicatorId = null;
+    }
+}
+
+/**
+ * [AI 채팅] 오류 메시지를 채팅창에 표시합니다.
+ * @param {string} errorMessage - 표시할 오류 메시지
+ */
+export function appendBotError(errorMessage) {
+    const { history } = getChatElements();
+    if (!history) return;
+    
+    // 기존 로딩 인디케이터가 있다면 오류 메시지로 대체
+    if (loadingIndicatorId) {
+        const loadingEl = document.getElementById(loadingIndicatorId);
+        if (loadingEl) {
+            loadingEl.textContent = errorMessage;
+             // 스타일 변경도 가능
+            loadingEl.classList.add('text-red-600');
+        }
+        loadingIndicatorId = null;
+    } else {
+        appendBotMessage(errorMessage); // 로딩 인디케이터가 없으면 그냥 메시지로 추가
+    }
+    history.scrollTop = history.scrollHeight;
+}
+
+
+/**
+ * [AI 채팅] 입력창과 전송 버튼의 활성화/비활성화 상태를 설정합니다.
+ * @param {boolean} disabled - 비활성화 여부
+ */
+export function setChatInputDisabled(disabled) {
+    const { input, sendBtn } = getChatElements();
+    if (input) {
+        input.disabled = disabled;
+        if (!disabled) {
+            input.value = '';
+        }
+    }
+    if (sendBtn) {
+        sendBtn.disabled = disabled;
+    }
+}
+
+
 
 /**
  * [기능] 트리 메뉴의 그룹(노선, 역)을 접거나 펼칩니다.
- * @param {string} id - 대상 그룹의 ID
+ * @param {string} groupId - 대상 그룹의 ID
  */
-export function toggleGroup(id) {
-    const el = document.getElementById(id);
-    const arrow = document.getElementById('arrow-' + id);
-    if(el) {
-        // Tailwind의 hidden 클래스를 토글 (hidden이 없으면 보임)
-        const isHidden = el.classList.toggle('hidden');
-        if(arrow) arrow.innerText = isHidden ? '▼' : '▲';
+export function toggleGroup(groupId) {
+    const groupContent = document.querySelector(`[data-group-content-id="${groupId}"]`);
+    const header = document.querySelector(`[data-group-id="${groupId}"]`);
+    if(groupContent && header) {
+        const isHidden = groupContent.classList.toggle('hidden');
+        const arrow = header.querySelector('.arrow-icon');
+        if(arrow) arrow.textContent = isHidden ? '▼' : '▲';
     }
 }
+
 
 /**
  * [유틸] 노선 이름에 따른 아이콘 HTML을 반환합니다.
  */
 function getLineIcon(lineTitle) {
-    // Tailwind 클래스로 아이콘 스타일링
     const baseClass = "inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold text-white mr-2 shadow-sm";
     if (lineTitle === '1호선') {
         return `<span class="${baseClass} bg-[#e60012]">1</span>`;
@@ -125,54 +240,57 @@ function getLineIcon(lineTitle) {
 /**
  * [기능] JSON 데이터를 기반으로 사이드바의 트리 메뉴 구조를 동적으로 생성합니다.
  * @param {Object} data - 맨홀 데이터 객체
- * @param {Function} onSelect - 항목 클릭 시 실행할 콜백
  */
-export function renderTree(data, onSelect) {
+export function renderTree(data) {
     const container = document.getElementById('tree-container');
+    if (!container) return;
     container.innerHTML = ""; 
+
+    const lineTemplate = document.getElementById('line-group-template');
+    const stationTemplate = document.getElementById('station-group-template');
+    const manholeTemplate = document.getElementById('manhole-item-template');
+
+    if (!lineTemplate || !stationTemplate || !manholeTemplate) {
+        console.error('Tree templates not found!');
+        return;
+    }
 
     data.lines.forEach(line => {
         const lineTotal = line.stations.reduce((acc, st) => acc + st.manholes.length, 0);
-
-        const div = document.createElement('div');
-        div.innerHTML = `
-            <div class="flex justify-between items-center p-3 cursor-pointer hover:bg-slate-50 border-b border-slate-100 font-bold text-slate-700 select-none transition-colors sticky top-0 bg-white z-10 shadow-sm" id="header-${line.lineId}">
-                <span class="flex items-center">${getLineIcon(line.lineTitle)} ${line.lineTitle} <span class="text-sm text-slate-400 font-normal ml-1">(${lineTotal})</span></span> 
-                <span id="arrow-${line.lineId}" class="text-slate-400 text-xs">▼</span>
-            </div>
-            <div id="${line.lineId}" class="hidden"></div>
-        `;
-        container.appendChild(div);
-        document.getElementById(`header-${line.lineId}`).onclick = () => toggleGroup(line.lineId);
         
-        const lineContent = document.getElementById(line.lineId);
+        const lineClone = lineTemplate.content.cloneNode(true);
+        const lineHeader = lineClone.querySelector('.tree-group-header');
+        const stationsContainer = lineClone.querySelector('.stations-container');
+        
+        lineHeader.dataset.groupId = line.lineId;
+        lineClone.querySelector('.line-icon').innerHTML = getLineIcon(line.lineTitle);
+        lineClone.querySelector('.line-title').textContent = line.lineTitle;
+        lineClone.querySelector('.line-count').textContent = `(${lineTotal})`;
+        stationsContainer.dataset.groupContentId = line.lineId;
+
         line.stations.forEach(st => {
             const stCount = st.manholes.length;
-            const stDiv = document.createElement('div');
-            stDiv.innerHTML = `
-                <div class="flex justify-between items-center p-2 pl-8 cursor-pointer hover:bg-slate-50 border-b border-slate-50 text-sm font-medium text-slate-600 select-none transition-colors sticky top-[45px] bg-slate-50/95 backdrop-blur-sm z-0" id="header-${st.stationId}">
-                    <span>${st.stationName} <span class="text-xs text-slate-400 font-normal">(${stCount})</span></span> 
-                    <span id="arrow-${st.stationId}" class="text-slate-400 text-xs">▼</span>
-                </div>
-                <div id="${st.stationId}" class="hidden"></div>
-            `;
-            lineContent.appendChild(stDiv);
-            document.getElementById(`header-${st.stationId}`).onclick = () => toggleGroup(st.stationId);
-            
-            const stContent = document.getElementById(st.stationId);
-            st.manholes.forEach(mh => {
-                const pos = new kakao.maps.LatLng(mh.lat, mh.lng);
-                createMarker(mh, pos, st.stationName, onSelect);
 
-                const item = document.createElement('div');
-                item.id = `manhole-item-${mh.id}`;
-                // Tailwind 클래스 적용 (기본 상태)
-                item.className = 'pl-12 py-2 pr-4 cursor-pointer text-sm text-slate-500 border-b border-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent';
-                item.innerText = `[${mh.id}] ${mh.name}`;
-                item.onclick = () => onSelect(mh.id);
-                stContent.appendChild(item);
+            const stationClone = stationTemplate.content.cloneNode(true);
+            const stationHeader = stationClone.querySelector('.tree-group-header');
+            const manholesContainer = stationClone.querySelector('.manholes-container');
+
+            stationHeader.dataset.groupId = st.stationId;
+            stationClone.querySelector('.station-name').textContent = st.stationName;
+            stationClone.querySelector('.station-count').textContent = `(${stCount})`;
+            manholesContainer.dataset.groupContentId = st.stationId;
+
+            st.manholes.forEach(mh => {
+                const manholeClone = manholeTemplate.content.cloneNode(true);
+                const manholeItem = manholeClone.querySelector('.manhole-item');
+                manholeItem.dataset.manholeId = mh.id;
+                manholeItem.id = `manhole-item-${mh.id}`;
+                manholeItem.textContent = `[${mh.id}] ${mh.name}`;
+                manholesContainer.appendChild(manholeClone);
             });
+            stationsContainer.appendChild(stationClone);
         });
+        container.appendChild(lineClone);
     });
 }
 
@@ -278,21 +396,18 @@ export function setupMenuEvents() {
  * [기능] 모달 내부에 PDF 뷰어를 렌더링합니다.
  * @param {string} type - 매뉴얼 타입 (파일명으로 사용)
  */
-window.viewPdfManual = async function(type) {
+export async function viewPdfManual(type) {
     const currentRenderId = Date.now();
     lastPdfRenderId = currentRenderId;
 
     const modalBody = document.getElementById('modal-body');
-    // 실제 파일은 프로젝트 루트의 manuals 폴더에 위치해야 합니다 (예: manuals/gas_detector.pdf)
     const pdfPath = `manuals/${type}.pdf`; 
 
-    // 안전작업 메뉴인지 확인 (목록으로 돌아가기 vs 닫기 버튼 구분)
     const isSafetyMenu = PDF_MENU_TARGETS.includes(currentMenuTarget);
     const btnText = isSafetyMenu ? '닫기' : '목록으로 돌아가기';
     const btnTextMobile = isSafetyMenu ? '닫기' : '목록';
     const btnIconPath = isSafetyMenu ? 'M6 18L18 6M6 6l12 12' : 'M10 19l-7-7m0 0l7-7m-7 7h18';
     
-    // 초기 배율 설정 (100%)
     currentPdfScale = 1.0;
     currentPdfDoc = null;
 
@@ -305,13 +420,12 @@ window.viewPdfManual = async function(type) {
                     </svg>
                     사용 매뉴얼
                 </h4>
-                <!-- 줌 컨트롤 버튼 추가 -->
                 <div class="flex items-center gap-1 bg-slate-100 rounded-lg p-1 mr-2">
-                    <button onclick="changePdfZoom(-0.2)" class="p-1 hover:bg-white rounded-md text-slate-600 transition-colors" title="축소">
+                    <button id="pdf-zoom-out-btn" class="p-1 hover:bg-white rounded-md text-slate-600 transition-colors" title="축소">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
                     </button>
                     <span id="pdf-zoom-level" class="text-xs font-mono w-12 text-center text-slate-500">${Math.round(currentPdfScale * 100)}%</span>
-                    <button onclick="changePdfZoom(0.2)" class="p-1 hover:bg-white rounded-md text-slate-600 transition-colors" title="확대">
+                    <button id="pdf-zoom-in-btn" class="p-1 hover:bg-white rounded-md text-slate-600 transition-colors" title="확대">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
                     </button>
                 </div>
@@ -321,14 +435,13 @@ window.viewPdfManual = async function(type) {
                         <span class="hidden sm:inline">다운로드</span>
                         <span class="sm:hidden">저장</span>
                     </a>
-                    <button onclick="closePdfManual()" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-sm transition-colors shadow-sm flex items-center gap-1">
+                    <button id="pdf-close-btn" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-sm transition-colors shadow-sm flex items-center gap-1">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${btnIconPath}" /></svg>
                         <span class="hidden sm:inline">${btnText}</span>
                         <span class="sm:hidden">${btnTextMobile}</span>
                     </button>
                 </div>
             </div>
-            <!-- PDF 뷰어 컨테이너 (PDF.js 렌더링 영역) -->
             <div id="pdf-viewer-container" class="flex-1 bg-slate-200/50 rounded-xl border border-slate-200 overflow-auto p-2 sm:p-4 flex flex-col items-center gap-4 relative min-h-[400px]">
                 <div id="pdf-loading-spinner" class="absolute inset-0 flex flex-col items-center justify-center z-10">
                     <div class="w-10 h-10 border-4 border-slate-300 border-t-blue-600 rounded-full animate-spin mb-3"></div>
@@ -338,34 +451,35 @@ window.viewPdfManual = async function(type) {
         </div>
     `;
 
-    try {
-        // PDF.js Worker 설정
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+    // 이벤트 리스너 바인딩
+    document.getElementById('pdf-zoom-out-btn').addEventListener('click', () => changePdfZoom(-0.2));
+    document.getElementById('pdf-zoom-in-btn').addEventListener('click', () => changePdfZoom(0.2));
+    document.getElementById('pdf-close-btn').addEventListener('click', closePdfManual);
 
-        // PDF 문서 로드
-        const loadingTask = window.pdfjsLib.getDocument(pdfPath);
+    try {
+        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        const loadingTask = pdfjsLib.getDocument(pdfPath);
         currentPdfDoc = await loadingTask.promise;
-        
-        // 렌더링 실행
         await renderCurrentPdf(currentRenderId);
-        
     } catch (error) {
         if (lastPdfRenderId !== currentRenderId) return;
         console.error('PDF Rendering Error:', error);
         const container = document.getElementById('pdf-viewer-container');
-        container.innerHTML = `
-            <div class="flex flex-col items-center justify-center h-full text-slate-500 p-8 text-center">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-slate-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <p class="font-bold text-lg text-slate-700 mb-2">문서를 표시할 수 없습니다.</p>
-                <a href="${pdfPath}" download class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors shadow-sm mt-4">
-                    파일 직접 다운로드
-                </a>
-            </div>
-        `;
+        if(container) {
+            container.innerHTML = `
+                <div class="flex flex-col items-center justify-center h-full text-slate-500 p-8 text-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-slate-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <p class="font-bold text-lg text-slate-700 mb-2">문서를 표시할 수 없습니다.</p>
+                    <a href="${pdfPath}" download class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors shadow-sm mt-4">
+                        파일 직접 다운로드
+                    </a>
+                </div>
+            `;
+        }
     }
-};
+}
 
 /**
  * [기능] 현재 로드된 PDF 문서를 설정된 배율로 렌더링합니다.
@@ -374,9 +488,8 @@ async function renderCurrentPdf(renderId) {
     if (!currentPdfDoc || lastPdfRenderId !== renderId) return;
 
     const container = document.getElementById('pdf-viewer-container');
-    container.innerHTML = ''; // 기존 내용 초기화
+    if(container) container.innerHTML = ''; // 기존 내용 초기화
 
-    // 줌 레벨 표시 업데이트
     const zoomLabel = document.getElementById('pdf-zoom-level');
     if(zoomLabel) zoomLabel.innerText = `${Math.round(currentPdfScale * 100)}%`;
 
@@ -391,17 +504,15 @@ async function renderCurrentPdf(renderId) {
         canvas.height = viewport.height;
         canvas.width = viewport.width;
         
-        // 스타일: 원본 크기를 유지하되, 컨테이너보다 크면 스크롤되도록 설정
-        // w-full 클래스를 제거하여 줌인 시 실제로 커지게 함
         canvas.className = "shadow-lg rounded-lg bg-white mb-4 last:mb-0 max-w-none";
-        canvas.style.maxWidth = 'none'; // Tailwind max-w-3xl 오버라이드
+        canvas.style.maxWidth = 'none';
         
         const renderContext = {
             canvasContext: context,
             viewport: viewport
         };
         
-        container.appendChild(canvas);
+        if(container) container.appendChild(canvas);
         await page.render(renderContext).promise;
     }
 }
@@ -409,29 +520,27 @@ async function renderCurrentPdf(renderId) {
 /**
  * [기능] PDF 줌 레벨을 변경하고 다시 렌더링합니다.
  */
-window.changePdfZoom = function(delta) {
+function changePdfZoom(delta) {
     const newScale = currentPdfScale + delta;
-    if (newScale < 0.5 || newScale > 5.0) return; // 최소/최대 배율 제한
+    if (newScale < 0.5 || newScale > 5.0) return;
     currentPdfScale = newScale;
+    // lastPdfRenderId를 사용하여 현재 렌더링 작업에 대해서만 실행
     renderCurrentPdf(lastPdfRenderId);
-};
+}
 
 /**
  * [기능] PDF 뷰어를 닫고 이전 테이블 화면으로 복귀합니다.
  */
-window.closePdfManual = async function() {
+async function closePdfManual() {
     const modalBody = document.getElementById('modal-body');
     
-    // 안전작업 메뉴인 경우 모달 닫기
     if (PDF_MENU_TARGETS.includes(currentMenuTarget)) {
         document.getElementById('spa-modal-overlay').style.display = 'none';
         return;
     }
 
-    // 데이터가 없으면 다시 로드
     if (!equipmentData) await loadEquipmentData();
 
-    // 저장된 타겟에 따라 테이블 다시 렌더링
     if (currentMenuTarget === 'device-reg') {
         modalBody.innerHTML = generateGasDetectorTableHTML(equipmentData?.gas_detector || { headers: [], items: [] });
     } else if (currentMenuTarget === 'remote-control') {
@@ -439,7 +548,8 @@ window.closePdfManual = async function() {
     } else if (currentMenuTarget === 'status-check') {
         modalBody.innerHTML = generateAirRespiratorTableHTML(equipmentData?.air_respirator || { headers: [], items: [] });
     }
-};
+}
+
 
 /**
  * [유틸] 테스트용 더미 데이터 테이블 HTML을 생성합니다.
@@ -478,135 +588,80 @@ function generateDummyTableHTML(title) {
 }
 
 /**
+ * [헬퍼] 장비 관리 테이블을 생성하고 모달에 렌더링합니다. (Template 사용)
+ * @param {object} dataObj - 테이블 데이터 (headers, items)
+ * @param {string} manualType - 매뉴얼 버튼에 연결할 PDF 파일명
+ */
+function _createEquipmentTable(dataObj, manualType) {
+    const template = document.getElementById('equipment-table-template');
+    if (!template) return;
+
+    const modalBody = document.getElementById('modal-body');
+    modalBody.innerHTML = ''; // 기존 내용 초기화
+
+    const clone = template.content.cloneNode(true);
+    
+    const headerRow = clone.querySelector('.table-headers');
+    const tableBody = clone.querySelector('.table-body');
+    const manualBtn = clone.querySelector('.manual-btn');
+
+    // 헤더 생성
+    if (headerRow) {
+        headerRow.innerHTML = dataObj.headers.map(h => `<th class="px-4 py-3 font-bold whitespace-nowrap">${h}</th>`).join('');
+    }
+
+    // 바디 생성
+    if (tableBody) {
+        dataObj.items.forEach(item => {
+            const row = document.createElement('tr');
+            row.className = 'bg-white hover:bg-slate-50 transition-colors';
+            
+            // 데이터 객체의 모든 값을 순회하며 <td> 생성
+            const cells = Object.values(item).map(value => {
+                const td = document.createElement('td');
+                td.className = 'px-4 py-3 whitespace-nowrap';
+                // 상태(status) 값에 따라 뱃지 스타일 적용
+                if (String(value).toLowerCase() === 'normal' || String(value).toLowerCase() === 'ok' || String(value) === '정상') {
+                     td.innerHTML = `<span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">${value}</span>`;
+                } else {
+                    td.textContent = value;
+                }
+                return td.outerHTML;
+            }).join('');
+            
+            row.innerHTML = cells;
+            tableBody.appendChild(row);
+        });
+    }
+    
+    // 매뉴얼 버튼 이벤트 리스너 추가
+    if (manualBtn) {
+        manualBtn.addEventListener('click', () => viewPdfManual(manualType));
+    }
+
+    modalBody.appendChild(clone);
+}
+
+
+/**
  * [기능] 공기호흡기 관리 테이블 및 매뉴얼 버튼 HTML을 생성합니다.
  */
 function generateAirRespiratorTableHTML(dataObj) {
-    const headers = dataObj.headers.map(h => `<th class="px-4 py-3 font-bold whitespace-nowrap">${h}</th>`).join('');
-    
-    const rows = dataObj.items.map((item, index) => `
-        <tr class="bg-white hover:bg-slate-50 transition-colors">
-            <td class="px-4 py-3 whitespace-nowrap">${index + 1}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.dept}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.name}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.assetNo}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.spec}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.acquireDate}</td>
-            <td class="px-4 py-3 whitespace-nowrap"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">${item.status}</span></td>
-        </tr>
-    `).join('');
-
-    return `
-        <div class="flex flex-col gap-4 mb-6">
-            <div class="flex justify-end items-center">
-                <button onclick="viewPdfManual('air_respirator')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg shadow-sm transition-colors flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                    </svg>
-                    <span>사용매뉴얼</span>
-                </button>
-            </div>
-        </div>
-        <div class="overflow-x-auto border border-slate-200 rounded-lg">
-            <table class="w-full text-sm text-left text-slate-600">
-                <thead class="text-xs text-slate-700 uppercase bg-slate-50 border-b border-slate-200">
-                    <tr>
-                        ${headers}
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                    ${rows}
-                </tbody>
-            </table>
-        </div>
-    `;
+    _createEquipmentTable(dataObj, 'air_respirator');
 }
 
 /**
  * [기능] 비상구조 장비 관리 테이블 및 매뉴얼 버튼 HTML을 생성합니다.
  */
 function generateEmergencyRescueTableHTML(dataObj) {
-    const headers = dataObj.headers.map(h => `<th class="px-4 py-3 font-bold whitespace-nowrap">${h}</th>`).join('');
-
-    const rows = dataObj.items.map((item, index) => `
-        <tr class="bg-white hover:bg-slate-50 transition-colors">
-            <td class="px-4 py-3 whitespace-nowrap">${index + 1}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.dept}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.name}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.assetNo}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.spec}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.acquireDate}</td>
-            <td class="px-4 py-3 whitespace-nowrap"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">${item.status}</span></td>
-        </tr>
-    `).join('');
-
-    return `
-        <div class="flex flex-col gap-4 mb-6">
-            <div class="flex justify-end items-center">
-                <button onclick="viewPdfManual('emergency_rescue')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg shadow-sm transition-colors flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                    </svg>
-                    <span>사용매뉴얼</span>
-                </button>
-            </div>
-        </div>
-        <div class="overflow-x-auto border border-slate-200 rounded-lg">
-            <table class="w-full text-sm text-left text-slate-600">
-                <thead class="text-xs text-slate-700 uppercase bg-slate-50 border-b border-slate-200">
-                    <tr>
-                        ${headers}
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                    ${rows}
-                </tbody>
-            </table>
-        </div>
-    `;
+    _createEquipmentTable(dataObj, 'emergency_rescue');
 }
 
 /**
  * [기능] 복합가스측정기 관리 테이블 및 매뉴얼 버튼 HTML을 생성합니다.
  */
 function generateGasDetectorTableHTML(dataObj) {
-    const headers = dataObj.headers.map(h => `<th class="px-4 py-3 font-bold whitespace-nowrap">${h}</th>`).join('');
-
-    const rows = dataObj.items.map((item, index) => `
-        <tr class="bg-white hover:bg-slate-50 transition-colors">
-            <td class="px-4 py-3 whitespace-nowrap">${index + 1}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.dept}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.assetNo}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.spec}</td>
-            <td class="px-4 py-3 whitespace-nowrap"><span class="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">${item.status}</span></td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.acquireDate}</td>
-            <td class="px-4 py-3 whitespace-nowrap">${item.calibDate}</td>
-        </tr>
-    `).join('');
-
-    return `
-        <div class="flex flex-col gap-4 mb-6">
-            <div class="flex justify-end items-center">
-                <button onclick="viewPdfManual('gas_detector')" class="px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg shadow-sm transition-colors flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                    </svg>
-                    <span>사용매뉴얼</span>
-                </button>
-            </div>
-        </div>
-        <div class="overflow-x-auto border border-slate-200 rounded-lg">
-            <table class="w-full text-sm text-left text-slate-600">
-                <thead class="text-xs text-slate-700 uppercase bg-slate-50 border-b border-slate-200">
-                    <tr>
-                        ${headers}
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-slate-100">
-                    ${rows}
-                </tbody>
-            </table>
-        </div>
-    `;
+    _createEquipmentTable(dataObj, 'gas_detector');
 }
 
 /**

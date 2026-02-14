@@ -233,5 +233,104 @@
             </div>
         </div>
     </div>
+
+    <!-- ========== TEMPLATES ========== -->
+    <template id="equipment-table-template">
+        <div class="flex flex-col gap-4 mb-6">
+            <div class="flex justify-end items-center">
+                <button class="manual-btn px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg shadow-sm transition-colors flex items-center gap-1">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
+                    </svg>
+                    <span>사용매뉴얼</span>
+                </button>
+            </div>
+        </div>
+        <div class="overflow-x-auto border border-slate-200 rounded-lg">
+            <table class="w-full text-sm text-left text-slate-600">
+                <thead class="text-xs text-slate-700 uppercase bg-slate-50 border-b border-slate-200">
+                    <tr class="table-headers"></tr>
+                </thead>
+                <tbody class="table-body divide-y divide-slate-100">
+                </tbody>
+            </table>
+        </div>
+    </template>
+
+    <template id="manhole-overlay-template">
+        <div class="absolute bottom-14 left-1/2 -translate-x-1/2 w-auto min-w-[300px] max-w-[90vw] bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-slate-200 overflow-hidden animate-[fadeIn_0.2s_ease-out] z-50">
+            <div class="p-4 relative">
+                <div class="absolute top-2 right-2">
+                    <button class="close-overlay-btn text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
+                    </button>
+                </div>
+                <div class="flex justify-between items-start mb-3">
+                    <div class="flex-1 pr-8">
+                        <h3 class="text-lg font-bold text-slate-800 flex flex-wrap items-center gap-2">
+                            <span class="data-name">맨홀이름</span>
+                            <span class="data-station-name text-xs font-normal px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full">역이름</span>
+                        </h3>
+                        <p class="text-xs text-slate-500 mt-1">
+                            ID: <span class="data-id"></span> | 좌표: <span class="data-coords"></span>
+                        </p>
+                    </div>
+                </div>
+                <div class="grid grid-cols-3 gap-2 text-center">
+                    <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 group hover:border-blue-200 transition-colors">
+                        <div class="text-xs text-slate-500 mb-1">민원</div>
+                        <div class="font-bold text-slate-700 text-lg"><span class="data-complaint-cnt">0</span><span class="text-xs font-normal text-slate-400 ml-0.5">회</span></div>
+                    </div>
+                    <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 group hover:border-blue-200 transition-colors">
+                        <div class="text-xs text-slate-500 mb-1">수선</div>
+                        <div class="font-bold text-blue-600 text-lg"><span class="data-repair-cnt">0</span><span class="text-xs font-normal text-slate-400 ml-0.5">회</span></div>
+                    </div>
+                    <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 group hover:border-blue-200 transition-colors">
+                        <div class="text-xs text-slate-500 mb-1">침수빈도</div>
+                        <div class="font-bold text-red-500 text-lg"><span class="data-flood-freq">0</span><span class="text-xs font-normal text-slate-400 ml-0.5">회</span></div>
+                    </div>
+                </div>
+                <div class="mt-3 pt-3 border-t border-slate-100 flex justify-between items-center">
+                    <div class="text-xs text-slate-500 flex items-center gap-1">
+                        평균수위 <span class="font-bold text-slate-700 text-sm data-water-level">250mm</span>
+                        <span class="w-2 h-2 rounded-full bg-green-500 ml-1"></span><span class="text-green-600">정상</span>
+                    </div>
+                    <button class="detail-view-btn text-xs bg-slate-800 text-white px-3 py-1.5 rounded-lg hover:bg-slate-700 transition-colors shadow-sm">상세보기</button>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="line-group-template">
+        <div>
+            <div class="tree-group-header flex justify-between items-center p-3 cursor-pointer hover:bg-slate-50 border-b border-slate-100 font-bold text-slate-700 select-none transition-colors sticky top-0 bg-white z-10 shadow-sm">
+                <span class="flex items-center">
+                    <span class="line-icon"></span>
+                    <span class="line-title"></span>
+                    <span class="line-count text-sm text-slate-400 font-normal ml-1"></span>
+                </span> 
+                <span class="arrow-icon text-slate-400 text-xs">▼</span>
+            </div>
+            <div class="stations-container hidden"></div>
+        </div>
+    </template>
+
+    <template id="station-group-template">
+        <div>
+            <div class="tree-group-header flex justify-between items-center p-2 pl-8 cursor-pointer hover:bg-slate-50 border-b border-slate-50 text-sm font-medium text-slate-600 select-none transition-colors sticky top-[45px] bg-slate-50/95 backdrop-blur-sm z-0">
+                <span>
+                    <span class="station-name"></span>
+                    <span class="station-count text-xs text-slate-400 font-normal"></span>
+                </span> 
+                <span class="arrow-icon text-slate-400 text-xs">▼</span>
+            </div>
+            <div class="manholes-container hidden"></div>
+        </div>
+    </template>
+
+    <template id="manhole-item-template">
+        <div class="manhole-item pl-12 py-2 pr-4 cursor-pointer text-sm text-slate-500 border-b border-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent">
+        </div>
+    </template>
 </body>
 </html>
