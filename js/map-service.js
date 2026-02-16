@@ -22,10 +22,7 @@ const svgSelectedMarkerHtml = `
   <path d="M34 14L20 34H30L28 50L42 30H32L34 14Z" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5" stroke-linejoin="round"/>
 </svg>`;
 
-const starImg = new kakao.maps.MarkerImage(
-    `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgSelectedMarkerHtml.trim())}`,
-    new kakao.maps.Size(50, 50)
-);
+let starImg = null;
 
 // 기본 맨홀 마커 이미지 (슬레이트 색상 + 번개 아이콘)
 const svgMarkerHtml = `
@@ -36,10 +33,7 @@ const svgMarkerHtml = `
   <path d="M34 14L20 34H30L28 50L42 30H32L34 14Z" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5" stroke-linejoin="round"/>
 </svg>`;
 
-const normalImg = new kakao.maps.MarkerImage(
-    `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgMarkerHtml.trim())}`,
-    new kakao.maps.Size(44, 44)
-);
+let normalImg = null;
 
 // ========================================
 // 초기화
@@ -49,6 +43,17 @@ const normalImg = new kakao.maps.MarkerImage(
  * [초기화] 카카오맵 및 로드뷰 객체를 생성하고 초기 설정을 수행합니다.
  */
 export function initMap() {
+    // [수정] 함수 내부에서 이미지 객체 생성 (kakao 객체가 로드된 후 실행됨)
+    starImg = new kakao.maps.MarkerImage(
+        `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgSelectedMarkerHtml.trim())}`,
+        new kakao.maps.Size(50, 50)
+    );
+
+    normalImg = new kakao.maps.MarkerImage(
+        `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgMarkerHtml.trim())}`,
+        new kakao.maps.Size(44, 44)
+    );
+
     state.map = new kakao.maps.Map(document.getElementById('map'), {
         center: new kakao.maps.LatLng(35.8714, 128.6014),
         level: 7

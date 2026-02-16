@@ -1,11 +1,8 @@
-import { createMarker, relayoutMap } from './map-service.js';
+import { relayoutMap } from './map-service.js';
+import { viewPdfManual } from './pdf-manager.js';
 
-let currentSelectedItemId = null;
 let equipmentData = null; // 장비 데이터 캐싱용 변수
 let currentMenuTarget = null; // 현재 활성화된 메뉴 타겟 저장
-let lastPdfRenderId = 0; // PDF 렌더링 중복 방지용 ID
-let currentPdfDoc = null; // 현재 로드된 PDF 문서 객체
-let currentPdfScale = 1.5; // PDF 렌더링 배율
 
 // PDF 뷰어로 바로 연결되는 메뉴 타겟 목록 (안전작업 및 점검표)
 const PDF_MENU_TARGETS = [
@@ -33,42 +30,6 @@ async function loadEquipmentData() {
 }
 
 /**
- * [기능] 사이드바 트리 메뉴에서 특정 맨홀 항목을 선택(하이라이트)하고,
- * 해당 항목이 보이도록 트리를 자동으로 펼치고 스크롤합니다.
- * @param {string} id - 선택할 맨홀 ID
- */
-export function selectManholeInSidebar(id) {
-    if (currentSelectedItemId) {
-        const prevSelected = document.getElementById(`manhole-item-${currentSelectedItemId}`);
-        if (prevSelected) {
-            // 이전 선택 스타일 제거
-            prevSelected.classList.remove('bg-blue-50', 'text-blue-700', 'font-bold', 'border-l-4', 'border-blue-600');
-        }
-    }
-
-    const newSelected = document.getElementById(`manhole-item-${id}`);
-    if (newSelected) {
-        // 새로운 선택 스타일 적용 (Tailwind)
-        newSelected.classList.add('bg-blue-50', 'text-blue-700', 'font-bold', 'border-l-4', 'border-blue-600');
-        currentSelectedItemId = id;
-
-        // 선택된 항목의 부모 그룹들이 닫혀있다면 모두 열어줌
-        let parent = newSelected.parentElement;
-        while(parent && parent.id !== 'tree-container') {
-            // hidden 클래스가 있으면(닫혀있으면) 제거해서 열어줌
-            if (parent.classList.contains('hidden')) {
-                const header = document.getElementById(`header-${parent.id}`);
-                if(header) header.click();
-            }
-            parent = parent.parentElement;
-        }
-        
-        // 상단 고정 헤더(Sticky)에 가려지는 것을 방지하기 위해 중앙으로 스크롤
-        newSelected.scrollIntoView({ behavior: 'smooth', block: 'center' });
-    }
-}
-
-/**
  * [기능] 사이드바 전체를 보이거나 숨깁니다.
  */
 export function toggleSidebar() {
@@ -92,213 +53,10 @@ export function toggleChat() {
     }
 }
 
-// ========================================
-// AI 채팅 UI 관리
-// ========================================
-const getChatElements = () => ({
-    history: document.getElementById('chat-history'),
-    input: document.getElementById('chat-input'),
-    sendBtn: document.getElementById('send-btn')
-});
-
-let loadingIndicatorId = null;
-
-/**
- * [AI 채팅] 사용자 메시지를 채팅창에 추가합니다.
- * @param {string} message - 사용자가 입력한 메시지
- */
-export function appendUserMessage(message) {
-    const { history } = getChatElements();
-    if (!history) return;
-    
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'self-end bg-blue-600 text-white px-4 py-2.5 rounded-2xl rounded-tr-none shadow-sm max-w-[85%] text-sm leading-relaxed break-words animate-[fadeIn_0.3s_ease-out]';
-    messageDiv.textContent = message;
-    history.appendChild(messageDiv);
-    history.scrollTop = history.scrollHeight;
-}
-
-/**
- * [AI 채팅] AI의 응답 메시지를 채팅창에 추가합니다.
- * @param {string} htmlContent - AI가 생성한 HTML 응답
- */
-export function appendBotMessage(htmlContent) {
-    const { history } = getChatElements();
-    if (!history) return;
-
-    const messageDiv = document.createElement('div');
-    messageDiv.className = 'self-start bg-white border border-slate-200 text-slate-800 px-4 py-3 rounded-2xl rounded-tl-none shadow-sm max-w-[90%] text-sm leading-relaxed prose prose-sm break-words animate-[fadeIn_0.3s_ease-out]';
-    messageDiv.innerHTML = htmlContent;
-    history.appendChild(messageDiv);
-    history.scrollTop = history.scrollHeight;
-}
-
-/**
- * [AI 채팅] '분석 중...' 로딩 인디케이터를 표시합니다.
- */
-export function showBotLoadingIndicator() {
-    const { history } = getChatElements();
-    if (!history) return;
-
-    loadingIndicatorId = "loading-" + Date.now();
-    const loadingDiv = document.createElement('div');
-    loadingDiv.id = loadingIndicatorId;
-    loadingDiv.className = 'self-start bg-white border border-slate-200 text-slate-600 px-4 py-2.5 rounded-2xl rounded-tl-none shadow-sm flex items-center gap-2 text-sm animate-[fadeIn_0.3s_ease-out]';
-    loadingDiv.innerHTML = `
-        <div class="w-4 h-4 border-2 border-slate-300 border-t-blue-600 rounded-full animate-spin"></div>
-        <span class="font-medium">분석 중...</span>
-    `;
-    history.appendChild(loadingDiv);
-    history.scrollTop = history.scrollHeight;
-}
-
-/**
- * [AI 채팅] 로딩 인디케이터를 제거합니다.
- */
-export function removeBotLoadingIndicator() {
-    if (loadingIndicatorId) {
-        const loadingEl = document.getElementById(loadingIndicatorId);
-        if (loadingEl) {
-            loadingEl.remove();
-        }
-        loadingIndicatorId = null;
-    }
-}
-
-/**
- * [AI 채팅] 오류 메시지를 채팅창에 표시합니다.
- * @param {string} errorMessage - 표시할 오류 메시지
- */
-export function appendBotError(errorMessage) {
-    const { history } = getChatElements();
-    if (!history) return;
-    
-    // 기존 로딩 인디케이터가 있다면 오류 메시지로 대체
-    if (loadingIndicatorId) {
-        const loadingEl = document.getElementById(loadingIndicatorId);
-        if (loadingEl) {
-            loadingEl.textContent = errorMessage;
-             // 스타일 변경도 가능
-            loadingEl.classList.add('text-red-600');
-        }
-        loadingIndicatorId = null;
-    } else {
-        appendBotMessage(errorMessage); // 로딩 인디케이터가 없으면 그냥 메시지로 추가
-    }
-    history.scrollTop = history.scrollHeight;
-}
-
-
-/**
- * [AI 채팅] 입력창과 전송 버튼의 활성화/비활성화 상태를 설정합니다.
- * @param {boolean} disabled - 비활성화 여부
- */
-export function setChatInputDisabled(disabled) {
-    const { input, sendBtn } = getChatElements();
-    if (input) {
-        input.disabled = disabled;
-        if (!disabled) {
-            input.value = '';
-        }
-    }
-    if (sendBtn) {
-        sendBtn.disabled = disabled;
-    }
-}
-
-
-
-/**
- * [기능] 트리 메뉴의 그룹(노선, 역)을 접거나 펼칩니다.
- * @param {string} groupId - 대상 그룹의 ID
- */
-export function toggleGroup(groupId) {
-    const groupContent = document.querySelector(`[data-group-content-id="${groupId}"]`);
-    const header = document.querySelector(`[data-group-id="${groupId}"]`);
-    if(groupContent && header) {
-        const isHidden = groupContent.classList.toggle('hidden');
-        const arrow = header.querySelector('.arrow-icon');
-        if(arrow) arrow.textContent = isHidden ? '▼' : '▲';
-    }
-}
-
-
-/**
- * [유틸] 노선 이름에 따른 아이콘 HTML을 반환합니다.
- */
-function getLineIcon(lineTitle) {
-    const baseClass = "inline-flex items-center justify-center w-5 h-5 rounded-full text-xs font-bold text-white mr-2 shadow-sm";
-    if (lineTitle === '1호선') {
-        return `<span class="${baseClass} bg-[#e60012]">1</span>`;
-    }
-    if (lineTitle === '2호선') {
-        return `<span class="${baseClass} bg-[#00a84d]">2</span>`;
-    }
-    return '🚇'; // 기본 아이콘
-}
-
-/**
- * [기능] JSON 데이터를 기반으로 사이드바의 트리 메뉴 구조를 동적으로 생성합니다.
- * @param {Object} data - 맨홀 데이터 객체
- */
-export function renderTree(data) {
-    const container = document.getElementById('tree-container');
-    if (!container) return;
-    container.innerHTML = ""; 
-
-    const lineTemplate = document.getElementById('line-group-template');
-    const stationTemplate = document.getElementById('station-group-template');
-    const manholeTemplate = document.getElementById('manhole-item-template');
-
-    if (!lineTemplate || !stationTemplate || !manholeTemplate) {
-        console.error('Tree templates not found!');
-        return;
-    }
-
-    data.lines.forEach(line => {
-        const lineTotal = line.stations.reduce((acc, st) => acc + st.manholes.length, 0);
-        
-        const lineClone = lineTemplate.content.cloneNode(true);
-        const lineHeader = lineClone.querySelector('.tree-group-header');
-        const stationsContainer = lineClone.querySelector('.stations-container');
-        
-        lineHeader.dataset.groupId = line.lineId;
-        lineClone.querySelector('.line-icon').innerHTML = getLineIcon(line.lineTitle);
-        lineClone.querySelector('.line-title').textContent = line.lineTitle;
-        lineClone.querySelector('.line-count').textContent = `(${lineTotal})`;
-        stationsContainer.dataset.groupContentId = line.lineId;
-
-        line.stations.forEach(st => {
-            const stCount = st.manholes.length;
-
-            const stationClone = stationTemplate.content.cloneNode(true);
-            const stationHeader = stationClone.querySelector('.tree-group-header');
-            const manholesContainer = stationClone.querySelector('.manholes-container');
-
-            stationHeader.dataset.groupId = st.stationId;
-            stationClone.querySelector('.station-name').textContent = st.stationName;
-            stationClone.querySelector('.station-count').textContent = `(${stCount})`;
-            manholesContainer.dataset.groupContentId = st.stationId;
-
-            st.manholes.forEach(mh => {
-                const manholeClone = manholeTemplate.content.cloneNode(true);
-                const manholeItem = manholeClone.querySelector('.manhole-item');
-                manholeItem.dataset.manholeId = mh.id;
-                manholeItem.id = `manhole-item-${mh.id}`;
-                manholeItem.textContent = `[${mh.id}] ${mh.name}`;
-                manholesContainer.appendChild(manholeClone);
-            });
-            stationsContainer.appendChild(stationClone);
-        });
-        container.appendChild(lineClone);
-    });
-}
-
 /**
  * [기능] 상단 메뉴바의 링크 클릭 이벤트를 처리합니다. (SPA 방식)
  */
 export function setupMenuEvents() {
-    const menuList = document.getElementById('menu-list');
     const spaLinks = document.querySelectorAll('.spa-link');
     const modalOverlay = document.getElementById('spa-modal-overlay');
     const modalTitle = document.getElementById('modal-title');
@@ -348,10 +106,6 @@ export function setupMenuEvents() {
             currentMenuTarget = target; // 현재 메뉴 타겟 저장
             const menuName = link.innerText;
 
-            const modalWindow = document.querySelector('.modal-window');
-            // Tailwind에서는 클래스 조작 대신 스타일을 직접 변경하거나 상태 클래스 사용
-            // 여기서는 간단히 내용만 교체
-
             modalTitle.innerText = menuName;
 
             // 장비 관련 메뉴일 경우 데이터 로드
@@ -366,7 +120,7 @@ export function setupMenuEvents() {
             } else if (target === 'status-check') {
                 generateAirRespiratorTableHTML(equipmentData?.air_respirator || { headers: [], items: [] });
             } else if (PDF_MENU_TARGETS.includes(target)) {
-                viewPdfManual(target);
+                viewPdfManual(target, currentMenuTarget, PDF_MENU_TARGETS, closePdfManual);
             } else if (target === 'realtime-monitor') {
                 modalBody.innerHTML = generateDummyTableHTML(menuName);
             } else {
@@ -392,148 +146,11 @@ export function setupMenuEvents() {
     });
 }
 
-/**
- * [기능] 모달 내부에 PDF 뷰어를 렌더링합니다.
- * @param {string} type - 매뉴얼 타입 (파일명으로 사용)
- */
-export async function viewPdfManual(type) {
-    const currentRenderId = Date.now();
-    lastPdfRenderId = currentRenderId;
-
-    const modalBody = document.getElementById('modal-body');
-    const pdfPath = `manuals/${type}.pdf`; 
-
-    const isSafetyMenu = PDF_MENU_TARGETS.includes(currentMenuTarget);
-    const btnText = isSafetyMenu ? '닫기' : '목록으로 돌아가기';
-    const btnTextMobile = isSafetyMenu ? '닫기' : '목록';
-    const btnIconPath = isSafetyMenu ? 'M6 18L18 6M6 6l12 12' : 'M10 19l-7-7m0 0l7-7m-7 7h18';
-    
-    currentPdfScale = 1.0;
-    currentPdfDoc = null;
-
-    modalBody.innerHTML = `
-        <div class="flex flex-col h-full min-h-[600px]">
-            <div class="flex justify-between items-center mb-4">
-                <h4 class="font-bold text-slate-700 flex items-center gap-2">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-red-500" viewBox="0 0 20 20" fill="currentColor">
-                        <path fill-rule="evenodd" d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4z" clip-rule="evenodd" />
-                    </svg>
-                    사용 매뉴얼
-                </h4>
-                <div class="flex items-center gap-1 bg-slate-100 rounded-lg p-1 mr-2">
-                    <button id="pdf-zoom-out-btn" class="p-1 hover:bg-white rounded-md text-slate-600 transition-colors" title="축소">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clip-rule="evenodd" /></svg>
-                    </button>
-                    <span id="pdf-zoom-level" class="text-xs font-mono w-12 text-center text-slate-500">${Math.round(currentPdfScale * 100)}%</span>
-                    <button id="pdf-zoom-in-btn" class="p-1 hover:bg-white rounded-md text-slate-600 transition-colors" title="확대">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clip-rule="evenodd" /></svg>
-                    </button>
-                </div>
-                <div class="flex gap-2">
-                    <a href="${pdfPath}" download class="px-3 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-600 rounded-lg text-sm transition-colors shadow-sm flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" /></svg>
-                        <span class="hidden sm:inline">다운로드</span>
-                        <span class="sm:hidden">저장</span>
-                    </a>
-                    <button id="pdf-close-btn" class="px-3 py-1.5 bg-white border border-slate-300 hover:bg-slate-50 text-slate-700 rounded-lg text-sm transition-colors shadow-sm flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="${btnIconPath}" /></svg>
-                        <span class="hidden sm:inline">${btnText}</span>
-                        <span class="sm:hidden">${btnTextMobile}</span>
-                    </button>
-                </div>
-            </div>
-            <div id="pdf-viewer-container" class="flex-1 bg-slate-200/50 rounded-xl border border-slate-200 overflow-auto p-2 sm:p-4 flex flex-col items-center gap-4 relative min-h-[400px]">
-                <div id="pdf-loading-spinner" class="absolute inset-0 flex flex-col items-center justify-center z-10">
-                    <div class="w-10 h-10 border-4 border-slate-300 border-t-blue-600 rounded-full animate-spin mb-3"></div>
-                    <span class="text-slate-500 font-medium animate-pulse">PDF 문서를 불러오는 중...</span>
-                </div>
-            </div>
-        </div>
-    `;
-
-    // 이벤트 리스너 바인딩
-    document.getElementById('pdf-zoom-out-btn').addEventListener('click', () => changePdfZoom(-0.2));
-    document.getElementById('pdf-zoom-in-btn').addEventListener('click', () => changePdfZoom(0.2));
-    document.getElementById('pdf-close-btn').addEventListener('click', closePdfManual);
-
-    try {
-        pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
-        const loadingTask = pdfjsLib.getDocument(pdfPath);
-        currentPdfDoc = await loadingTask.promise;
-        await renderCurrentPdf(currentRenderId);
-    } catch (error) {
-        if (lastPdfRenderId !== currentRenderId) return;
-        console.error('PDF Rendering Error:', error);
-        const container = document.getElementById('pdf-viewer-container');
-        if(container) {
-            container.innerHTML = `
-                <div class="flex flex-col items-center justify-center h-full text-slate-500 p-8 text-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-slate-300 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                    <p class="font-bold text-lg text-slate-700 mb-2">문서를 표시할 수 없습니다.</p>
-                    <a href="${pdfPath}" download class="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-sm transition-colors shadow-sm mt-4">
-                        파일 직접 다운로드
-                    </a>
-                </div>
-            `;
-        }
-    }
-}
-
-/**
- * [기능] 현재 로드된 PDF 문서를 설정된 배율로 렌더링합니다.
- */
-async function renderCurrentPdf(renderId) {
-    if (!currentPdfDoc || lastPdfRenderId !== renderId) return;
-
-    const container = document.getElementById('pdf-viewer-container');
-    if(container) container.innerHTML = ''; // 기존 내용 초기화
-
-    const zoomLabel = document.getElementById('pdf-zoom-level');
-    if(zoomLabel) zoomLabel.innerText = `${Math.round(currentPdfScale * 100)}%`;
-
-    for (let pageNum = 1; pageNum <= currentPdfDoc.numPages; pageNum++) {
-        if (lastPdfRenderId !== renderId) return;
-        
-        const page = await currentPdfDoc.getPage(pageNum);
-        const viewport = page.getViewport({ scale: currentPdfScale });
-        
-        const canvas = document.createElement('canvas');
-        const context = canvas.getContext('2d');
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
-        
-        canvas.className = "shadow-lg rounded-lg bg-white mb-4 last:mb-0 max-w-none";
-        canvas.style.maxWidth = 'none';
-        
-        const renderContext = {
-            canvasContext: context,
-            viewport: viewport
-        };
-        
-        if(container) container.appendChild(canvas);
-        await page.render(renderContext).promise;
-    }
-}
-
-/**
- * [기능] PDF 줌 레벨을 변경하고 다시 렌더링합니다.
- */
-function changePdfZoom(delta) {
-    const newScale = currentPdfScale + delta;
-    if (newScale < 0.5 || newScale > 5.0) return;
-    currentPdfScale = newScale;
-    // lastPdfRenderId를 사용하여 현재 렌더링 작업에 대해서만 실행
-    renderCurrentPdf(lastPdfRenderId);
-}
 
 /**
  * [기능] PDF 뷰어를 닫고 이전 테이블 화면으로 복귀합니다.
  */
 async function closePdfManual() {
-    const modalBody = document.getElementById('modal-body');
-    
     if (PDF_MENU_TARGETS.includes(currentMenuTarget)) {
         document.getElementById('spa-modal-overlay').style.display = 'none';
         return;
@@ -636,7 +253,7 @@ function _createEquipmentTable(dataObj, manualType) {
     
     // 매뉴얼 버튼 이벤트 리스너 추가
     if (manualBtn) {
-        manualBtn.addEventListener('click', () => viewPdfManual(manualType));
+        manualBtn.addEventListener('click', () => viewPdfManual(manualType, currentMenuTarget, PDF_MENU_TARGETS, closePdfManual));
     }
 
     modalBody.appendChild(clone);

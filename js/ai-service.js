@@ -7,7 +7,7 @@ import {
     appendBotMessage, 
     appendBotError, 
     setChatInputDisabled 
-} from './ui-manager.js';
+} from './chat-manager.js';
 
 const API_KEY = "AIzaSyDZfCjhWW4PNJ3R1EkbkHrm6nhjG_IuPuI";
 const genAI = new GoogleGenerativeAI(API_KEY);

@@ -1,5 +1,6 @@
 import { initMap, selectManhole, relayoutMap, initMapResizer, createMarker } from './map-service.js';
-import { renderTree, toggleSidebar, toggleChat, setupMenuEvents, toggleGroup, selectManholeInSidebar, openManholeDetailModal } from './ui-manager.js';
+import { renderTree, toggleGroup, selectManholeInSidebar } from './tree-manager.js';
+import { toggleSidebar, toggleChat, setupMenuEvents, openManholeDetailModal } from './ui-controller.js';
 import { askAI } from './ai-service.js';
 
 let rawData = null;
