@@ -1,3 +1,4 @@
+import { filterTree } from './tree-manager.js';
 // ========================================
 // 상태 변수 & 상수
 // ========================================
@@ -76,7 +77,7 @@ function setupMapControls() {
     const weatherCheckbox = document.getElementById('weather-checkbox');
     const roadviewCheckbox = document.getElementById('roadview-checkbox');
     const mapResizer = document.getElementById('map-resizer');
-    const resetMarkersBtn = document.getElementById('reset-markers-btn');
+    const resetFilterBtn = document.getElementById('reset-filter-btn');
 
     trafficCheckbox.addEventListener('change', (e) => {
         if (e.target.checked) {
@@ -104,8 +105,8 @@ function setupMapControls() {
         }
     });
 
-    if (resetMarkersBtn) {
-        resetMarkersBtn.addEventListener('click', () => {
+    if (resetFilterBtn) {
+        resetFilterBtn.addEventListener('click', () => {
             filterMarkers([]); // 빈 배열 전달 시 전체 마커 표시
         });
     }
@@ -396,9 +397,19 @@ export function drawTestCircle(lat, lng, radiusMeter = 5000) {
 export function filterMarkers(targetIds) {
     if (!state.map) return;
 
+    // [추가] 필터링 실행 시 기존 선택된 오버레이 닫기 및 마커 스타일 초기화
+    if (state.currentOverlay) {
+        state.currentOverlay.setMap(null);
+        state.currentOverlay = null;
+    }
+    Object.values(state.markersMap).forEach(item => {
+        item.marker.setImage(normalImg);
+    });
+
     const showAll = !targetIds || targetIds.length === 0;
     const bounds = new kakao.maps.LatLngBounds();
     let hasVisibleMarker = false;
+    const filterControl = document.getElementById('map-filter-control');
 
     Object.values(state.markersMap).forEach(item => {
         const shouldShow = showAll || targetIds.includes(item.data.id);
@@ -414,4 +425,16 @@ export function filterMarkers(targetIds) {
     if (hasVisibleMarker) {
         state.map.setBounds(bounds);
     }
+
+    // [추가] 필터링 상태에 따라 초기화 버튼 표시/숨김 토글
+    if (filterControl) {
+        if (!showAll) {
+            filterControl.classList.remove('hidden');
+        } else {
+            filterControl.classList.add('hidden');
+        }
+    }
+
+    // [추가] 사이드바 트리 메뉴도 함께 필터링
+    filterTree(targetIds);
 }

@@ -25,8 +25,17 @@ export function selectManholeInSidebar(id) {
         while(parent && parent.id !== 'tree-container') {
             // hidden 클래스가 있으면(닫혀있으면) 제거해서 열어줌
             if (parent.classList.contains('hidden')) {
-                const header = document.getElementById(`header-${parent.id}`);
-                if(header) header.click();
+                parent.classList.remove('hidden');
+                
+                // 연관된 헤더의 화살표 아이콘 업데이트
+                const contentId = parent.dataset.groupContentId;
+                if (contentId) {
+                    const header = document.querySelector(`[data-group-id="${contentId}"]`);
+                    if (header) {
+                        const arrow = header.querySelector('.arrow-icon');
+                        if (arrow) arrow.textContent = '▲';
+                    }
+                }
             }
             parent = parent.parentElement;
         }
@@ -120,5 +129,86 @@ export function renderTree(data) {
             stationsContainer.appendChild(stationClone);
         });
         container.appendChild(lineClone);
+    });
+}
+
+/**
+ * [기능] 전달받은 맨홀 ID 목록에 해당하는 항목만 트리에 표시합니다.
+ * 목록이 비어있거나 null이면 모든 항목을 초기 상태(접힌 상태)로 되돌립니다.
+ * @param {string[]} targetIds - 표시할 맨홀 ID 배열
+ */
+export function filterTree(targetIds) {
+    const container = document.getElementById('tree-container');
+    if (!container) return;
+
+    const showAll = !targetIds || targetIds.length === 0;
+
+    // 1. 맨홀 아이템 필터링
+    const allManholes = container.querySelectorAll('.manhole-item');
+    allManholes.forEach(item => {
+        if (showAll || targetIds.includes(item.dataset.manholeId)) {
+            item.classList.remove('hidden');
+        } else {
+            item.classList.add('hidden');
+        }
+    });
+
+    // 2. 역(Station) 그룹 필터링
+    // .stations-container 바로 아래의 div들이 역 그룹임
+    const allStationGroups = container.querySelectorAll('.stations-container > div');
+    allStationGroups.forEach(group => {
+        const manholesContainer = group.querySelector('.manholes-container');
+        // 현재 그룹 내에서 숨겨지지 않은 맨홀이 하나라도 있는지 확인
+        const hasVisibleManhole = manholesContainer.querySelector('.manhole-item:not(.hidden)');
+
+        if (showAll) {
+            group.classList.remove('hidden');
+            // 초기화 시에는 그룹을 접어둠 (깔끔하게 정리)
+            manholesContainer.classList.add('hidden');
+            const arrow = group.querySelector('.arrow-icon');
+            if(arrow) arrow.textContent = '▼';
+        } else {
+            if (hasVisibleManhole) {
+                group.classList.remove('hidden');
+                // 필터링 결과가 있으면 펼쳐서 보여줌
+                manholesContainer.classList.remove('hidden');
+                const arrow = group.querySelector('.arrow-icon');
+                if(arrow) arrow.textContent = '▲';
+            } else {
+                group.classList.add('hidden');
+            }
+        }
+    });
+
+    // 3. 노선(Line) 그룹 필터링
+    // #tree-container 바로 아래의 div들이 노선 그룹임
+    const allLineGroups = Array.from(container.children);
+    allLineGroups.forEach(group => {
+        const stationsContainer = group.querySelector('.stations-container');
+        // 현재 노선 내에서 숨겨지지 않은 역 그룹이 하나라도 있는지 확인
+        let hasVisibleStation = false;
+        const stationDivs = stationsContainer.children;
+        for (let stDiv of stationDivs) {
+            if (!stDiv.classList.contains('hidden')) {
+                hasVisibleStation = true;
+                break;
+            }
+        }
+
+        if (showAll) {
+            group.classList.remove('hidden');
+            stationsContainer.classList.add('hidden');
+            const arrow = group.querySelector('.arrow-icon');
+            if(arrow) arrow.textContent = '▼';
+        } else {
+            if (hasVisibleStation) {
+                group.classList.remove('hidden');
+                stationsContainer.classList.remove('hidden');
+                const arrow = group.querySelector('.arrow-icon');
+                if(arrow) arrow.textContent = '▲';
+            } else {
+                group.classList.add('hidden');
+            }
+        }
     });
 }

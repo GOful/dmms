@@ -37,18 +37,19 @@ function _buildPrompt(userMsg, rawData) {
         });
 
         return `
-당신은 대구교통공사(DTRO)의 맨홀 관리 시스템 전문 AI 어시스턴트입니다.
-아래 제공된 [Data]를 분석하여 사용자의 질문에 답변하세요.
+당신은 대구교통공사(DTRO)의 맨홀 관리 시스템 전문 AI 어시스턴트다
+아래 제공된 [Data]를 분석하여 사용자의 질문에 답변
 
 <Instruction>
-1. 반드시 제공된 [Data]에 기반해서만 답변하세요.
-2. 반드시 답변 시 HTML 태그(<ul>, <li>, <strong>, <br>)를 적절히 섞어 가독성을 높이세요.
-3. 위험 시설물(침수/민원 높음) 언급 시 반드시 "안전 점검이 필요합니다"라는 경고를 포함하세요.
-4. [중요] 사용자가 지도 표시(찍어줘, 보여줘 등)를 요청하면, 다른 설명 없이 오직 아래 형식의 JSON 블록만 출력하세요:
+1. 반드시 제공된 [Data]에 기반해 답변
+2. 반드시 답변 시 HTML 태그(<ul>, <li>, <strong>, <br>)를 적절히 섞어 가독성 높이기
+3. 위험 시설물(침수/민원 높음) 언급 시 반드시 주의점검에 대한 내용을 마지막 강조
+4. [중요] 사용자가 지도 표시(찍어줘, 보여줘 등)를 요청하면, 아래 JSON 형식으로 응답. 'message' 필드에는 선택된 맨홀들의 데이터(침수 횟수, 상태 등)와 선정 이유를 HTML 태그(<ul>, <li>)를 사용하여 요약해 주세요:
 \`\`\`json
 {
   "tool": "filter_map_markers",
-  "target_ids": ["ID1", "ID2"]
+  "target_ids": ["ID1", "ID2"],
+  "message": "요청하신 침수 위험 지역 2곳을 표시했습니다.<br><ul><li><strong>MH-001</strong>: 침수 5회 (심각)</li>...</ul>"
 }
 \`\`\`
 </Instruction>
@@ -97,7 +98,7 @@ export async function askAI(rawData) {
                 if (actionData.tool === "filter_map_markers" && Array.isArray(actionData.target_ids)) {
                     // 지도 기능 실행
                     filterMarkers(actionData.target_ids);
-                    displayMessage = `요청하신 <strong>${actionData.target_ids.length}</strong>개의 시설물을 지도에 표시했습니다.`;
+                    displayMessage = actionData.message || `요청하신 <strong>${actionData.target_ids.length}</strong>개의 시설물을 지도에 표시했습니다.`;
                 }
             } catch (e) {
                 console.error("JSON 파싱 에러:", e);
