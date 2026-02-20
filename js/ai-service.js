@@ -31,7 +31,7 @@ function _buildPrompt(userMsg, rawData) {
         rawData.lines.forEach(line => {
             line.stations.forEach(st => {
                 st.manholes.forEach(mh => {        
-                    contextData += `${mh.id},${mh.name},${st.stationName},${mh.lat},${mh.lng},${mh.flood_freq || 0},${mh.repair_cnt || 0},${mh.complaint_cnt || 0}\n`;
+                    contextData += `${mh.id},${mh.name},${st.stationName},${mh.lat},${mh.lng},${mh.flood_cnt || 0},${mh.repair_cnt || 0},${mh.complaint_cnt || 0}\n`;
                 });
             });
         });
@@ -44,12 +44,24 @@ function _buildPrompt(userMsg, rawData) {
 1. 반드시 제공된 [Data]에 기반해 답변
 2. 반드시 답변 시 HTML 태그(<ul>, <li>, <strong>, <br>)를 적절히 섞어 가독성 높이기
 3. 위험 시설물(침수/민원 높음) 언급 시 반드시 주의점검에 대한 내용을 마지막 강조
-4. [중요] 사용자가 지도 표시(찍어줘, 보여줘 등)를 요청하면, 아래 JSON 형식으로 응답. 'message' 필드에는 선택된 맨홀들의 데이터(침수 횟수, 상태 등)와 선정 이유를 HTML 태그(<ul>, <li>)를 사용하여 요약해 주세요:
+4. [중요] 사용자가 지도 표시(찍어줘, 보여줘 등)를 요청하면, 아래 JSON 형식으로 응답하고 'message' 필드에는 선택된 맨홀들의 데이터(침수 횟수, 상태 등)와 선정 이유를 HTML 태그(<ul>, <li>)를 사용하여 요약해 주세요:
+
 \`\`\`json
 {
   "tool": "filter_map_markers",
   "target_ids": ["ID1", "ID2"],
   "message": "요청하신 침수 위험 지역 2곳을 표시했습니다.<br><ul><li><strong>MH-001</strong>: 침수 5회 (심각)</li>...</ul>"
+}
+\`\`\`
+   - [매우 중요] '수선 5회 이상', '침수 1회 이상' 등 명확한 수치 조건을 제시한 경우, 직접 ID를 찾지 말고 아래 형식을 반환하세요 (시스템이 정확히 계산합니다):
+\`\`\`json
+{
+  "tool": "apply_filter",
+  "criteria": {
+    "field": "repair_cnt", // 데이터 필드명 (repair_cnt, flood_cnt, complaint_cnt)
+    "operator": ">=", // 연산자 (>=, <=, >, <, ==)
+    "value": 5 // 기준 값 (숫자)
+  }
 }
 \`\`\`
 </Instruction>
@@ -88,17 +100,54 @@ export async function askAI(rawData) {
         // 3. 응답 처리 로직
         let displayMessage = text;
         
-        // JSON 추출을 위한 정규표현식 (비탐욕적 매칭)
-        const jsonMatch = text.match(/\{[\s\S]*?\}/);
+        // JSON 추출 로직 개선 (Code Block 우선, 없으면 Greedy 매칭으로 중첩 객체 대응)
+        let jsonString = null;
+        const codeBlockMatch = text.match(/```json\s*([\s\S]*?)\s*```/);
+        
+        if (codeBlockMatch) {
+            jsonString = codeBlockMatch[1];
+        } else {
+            // 중첩된 중괄호({ ... { ... } ... })를 처리하기 위해 Greedy 매칭 사용
+            const jsonMatch = text.match(/\{[\s\S]*\}/);
+            if (jsonMatch) jsonString = jsonMatch[0];
+        }
 
-        if (jsonMatch) {
+        if (jsonString) {
             try {
-                const actionData = JSON.parse(jsonMatch[0].trim());
+                const actionData = JSON.parse(jsonString.trim());
                 
                 if (actionData.tool === "filter_map_markers" && Array.isArray(actionData.target_ids)) {
                     // 지도 기능 실행
                     filterMarkers(actionData.target_ids);
                     displayMessage = actionData.message || `요청하신 <strong>${actionData.target_ids.length}</strong>개의 시설물을 지도에 표시했습니다.`;
+                }
+                
+                // [추가] 수치 기반 필터링 로직 (AI가 조건을 추출하면 JS가 정확히 계산)
+                if (actionData.tool === "apply_filter" && actionData.criteria) {
+                    const { field, operator, value } = actionData.criteria;
+                    const matchedIds = [];
+                    let matchCount = 0;
+
+                    // 전체 데이터 순회하며 조건 검사
+                    rawData.lines.forEach(line => {
+                        line.stations.forEach(st => {
+                            st.manholes.forEach(mh => {
+                                const dataValue = mh[field] || 0;
+                                let isMatch = false;
+                                
+                                if (operator === ">=") isMatch = dataValue >= value;
+                                else if (operator === "<=") isMatch = dataValue <= value;
+                                else if (operator === ">") isMatch = dataValue > value;
+                                else if (operator === "<") isMatch = dataValue < value;
+                                else if (operator === "==") isMatch = dataValue == value;
+
+                                if (isMatch) matchedIds.push(mh.id);
+                            });
+                        });
+                    });
+
+                    filterMarkers(matchedIds);
+                    displayMessage = `요청하신 조건에 해당하는 시설물 <strong>${matchedIds.length}</strong>곳을 정확히 찾아 지도에 표시했습니다.`;
                 }
             } catch (e) {
                 console.error("JSON 파싱 에러:", e);
