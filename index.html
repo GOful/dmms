@@ -126,6 +126,12 @@
                         <input type="checkbox" id="roadview-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300"> 로드뷰
                     </label>
                 </div>
+                <button id="reset-markers-btn" class="mt-1 w-full bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-bold py-2 px-3 rounded-lg transition-colors flex items-center justify-center gap-1 border border-slate-200">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    마커 초기화
+                </button>
             </div>
 
             <!-- 카카오맵 -->
@@ -143,7 +149,7 @@
             <div class="bg-slate-900 p-4 rounded-t-2xl flex justify-between items-center text-white">
                 <div class="flex items-center gap-2">
                     <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
-                    <span class="font-medium">AI Assistant</span>
+                    <span class="font-medium">AI 대화창</span>
                 </div>
                 <button onclick="document.getElementById('toggle-chat-btn').click()" class="text-slate-400 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button>
             </div>
@@ -286,14 +292,13 @@
                         <div class="font-bold text-blue-600 text-lg"><span class="data-repair-cnt">0</span><span class="text-xs font-normal text-slate-400 ml-0.5">회</span></div>
                     </div>
                     <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 group hover:border-blue-200 transition-colors">
-                        <div class="text-xs text-slate-500 mb-1">침수빈도</div>
+                        <div class="text-xs text-slate-500 mb-1">침수횟수</div>
                         <div class="font-bold text-red-500 text-lg"><span class="data-flood-freq">0</span><span class="text-xs font-normal text-slate-400 ml-0.5">회</span></div>
                     </div>
                 </div>
                 <div class="mt-3 pt-3 border-t border-slate-100 flex justify-between items-center">
                     <div class="text-xs text-slate-500 flex items-center gap-1">
                         평균수위 <span class="font-bold text-slate-700 text-sm data-water-level">250mm</span>
-                        <span class="w-2 h-2 rounded-full bg-green-500 ml-1"></span><span class="text-green-600">정상</span>
                     </div>
                     <button class="detail-view-btn text-xs bg-slate-800 text-white px-3 py-1.5 rounded-lg hover:bg-slate-700 transition-colors shadow-sm">상세보기</button>
                 </div>

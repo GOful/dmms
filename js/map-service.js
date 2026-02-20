@@ -76,6 +76,7 @@ function setupMapControls() {
     const weatherCheckbox = document.getElementById('weather-checkbox');
     const roadviewCheckbox = document.getElementById('roadview-checkbox');
     const mapResizer = document.getElementById('map-resizer');
+    const resetMarkersBtn = document.getElementById('reset-markers-btn');
 
     trafficCheckbox.addEventListener('change', (e) => {
         if (e.target.checked) {
@@ -102,6 +103,12 @@ function setupMapControls() {
             state.map.relayout();
         }
     });
+
+    if (resetMarkersBtn) {
+        resetMarkersBtn.addEventListener('click', () => {
+            filterMarkers([]); // 빈 배열 전달 시 전체 마커 표시
+        });
+    }
 }
 
 /**
@@ -167,7 +174,6 @@ export function selectManhole(id) {
     const target = state.markersMap[id];
     if(!target) return;
 
-    state.map.setLevel(4);
     state.map.panTo(target.pos);
 
     Object.values(state.markersMap).forEach(m => m.marker.setImage(normalImg));
@@ -205,7 +211,36 @@ function showManholeOverlay(mh, stationName, position) {
     content.querySelector('.data-complaint-cnt').textContent = mh.complaint_cnt || 0;
     content.querySelector('.data-repair-cnt').textContent = mh.repair_cnt || 0;
     content.querySelector('.data-flood-freq').textContent = mh.flood_freq || 0;
-    content.querySelector('.data-water-level').textContent = `${waterLevel}mm`;
+
+    // [수정] 수위 5단계 그래픽 시각화
+    const maxLevel = 500; // 최대 수위 기준 (예: 500mm)
+    let levelStep = Math.ceil((waterLevel / maxLevel) * 5);
+    if (levelStep < 1) levelStep = 1;
+    if (levelStep > 5) levelStep = 5;
+
+    // 단계별 설정 (정상 -> 심각)
+    const stepConfig = {
+        1: { label: '정상', color: 'bg-green-500', textClass: 'text-green-700' },
+        2: { label: '주의', color: 'bg-blue-500', textClass: 'text-blue-700' },
+        3: { label: '경계', color: 'bg-yellow-400', textClass: 'text-yellow-600' },
+        4: { label: '위험', color: 'bg-orange-500', textClass: 'text-orange-700' },
+        5: { label: '심각', color: 'bg-red-600', textClass: 'text-red-700' }
+    };
+
+    const config = stepConfig[levelStep];
+
+    // 5개 막대 생성
+    const barsHtml = Array.from({length: 5}, (_, i) => 
+        `<div class="w-1.5 h-3 rounded-sm ${i < levelStep ? config.color : 'bg-slate-200'}"></div>`
+    ).join('');
+
+    const waterLevelEl = content.querySelector('.data-water-level');
+    waterLevelEl.classList.add('flex', 'items-center', 'gap-2'); 
+    waterLevelEl.innerHTML = `
+        <div class="flex gap-0.5">${barsHtml}</div>
+        <span class="font-bold text-xs ${config.textClass}">${config.label}</span>
+        <span class="text-xs text-slate-500">(${waterLevel}mm)</span>
+    `;
 
     // 이벤트 리스너 연결
     content.querySelector('.close-overlay-btn').addEventListener('click', () => {
@@ -351,4 +386,32 @@ export function drawTestCircle(lat, lng, radiusMeter = 5000) {
 
     state.currentCircle.setMap(state.map);
     state.map.panTo(position);
+}
+
+/**
+ * [기능] 전달받은 맨홀 ID 목록에 해당하는 마커만 지도에 표시합니다.
+ * 목록이 비어있거나 null이면 모든 마커를 다시 표시합니다.
+ * @param {string[]} targetIds - 표시할 맨홀 ID 배열
+ */
+export function filterMarkers(targetIds) {
+    if (!state.map) return;
+
+    const showAll = !targetIds || targetIds.length === 0;
+    const bounds = new kakao.maps.LatLngBounds();
+    let hasVisibleMarker = false;
+
+    Object.values(state.markersMap).forEach(item => {
+        const shouldShow = showAll || targetIds.includes(item.data.id);
+        item.marker.setMap(shouldShow ? state.map : null);
+
+        if (shouldShow && !showAll) {
+            bounds.extend(item.pos);
+            hasVisibleMarker = true;
+        }
+    });
+
+    // 필터링된 마커들이 한눈에 보이도록 지도 범위 재설정
+    if (hasVisibleMarker) {
+        state.map.setBounds(bounds);
+    }
 }
