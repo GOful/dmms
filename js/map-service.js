@@ -15,6 +15,8 @@ const state = {
     watchId: null,          // 위치 추적 ID
     userMarker: null,       // 내 위치 마커
     isTracking: false,      // 지도 중심 이동 여부
+    selectedMarkerOverlay: null, // [추가] 선택된 마커의 애니메이션 오버레이
+    selectedManholeId: null,     // [추가] 현재 선택된 맨홀 ID (마커 복원용)
 };
 
 // 선택된 맨홀 마커 이미지 (파란색 강조)
@@ -182,13 +184,41 @@ export function selectManhole(id) {
     // UI 업데이트를 위해 이벤트를 발생시켜 main.js에 알림
     document.dispatchEvent(new CustomEvent('manholeselected', { detail: { manholeId: id } }));
     
+    // [추가] 이전에 선택된 마커 상태 복원 (애니메이션 오버레이 제거 및 원래 마커 표시)
+    if (state.selectedManholeId && state.markersMap[state.selectedManholeId]) {
+        state.markersMap[state.selectedManholeId].marker.setMap(state.map);
+    }
+    if (state.selectedMarkerOverlay) {
+        state.selectedMarkerOverlay.setMap(null);
+        state.selectedMarkerOverlay = null;
+    }
+
     const target = state.markersMap[id];
     if(!target) return;
 
+    state.selectedManholeId = id; // 현재 선택 ID 저장
     state.map.panTo(target.pos);
 
-    Object.values(state.markersMap).forEach(m => m.marker.setImage(normalImg));
-    target.marker.setImage(starImg);
+    // [수정] 선택된 마커를 잠시 숨기고, 그 위치에 파동 효과(Ping)가 적용된 오버레이 생성
+    target.marker.setMap(null);
+
+    const content = document.createElement('div');
+    content.className = "relative flex items-center justify-center w-24 h-24 cursor-pointer"; 
+    content.innerHTML = `
+        <div class="absolute w-16 h-16 bg-blue-500 rounded-full opacity-40 animate-ping"></div>
+        <div class="relative z-10 w-12 h-12 drop-shadow-xl">
+            ${svgSelectedMarkerHtml}
+        </div>
+    `;
+
+    state.selectedMarkerOverlay = new kakao.maps.CustomOverlay({
+        position: target.pos,
+        content: content,
+        yAnchor: 0.5, // 원형 마커의 중심이 좌표에 오도록 설정
+        xAnchor: 0.5,
+        zIndex: 101
+    });
+    state.selectedMarkerOverlay.setMap(state.map);
 
     state.rvClient.getNearestPanoId(target.pos, 50, (pId) => {
         if(pId) state.rv.setPanoId(pId, target.pos);
@@ -256,7 +286,17 @@ function showManholeOverlay(mh, stationName, position) {
     // 이벤트 리스너 연결
     content.querySelector('.close-overlay-btn').addEventListener('click', () => {
         if (state.currentOverlay) state.currentOverlay.setMap(null);
-        Object.values(state.markersMap).forEach(m => m.marker.setImage(normalImg));
+        
+        // [추가] 닫기 버튼 클릭 시 애니메이션 오버레이 제거 및 원래 마커 복원
+        if (state.selectedManholeId && state.markersMap[state.selectedManholeId]) {
+            state.markersMap[state.selectedManholeId].marker.setMap(state.map);
+        }
+        if (state.selectedMarkerOverlay) {
+            state.selectedMarkerOverlay.setMap(null);
+            state.selectedMarkerOverlay = null;
+        }
+        state.selectedManholeId = null;
+
         selectManholeInSidebar(null); // [추가] 사이드바 선택 상태 해제
     });
 
@@ -413,9 +453,17 @@ export function filterMarkers(targetIds) {
         state.currentOverlay.setMap(null);
         state.currentOverlay = null;
     }
-    Object.values(state.markersMap).forEach(item => {
-        item.marker.setImage(normalImg);
-    });
+    
+    // [추가] 필터링 시 선택된 애니메이션 오버레이 초기화
+    if (state.selectedMarkerOverlay) {
+        state.selectedMarkerOverlay.setMap(null);
+        state.selectedMarkerOverlay = null;
+    }
+    if (state.selectedManholeId && state.markersMap[state.selectedManholeId]) {
+        state.markersMap[state.selectedManholeId].marker.setMap(state.map);
+    }
+    state.selectedManholeId = null;
+
     selectManholeInSidebar(null); // [추가] 필터링 시에도 사이드바 선택 해제
 
     const showAll = !targetIds || targetIds.length === 0;
