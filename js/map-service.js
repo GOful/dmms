@@ -472,7 +472,7 @@ function toggleUserTracking(enable) {
                 updateUserPosition, 
                 (err) => {
                     console.error('위치 정보를 가져올 수 없습니다.', err);
-                    alert('위치 정보를 가져올 수 없습니다. 권한을 확인해주세요.');
+                    alert('위치 정보를 가져올 수 없습니다. 기기의 권한을 확인해주세요.');
                     const checkbox = document.getElementById('location-checkbox');
                     if(checkbox) checkbox.checked = false;
                     state.isTracking = false;
@@ -526,8 +526,5 @@ function updateUserPosition(position) {
         state.userMarker.setPosition(loc);
     }
 
-    // 추적 모드일 경우 지도 중심 이동
-    if (state.isTracking) {
-        state.map.panTo(loc);
-    }
+
 }
