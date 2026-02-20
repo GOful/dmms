@@ -12,6 +12,9 @@ const state = {
     markersMap: {},         // 맨홀 ID를 키로 하는 마커 객체 저장소 { [manholeId]: { marker, pos, data, stationName } }
     weatherOverlays: [],    // 날씨 오버레이(원, 커스텀오버레이) 객체 배열
     currentOverlay: null,   // 현재 표시된 맨홀 정보 오버레이
+    watchId: null,          // 위치 추적 ID
+    userMarker: null,       // 내 위치 마커
+    isTracking: false,      // 지도 중심 이동 여부
 };
 
 // 선택된 맨홀 마커 이미지 (파란색 강조)
@@ -78,6 +81,7 @@ function setupMapControls() {
     const roadviewCheckbox = document.getElementById('roadview-checkbox');
     const mapResizer = document.getElementById('map-resizer');
     const resetFilterBtn = document.getElementById('reset-filter-btn');
+    const locationCheckbox = document.getElementById('location-checkbox');
 
     trafficCheckbox.addEventListener('change', (e) => {
         if (e.target.checked) {
@@ -108,6 +112,12 @@ function setupMapControls() {
     if (resetFilterBtn) {
         resetFilterBtn.addEventListener('click', () => {
             filterMarkers([]); // 빈 배열 전달 시 전체 마커 표시
+        });
+    }
+
+    if (locationCheckbox) {
+        locationCheckbox.addEventListener('change', (e) => {
+            toggleUserTracking(e.target.checked);
         });
     }
 }
@@ -439,4 +449,85 @@ export function filterMarkers(targetIds) {
 
     // [추가] 사이드바 트리 메뉴도 함께 필터링
     filterTree(targetIds);
+}
+
+/**
+ * [기능] 내 위치 추적 기능을 켜거나 끕니다.
+ * @param {boolean} enable - 활성화 여부
+ */
+function toggleUserTracking(enable) {
+    if (enable) {
+        if (navigator.geolocation) {
+            // [설정] 위치 업데이트 주기 및 정확도 설정
+            // maximumAge: 캐시된 위치 정보의 유효 시간(ms). 0이면 항상 새로운 위치를 시도.
+            // timeout: 위치 정보를 가져오는 데 허용되는 최대 시간(ms).
+            const options = {
+                enableHighAccuracy: true,
+                maximumAge: 0,
+                timeout: 10000 
+            };
+
+            state.isTracking = true;
+            state.watchId = navigator.geolocation.watchPosition(
+                updateUserPosition, 
+                (err) => {
+                    console.error('위치 정보를 가져올 수 없습니다.', err);
+                    alert('위치 정보를 가져올 수 없습니다. 권한을 확인해주세요.');
+                    const checkbox = document.getElementById('location-checkbox');
+                    if(checkbox) checkbox.checked = false;
+                    state.isTracking = false;
+                }, 
+                options
+            );
+        } else {
+            alert('이 브라우저는 위치 정보를 지원하지 않습니다.');
+        }
+    } else {
+        if (state.watchId) {
+            navigator.geolocation.clearWatch(state.watchId);
+            state.watchId = null;
+        }
+        state.isTracking = false;
+        if (state.userMarker) {
+            state.userMarker.setMap(null);
+            state.userMarker = null;
+        }
+    }
+}
+
+/**
+ * [내부 기능] 위치 업데이트 시 마커를 이동하고 지도를 중심에 맞춥니다.
+ */
+function updateUserPosition(position) {
+    const lat = position.coords.latitude;
+    const lng = position.coords.longitude;
+    const loc = new kakao.maps.LatLng(lat, lng);
+
+    if (!state.userMarker) {
+        // 내 위치 마커 생성 (CustomOverlay로 변경하여 시인성 강화)
+        // 파동 애니메이션(animate-ping)과 흰색 배경/그림자를 추가하여 눈에 잘 띄게 함
+        const content = `
+            <div class="relative flex items-center justify-center">
+                <div class="absolute w-14 h-14 bg-blue-500 rounded-full opacity-75 animate-ping"></div>
+                <div class="relative w-12 h-12 bg-white rounded-full shadow-xl border-2 border-blue-500 flex items-center justify-center overflow-hidden z-10">
+                    <img src="img/logo.svg" alt="내 위치" class="w-9 h-9 object-contain">
+                </div>
+            </div>
+        `;
+
+        state.userMarker = new kakao.maps.CustomOverlay({
+            position: loc,
+            content: content,
+            map: state.map,
+            yAnchor: 0.5,
+            xAnchor: 0.5
+        });
+    } else {
+        state.userMarker.setPosition(loc);
+    }
+
+    // 추적 모드일 경우 지도 중심 이동
+    if (state.isTracking) {
+        state.map.panTo(loc);
+    }
 }
