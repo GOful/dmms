@@ -52,12 +52,14 @@ export function initMap() {
     // [수정] 함수 내부에서 이미지 객체 생성 (kakao 객체가 로드된 후 실행됨)
     starImg = new kakao.maps.MarkerImage(
         `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgSelectedMarkerHtml.trim())}`,
-        new kakao.maps.Size(50, 50)
+        new kakao.maps.Size(50, 50),
+        { offset: new kakao.maps.Point(25, 25) } // [추가] 앵커를 중앙으로 설정
     );
 
     normalImg = new kakao.maps.MarkerImage(
         `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgMarkerHtml.trim())}`,
-        new kakao.maps.Size(44, 44)
+        new kakao.maps.Size(44, 44),
+        { offset: new kakao.maps.Point(22, 22) } // [추가] 앵커를 중앙으로 설정 (기본값은 하단 중앙)
     );
 
     state.map = new kakao.maps.Map(document.getElementById('map'), {
@@ -205,7 +207,7 @@ export function selectManhole(id) {
     const content = document.createElement('div');
     content.className = "relative flex items-center justify-center w-24 h-24 cursor-pointer"; 
     content.innerHTML = `
-        <div class="absolute w-16 h-16 bg-blue-500 rounded-full opacity-40 animate-ping"></div>
+        <div class="absolute w-10 h-10 bg-blue-500 rounded-full opacity-80 animate-ping"></div>
         <div class="relative z-10 w-12 h-12 drop-shadow-xl">
             ${svgSelectedMarkerHtml}
         </div>
