@@ -14,6 +14,12 @@ export function selectManholeInSidebar(id) {
         }
     }
 
+    // [추가] id가 없으면(null 등) 선택 상태를 초기화하고 종료
+    if (!id) {
+        currentSelectedItemId = null;
+        return;
+    }
+
     const newSelected = document.getElementById(`manhole-item-${id}`);
     if (newSelected) {
         // 새로운 선택 스타일 적용 (Tailwind)

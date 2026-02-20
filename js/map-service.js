@@ -1,4 +1,4 @@
-import { filterTree } from './tree-manager.js';
+import { filterTree, selectManholeInSidebar } from './tree-manager.js';
 // ========================================
 // 상태 변수 & 상수
 // ========================================
@@ -246,6 +246,8 @@ function showManholeOverlay(mh, stationName, position) {
     // 이벤트 리스너 연결
     content.querySelector('.close-overlay-btn').addEventListener('click', () => {
         if (state.currentOverlay) state.currentOverlay.setMap(null);
+        Object.values(state.markersMap).forEach(m => m.marker.setImage(normalImg));
+        selectManholeInSidebar(null); // [추가] 사이드바 선택 상태 해제
     });
 
     // 상세보기 버튼 클릭 시 UI 모듈에 직접 의존하는 대신 커스텀 이벤트를 발생시킴
@@ -309,7 +311,6 @@ async function displayWeather() {
             const circle = new kakao.maps.Circle({
                 center: position,
                 radius: 500,
-                strokeWeight: 2,
                 strokeColor: '#1E90FF',
                 strokeOpacity: 0.8,
                 strokeStyle: 'solid',
@@ -405,6 +406,7 @@ export function filterMarkers(targetIds) {
     Object.values(state.markersMap).forEach(item => {
         item.marker.setImage(normalImg);
     });
+    selectManholeInSidebar(null); // [추가] 필터링 시에도 사이드바 선택 해제
 
     const showAll = !targetIds || targetIds.length === 0;
     const bounds = new kakao.maps.LatLngBounds();
