@@ -206,6 +206,9 @@ export function selectManhole(id) {
 
     const content = document.createElement('div');
     content.className = "relative flex items-center justify-center w-24 h-24 cursor-pointer"; 
+    // [수정] CustomOverlay가 CSS 클래스 적용 전 렌더링되어 위치가 어긋나는 현상 방지 (명시적 크기 지정)
+    content.style.width = '96px';
+    content.style.height = '96px';
     content.innerHTML = `
         <div class="absolute w-10 h-10 bg-blue-500 rounded-full opacity-80 animate-ping"></div>
         <div class="relative z-10 w-12 h-12 drop-shadow-xl">
