@@ -164,6 +164,34 @@ export function initMapResizer() {
         document.addEventListener('mousemove', mouseMoveHandler);
         document.addEventListener('mouseup', mouseUpHandler);
     });
+
+    // [추가] 모바일 터치 이벤트 지원
+    resizer.addEventListener('touchstart', (e) => {
+        e.preventDefault(); // 터치 시 브라우저 스크롤 방지
+        isResizing = true;
+        
+        const touchMoveHandler = (e) => {
+            if (!isResizing) return;
+            const mainRect = mainContent.getBoundingClientRect();
+            const clientY = e.touches[0].clientY; // 터치 좌표 가져오기
+            
+            let newHeight = mainRect.bottom - clientY;
+            newHeight = Math.max(100, Math.min(newHeight, mainRect.height - 100));
+            roadviewContainer.style.height = `${newHeight}px`;
+        };
+
+        const touchEndHandler = () => {
+            isResizing = false;
+            document.removeEventListener('touchmove', touchMoveHandler);
+            document.removeEventListener('touchend', touchEndHandler);
+
+            if(state.map) state.map.relayout();
+            if(state.rv) state.rv.relayout();
+        };
+
+        document.addEventListener('touchmove', touchMoveHandler, { passive: false });
+        document.addEventListener('touchend', touchEndHandler);
+    });
 }
 
 // ========================================
@@ -516,7 +544,7 @@ function toggleUserTracking(enable) {
             // timeout: 위치 정보를 가져오는 데 허용되는 최대 시간(ms).
             const options = {
                 enableHighAccuracy: true,
-                maximumAge: 0,
+                maximumAge: 30000,
                 timeout: 10000 
             };
 
