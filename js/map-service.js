@@ -575,6 +575,9 @@ function updateUserPosition(position) {
             yAnchor: 0.5,
             xAnchor: 0.5
         });
+
+        // [추가] 내 위치 표시 활성화 시(마커 최초 생성 시) 지도 중심 이동
+        state.map.panTo(loc);
     } else {
         state.userMarker.setPosition(loc);
     }
