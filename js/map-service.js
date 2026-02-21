@@ -537,8 +537,12 @@ export function filterMarkers(targetIds) {
  * @param {boolean} enable - 활성화 여부
  */
 function toggleUserTracking(enable) {
+    const loadingEl = document.getElementById('location-loading');
+
     if (enable) {
         if (navigator.geolocation) {
+            if(loadingEl) loadingEl.classList.remove('hidden'); // 로딩 표시 시작
+
             // [설정] 위치 업데이트 주기 및 정확도 설정
             // maximumAge: 캐시된 위치 정보의 유효 시간(ms). 0이면 항상 새로운 위치를 시도.
             // timeout: 위치 정보를 가져오는 데 허용되는 최대 시간(ms).
@@ -550,13 +554,17 @@ function toggleUserTracking(enable) {
 
             state.isTracking = true;
             state.watchId = navigator.geolocation.watchPosition(
-                updateUserPosition, 
+                (position) => {
+                    updateUserPosition(position);
+                    if(loadingEl) loadingEl.classList.add('hidden'); // 위치 수신 성공 시 로딩 숨김
+                },
                 (err) => {
                     console.error('위치 정보를 가져올 수 없습니다.', err);
                     alert('위치 정보를 가져올 수 없습니다. 기기의 권한을 확인해주세요.');
                     const checkbox = document.getElementById('location-checkbox');
                     if(checkbox) checkbox.checked = false;
                     state.isTracking = false;
+                    if(loadingEl) loadingEl.classList.add('hidden'); // 에러 시에도 로딩 숨김
                 }, 
                 options
             );
@@ -569,6 +577,7 @@ function toggleUserTracking(enable) {
             state.watchId = null;
         }
         state.isTracking = false;
+        if(loadingEl) loadingEl.classList.add('hidden'); // 체크 해제 시 로딩 숨김
         if (state.userMarker) {
             state.userMarker.setMap(null);
             state.userMarker = null;
