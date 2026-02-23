@@ -117,16 +117,32 @@
                 <div id="datetime-display" class="text-center text-sm font-bold text-slate-700 border-b border-slate-200 pb-2 tabular-nums"></div>
                 <div class="flex flex-col gap-2">
                     <label class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-blue-600 transition-colors">
-                        <input type="checkbox" id="traffic-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300"> 실시간 교통
+                        <input type="checkbox" id="traffic-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                        </svg>
+                        <span>실시간 교통정보</span>
                     </label>
                     <label class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-blue-600 transition-colors">
-                        <input type="checkbox" id="weather-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300"> 역별 날씨
+                        <input type="checkbox" id="weather-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
+                        </svg>
+                        <span>현재 날씨</span>
                     </label>
                     <label class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-blue-600 transition-colors">
-                        <input type="checkbox" id="roadview-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300"> 로드뷰
+                        <input type="checkbox" id="roadview-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                        </svg>
+                        <span>로드뷰</span>
                     </label>
                     <label class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-blue-600 transition-colors">
                         <input type="checkbox" id="location-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300"> 
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
                         <span>내 위치 표시</span>
                         <svg id="location-loading" class="animate-spin h-4 w-4 text-blue-600 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
