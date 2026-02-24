@@ -381,17 +381,21 @@ async function displayWeather() {
 
             const ta = parseFloat(data.TA);
             const rn_ox_val = parseFloat(data.RN_OX);
-            const rn_60m = parseFloat(data.RN_60M);
+            const rn_15m = parseFloat(data.RN_15M);
             const vs = parseInt(data.VS, 10);
 
             let weatherIcon = '☀️';
-            if (rn_ox_val > 0 || rn_60m > 0) weatherIcon = '☔️';
+            if (rn_ox_val > 0 || rn_15m > 0) weatherIcon = '☔️';
+            if (rn_ox_val > 0 || rn_15m > 0) {
+                // 강수가 감지될 때 기온이 2.0도 이하이면 눈(❄️), 아니면 비(☔️)로 표시
+                weatherIcon = (ta <= 2.0) ? '❄️' : '☔️';
+            }
             else if (vs < 50) weatherIcon = '🌫️';
 
             const tempText = `${ta.toFixed(1)}°C`;
             let pcpText = "강수 없음";
-            if (rn_ox_val > 0 || rn_60m > 0) {
-                pcpText = `강수: ${rn_60m.toFixed(1)}mm`;
+            if (rn_ox_val > 0 || rn_15m > 0) {
+                pcpText = `강수: ${rn_15m.toFixed(1)}mm`;
             }
 
             const circle = new kakao.maps.Circle({

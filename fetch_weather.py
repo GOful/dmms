@@ -48,7 +48,7 @@ def fetch_and_save_as_json():
     for station_name, coords in stations.items():
         url = (
             f"https://apihub.kma.go.kr/api/typ01/url/sfc_nc_var.php?"
-            f"tm1={tm1}&tm2={tm2}&obs=ta,rn_ox,rn_60m,vs"
+            f"tm1={tm1}&tm2={tm2}&obs=ta,rn_ox,rn_15m,vs,sd_tot"
             f"&lon={coords['lon']}&lat={coords['lat']}&authKey={auth_key}"
         )
         
@@ -68,7 +68,7 @@ def fetch_and_save_as_json():
                 continue
 
             lines = response.text.strip().split('\n')
-            headers = ['tm', 'ta', 'rn_ox', 'rn_60m', 'vs']
+            headers = ['tm', 'ta', 'rn_ox', 'rn_15m', 'vs', 'sd_tot']
 
             for line in lines:
                 line = line.strip()
@@ -85,8 +85,9 @@ def fetch_and_save_as_json():
                         "LON": coords['lon'],
                         "TA": item.get('ta'),
                         "RN_OX": item.get('rn_ox'),
-                        "RN_60M": item.get('rn_60m'),
-                        "VS": item.get('vs')
+                        "RN_15M": item.get('rn_15m'),
+                        "VS": item.get('vs'),
+                        "SD_TOT": item.get('sd_tot')
                     }
                     break
             
