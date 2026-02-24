@@ -42,6 +42,7 @@ jobs:
       - name: Fetch Weather Data
         env:
           KMA_API_KEY: ${{ secrets.KMA_API_KEY }}
+          TZ: 'Asia/Seoul'
         run: |
           pip install requests python-dotenv
           python fetch_weather.py
