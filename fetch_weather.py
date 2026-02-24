@@ -57,7 +57,7 @@ def fetch_and_save_as_json():
     for station_name, coords in stations.items():
         url = (
             f"https://apihub.kma.go.kr/api/typ01/url/sfc_nc_var.php?"
-            f"tm1={tm1}&tm2={tm2}&obs=ta,rn_ox,rn_15m,vs,sd_tot"
+            f"tm1={tm1}&tm2={tm2}&obs=ta,rn_ox,rn_day,vs"
             f"&lon={coords['lon']}&lat={coords['lat']}&authKey={auth_key}"
         )
         
@@ -77,7 +77,7 @@ def fetch_and_save_as_json():
                 continue
 
             lines = response.text.strip().split('\n')
-            headers = ['tm', 'ta', 'rn_ox', 'rn_15m', 'vs', 'sd_tot']
+            headers = ['tm', 'ta', 'rn_ox', 'rn_day', 'vs']
 
             for line in lines:
                 line = line.strip()
@@ -94,11 +94,12 @@ def fetch_and_save_as_json():
                         "LON": coords['lon'],
                         "TA": item.get('ta'),
                         "RN_OX": item.get('rn_ox'),
-                        "RN_15M": item.get('rn_15m'),
-                        "VS": item.get('vs'),
-                        "SD_TOT": item.get('sd_tot')
+                        "RN_DAY": item.get('rn_day'),
+                        "VS": item.get('vs')                        
                     }
                     break
+                else:
+                    print(f"DEBUG: 컬럼 개수 불일치 (Expected {len(headers)}, Got {len(row)}) - Row: {row}")
             
             time.sleep(0.5) # 서버 부하 방지 및 안정적인 출력을 위해 0.5초 대기
 
