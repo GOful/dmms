@@ -1,6 +1,7 @@
 import requests
 import json
 import urllib3
+import os
 import time
 from datetime import datetime, timedelta
 from requests.adapters import HTTPAdapter
@@ -9,8 +10,16 @@ from urllib3.util.retry import Retry
 # SSL 경고 무시
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+# .env 파일 로드
+from dotenv import load_dotenv
+load_dotenv()
+
 def fetch_and_save_as_json():
-    auth_key = "-MBhNUogT9uAYTVKIL_bWA"
+    auth_key = os.getenv("KMA_API_KEY")
+    if not auth_key:
+        print("오류: .env 파일에서 KMA_API_KEY를 찾을 수 없습니다.")
+        return
+
     stations = {
     "설화명곡역": {"lat": 35.7986, "lon": 128.4894},
     "상인역": {"lat": 35.8186, "lon": 128.5369},

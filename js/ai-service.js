@@ -9,10 +9,10 @@ import {
     setChatInputDisabled 
 } from './chat-manager.js';
 import { filterMarkers } from './map-service.js';
+import { GOOGLE_API_KEY } from './apikey.js';
 
 // 주의: API 키는 실제 배포 시 환경 변수나 보안 처리를 권장합니다.
-const API_KEY = "AIzaSyCeADCfML6ssTB6Ku8c8yPlP6uRNoBn-fo";
-const genAI = new GoogleGenerativeAI(API_KEY);
+const genAI = new GoogleGenerativeAI(GOOGLE_API_KEY);
 
 // 모델 설정
 const model = genAI.getGenerativeModel({ 

@@ -1,0 +1,4 @@
+# Environment Variables & Secrets
+.env
+js/apikey.js
+__pycache__/
