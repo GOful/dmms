@@ -386,7 +386,7 @@ async function displayWeather() {
 
             let weatherIcon = '☀️';
             if (rn_ox_val > 0 || rn_60m > 0) weatherIcon = '☔️';
-            else if (vs < 12) weatherIcon = '🌫️';
+            else if (vs < 50) weatherIcon = '🌫️';
 
             const tempText = `${ta.toFixed(1)}°C`;
             const pcpText = rn_60m > 0 ? `강수: ${rn_60m}mm` : "강수 없음";
