@@ -63,10 +63,10 @@ function _buildPrompt(userMsg, rawData) {
     "field": "repair_cnt", // 데이터 필드명 (repair_cnt, flood_cnt, complaint_cnt, risk_score)
     "operator": ">=", // 연산자 (>=, <=, >, <, ==) *주의: "넘는/초과"는 ">", "이상"은 ">="
     "value": 5, // 기준 값 (숫자)
-    "limit": 5 // [선택] 결과 개수 제한 (예: "5곳만", "상위 3개")
+    "limit": null // [선택] 사용자가 "5곳만", "상위 3개" 처럼 개수를 명시하지 않으면 null 또는 생략
   }
 }
-   - [팁] '특별 관리', '위험한 곳', '시급한', '추천' 등 복합적인 판단이 필요한 경우 field를 'risk_score'로 설정하고 value는 5 이상으로 잡으세요. 또한, 결과가 너무 많지 않도록 반드시 'limit': 5 를 설정하세요.
+   - [팁] '특별 관리', '위험한 곳', '시급한', '추천' 등 복합적인 판단이 필요한 경우 field를 'risk_score'로 설정하고 value는 5 이상으로 잡으세요. 이때는 결과가 너무 많지 않도록 'limit': 5 를 설정하세요.
 \`\`\`
 </Instruction>
 
