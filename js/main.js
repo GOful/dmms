@@ -2,6 +2,7 @@ import { initMap, selectManhole, relayoutMap, initMapResizer, createMarker } fro
 import { renderTree, toggleGroup, selectManholeInSidebar } from './tree-manager.js';
 import { toggleSidebar, toggleChat, setupMenuEvents, openManholeDetailModal } from './ui-controller.js';
 import { askAI } from './ai-service.js';
+import { initChatHelp } from './chat-manager.js';
 
 let rawData = null;
 
@@ -97,6 +98,9 @@ async function init() {
     // --- 지도 초기화 ---
     initMap();
     initMapResizer();
+
+    // --- AI 채팅 도움말 초기화 ---
+    initChatHelp();
 
     // --- 데이터 로드 및 렌더링 ---
     try {

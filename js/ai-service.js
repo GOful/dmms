@@ -27,11 +27,13 @@ function _buildPrompt(userMsg, rawData) {
     const isRelated = infraKeywords.some(key => userMsg.includes(key));
 
     if (isRelated) {
-        let contextData = "ID,이름,역,위도,경도,침수횟수,수선횟수,민원횟수\n";
+        // [최적화] AI에게 위도/경도 좌표까지 보낼 필요는 없음 (토큰 절약)
+        // AI는 ID와 상태값만 판단하고, 위치 표시는 JS가 담당함
+        let contextData = "ID,이름,역,침수,수선,민원\n";
         rawData.lines.forEach(line => {
             line.stations.forEach(st => {
                 st.manholes.forEach(mh => {        
-                    contextData += `${mh.id},${mh.name},${st.stationName},${mh.lat},${mh.lng},${mh.flood_cnt || 0},${mh.repair_cnt || 0},${mh.complaint_cnt || 0}\n`;
+                    contextData += `${mh.id},${mh.name},${st.stationName},${mh.flood_cnt || 0},${mh.repair_cnt || 0},${mh.complaint_cnt || 0}\n`;
                 });
             });
         });
@@ -53,16 +55,18 @@ function _buildPrompt(userMsg, rawData) {
   "message": "요청하신 침수 위험 지역 2곳을 표시했습니다.<br><ul><li><strong>MH-001</strong>: 침수 5회 (심각)</li>...</ul>"
 }
 \`\`\`
-   - [매우 중요] '수선 5회 이상', '침수 1회 이상' 등 명확한 수치 조건을 제시한 경우, 직접 ID를 찾지 말고 아래 형식을 반환하세요 (시스템이 정확히 계산합니다):
+   - [매우 중요] '수선 5회 이상', '침수 1회 이상', '3회 넘는' 등 수치 조건을 제시한 경우, 절대 직접 ID를 나열하지 말고 반드시 'apply_filter' 도구를 사용하세요 (시스템이 정확히 계산합니다):
 \`\`\`json
 {
   "tool": "apply_filter",
   "criteria": {
-    "field": "repair_cnt", // 데이터 필드명 (repair_cnt, flood_cnt, complaint_cnt)
-    "operator": ">=", // 연산자 (>=, <=, >, <, ==)
-    "value": 5 // 기준 값 (숫자)
+    "field": "repair_cnt", // 데이터 필드명 (repair_cnt, flood_cnt, complaint_cnt, risk_score)
+    "operator": ">=", // 연산자 (>=, <=, >, <, ==) *주의: "넘는/초과"는 ">", "이상"은 ">="
+    "value": 5, // 기준 값 (숫자)
+    "limit": 5 // [선택] 결과 개수 제한 (예: "5곳만", "상위 3개")
   }
 }
+   - [팁] '특별 관리', '위험한 곳', '시급한', '추천' 등 복합적인 판단이 필요한 경우 field를 'risk_score'로 설정하고 value는 5 이상으로 잡으세요. 또한, 결과가 너무 많지 않도록 반드시 'limit': 5 를 설정하세요.
 \`\`\`
 </Instruction>
 
@@ -124,30 +128,80 @@ export async function askAI(rawData) {
                 
                 // [추가] 수치 기반 필터링 로직 (AI가 조건을 추출하면 JS가 정확히 계산)
                 if (actionData.tool === "apply_filter" && actionData.criteria) {
-                    const { field, operator, value } = actionData.criteria;
-                    const matchedIds = [];
-                    let matchCount = 0;
+                    const { field, operator, value, limit } = actionData.criteria;
+                    let matchedDetails = []; // 상세 정보 수집용
+                    let matchedIds = [];
 
                     // 전체 데이터 순회하며 조건 검사
                     rawData.lines.forEach(line => {
                         line.stations.forEach(st => {
                             st.manholes.forEach(mh => {
-                                const dataValue = mh[field] || 0;
-                                let isMatch = false;
-                                
-                                if (operator === ">=") isMatch = dataValue >= value;
-                                else if (operator === "<=") isMatch = dataValue <= value;
-                                else if (operator === ">") isMatch = dataValue > value;
-                                else if (operator === "<") isMatch = dataValue < value;
-                                else if (operator === "==") isMatch = dataValue == value;
+                                let dataValue = 0;
+                                if (field === 'risk_score') {
+                                    // [추가] 종합 위험도 계산 (가중치: 침수 3, 수선 2, 민원 1)
+                                    dataValue = (mh.flood_cnt || 0) * 3 + (mh.repair_cnt || 0) * 2 + (mh.complaint_cnt || 0) * 1;
+                                } else {
+                                    dataValue = mh[field] || 0;
+                                }
 
-                                if (isMatch) matchedIds.push(mh.id);
+                                let isMatch = false;
+                                const numValue = Number(value);
+                                
+                                if (operator === ">=") isMatch = dataValue >= numValue;
+                                else if (operator === "<=") isMatch = dataValue <= numValue;
+                                else if (operator === ">") isMatch = dataValue > numValue;
+                                else if (operator === "<") isMatch = dataValue < numValue;
+                                else if (operator === "==") isMatch = dataValue == numValue;
+
+                                if (isMatch) {
+                                    matchedDetails.push({
+                                        id: mh.id,
+                                        name: mh.name,
+                                        val: dataValue,
+                                        station: st.stationName
+                                    });
+                                }
                             });
                         });
                     });
 
+                    // [개선] 정렬 및 개수 제한 로직 추가
+                    // 값이 높은 순서대로 정렬 (내림차순)
+                    matchedDetails.sort((a, b) => b.val - a.val);
+
+                    // [수정] limit 처리 로직 개선
+                    // risk_score(종합 위험도) 분석이나 '추천' 요청인 경우, limit이 명시되지 않았더라도 
+                    // 너무 많은 결과가 나오지 않도록 기본적으로 상위 5개만 보여줌
+                    let finalLimit = limit;
+                    if (!finalLimit && field === 'risk_score') {
+                        finalLimit = 5;
+                    }
+
+                    if (finalLimit && finalLimit > 0 && matchedDetails.length > finalLimit) {
+                        matchedDetails = matchedDetails.slice(0, finalLimit);
+                    }
+
+                    // 최종 ID 목록 추출
+                    matchedIds = matchedDetails.map(item => item.id);
+
                     filterMarkers(matchedIds);
-                    displayMessage = `요청하신 조건에 해당하는 시설물 <strong>${matchedIds.length}</strong>곳을 정확히 찾아 지도에 표시했습니다.`;
+                    
+                    // [수정] 결과 메시지를 JS가 직접 생성 (AI 환각 방지)
+                    const fieldNameMap = { 'repair_cnt': '수선', 'flood_cnt': '침수', 'complaint_cnt': '민원', 'risk_score': '종합 위험도' };
+                    const fieldName = fieldNameMap[field] || field;
+                    const limitText = finalLimit ? ` (상위 ${finalLimit}곳)` : '';
+                    const unit = field === 'risk_score' ? '점' : '회';
+
+                    if (matchedIds.length > 0) {
+                        const listHtml = matchedDetails.map(item => 
+                            `<li><strong>${item.id}</strong> (${item.station}): ${fieldName} ${item.val}${unit} - ${item.name}</li>`
+                        ).join('');
+                        
+                        displayMessage = `<p>요청하신 시설물 <strong>${matchedIds.length}</strong>곳을 찾았습니다.${limitText}</p>
+                                          <ul class="list-disc pl-5 mt-2 text-sm space-y-1 max-h-60 overflow-y-auto">${listHtml}</ul>`;
+                    } else {
+                        displayMessage = `<p>요청하신 조건에 해당하는 시설물이 없습니다.</p>`;
+                    }
                 }
             } catch (e) {
                 console.error("JSON 파싱 에러:", e);
