@@ -369,7 +369,8 @@ async function displayWeather() {
     if (state.weatherOverlays.length > 0) return;
 
     try {
-        const response = await fetch('weather_data.json');
+        // [수정] 캐시 방지를 위해 타임스탬프 파라미터 추가 및 no-store 옵션 적용
+        const response = await fetch(`weather_data.json?t=${new Date().getTime()}`, { cache: 'no-store' });
         const weatherData = await response.json();
 
         for (const stationName in weatherData) {
