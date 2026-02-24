@@ -389,7 +389,10 @@ async function displayWeather() {
             else if (vs < 50) weatherIcon = '🌫️';
 
             const tempText = `${ta.toFixed(1)}°C`;
-            const pcpText = rn_60m > 0 ? `강수: ${rn_60m}mm` : "강수 없음";
+            let pcpText = "강수 없음";
+            if (rn_ox_val > 0 || rn_60m > 0) {
+                pcpText = `강수: ${rn_60m.toFixed(1)}mm`;
+            }
 
             const circle = new kakao.maps.Circle({
                 center: position,
