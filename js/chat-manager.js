@@ -144,49 +144,82 @@ export function initChatHelp() {
     // 3. 예시 질문 팝업 생성 (직전의 깔끔한 구성으로 복원)
     const popup = document.createElement('div');
     // 위치: 버튼 위쪽 (mb-10)
-    popup.className = 'hidden absolute bottom-full left-0 mb-10 w-80 bg-white border border-slate-200 shadow-xl rounded-2xl p-3 z-50 animate-[fadeIn_0.2s_ease-out]';
+    popup.className = 'hidden absolute bottom-full left-0 mb-12 w-[380px] bg-white border border-slate-100 shadow-2xl rounded-xl overflow-hidden z-50 animate-[fadeIn_0.2s_ease-out] ring-1 ring-slate-900/5';
     popup.innerHTML = `
-        <div class="space-y-4 p-1">
-            <div>
-                <div class="text-xs font-bold text-slate-600 bg-slate-100 px-2 py-1 rounded inline-block mb-1">사용 팁</div>
-                <ul class="space-y-1">
-                    <li class="flex items-center text-sm text-slate-700 px-3 py-1"><svg class="w-4 h-4 text-blue-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg><span><span class="font-bold text-slate-800">"표시해줘"</span> : 지도에 위치를 표시합니다</span></li>
-                    <li class="flex items-center text-sm text-slate-700 px-3 py-1"><svg class="w-4 h-4 text-slate-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg><span><span class="font-bold text-slate-800">"알려줘"</span> : 상세 내용을 글로 답변합니다</span></li>
-                </ul>
+        <!-- 헤더 영역 -->
+        <div class="bg-slate-900 p-3 text-white relative overflow-hidden">
+            <div class="absolute top-0 right-0 -mt-2 -mr-2 w-16 h-16 bg-white opacity-10 rounded-full blur-xl"></div>
+            
+            <button id="close-help-popup" class="absolute top-3 right-3 text-slate-400 hover:text-white transition-colors z-20">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                    <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                </svg>
+            </button>
+
+            <h4 class="font-bold text-sm flex items-center gap-2 relative z-10">
+                <svg class="w-5 h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                AI 대화 질문 가이드
+            </h4>
+        </div>
+
+        <!-- 컨텐츠 영역 -->
+        <div class="p-3 bg-slate-50/50">
+            
+            <!-- 1. 기본 팁 (컴팩트 배치) -->
+            <div class="flex gap-2 mb-3">
+                <div class="flex-1 bg-white border border-slate-200 rounded-lg py-2 px-2 flex items-center justify-center gap-1.5 shadow-sm">
+                    <svg class="w-3.5 h-3.5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                    <span class="text-xs text-slate-600"><span class="font-bold text-slate-900 text-sm">"표시해줘"</span> : 지도 핀</span>
+                </div>
+                <div class="flex-1 bg-white border border-slate-200 rounded-lg py-2 px-2 flex items-center justify-center gap-1.5 shadow-sm">
+                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>
+                    <span class="text-xs text-slate-600"><span class="font-bold text-slate-900 text-sm">"알려줘"</span> : 상세 답변</span>
+                </div>
             </div>
-            <div>
-                <div class="text-xs font-bold text-blue-600 bg-blue-50 px-2 py-1 rounded inline-block mb-1">데이터형 질문</div>
-                <ul class="space-y-1">
-                    <li>
-                        <button class="w-full text-left text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 px-3 py-2.5 rounded-lg transition-colors example-btn flex items-center justify-between group">
-                            <span class="flex items-center"><svg class="w-4 h-4 text-blue-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>침수 횟수 3회 이상인 곳 표시해줘</span>
-                            <svg class="w-5 h-5 text-slate-300 group-hover:text-blue-500 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7v4a3 3 0 0 1-3 3H5m0 0l4-4m-4 4l4 4" /></svg>
+
+            <!-- 2. 추천 질문 리스트 -->
+            <div class="space-y-3">
+                <!-- 데이터형 -->
+                <div>
+                    <h5 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 pl-1">데이터형 질문</h5>
+                    <div class="space-y-1">
+                        <button class="example-btn group w-full flex items-center justify-between gap-2 py-1.5 px-2.5 rounded-lg bg-white border border-slate-200 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-sm transition-all duration-200 text-left">
+                            <div class="flex items-center gap-2.5">
+                                <svg class="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                                <span class="text-sm text-slate-700 font-medium group-hover:text-slate-900">침수 횟수 3회 이상인 곳 표시해줘</span>
+                            </div>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-blue-500 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7v4a3 3 0 0 1-3 3H5m0 0l4-4m-4 4l4 4" /></svg>
                         </button>
-                    </li>
-                    <li>
-                        <button class="w-full text-left text-sm text-slate-700 hover:bg-blue-50 hover:text-blue-700 px-3 py-2.5 rounded-lg transition-colors example-btn flex items-center justify-between group">
-                            <span class="flex items-center"><svg class="w-4 h-4 text-slate-400 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/></svg>반월당역 근처 맨홀 침수 이력 알려줘</span>
-                            <svg class="w-5 h-5 text-slate-300 group-hover:text-blue-500 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7v4a3 3 0 0 1-3 3H5m0 0l4-4m-4 4l4 4" /></svg>
+                        <button class="example-btn group w-full flex items-center justify-between gap-2 py-1.5 px-2.5 rounded-lg bg-white border border-slate-200 hover:border-blue-300 hover:bg-blue-50/50 hover:shadow-sm transition-all duration-200 text-left">
+                            <div class="flex items-center gap-2.5">
+                                <svg class="w-4 h-4 text-blue-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+                                <span class="text-sm text-slate-700 font-medium group-hover:text-slate-900">반월당역 근처 맨홀 침수 이력 알려줘</span>
+                            </div>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-blue-500 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7v4a3 3 0 0 1-3 3H5m0 0l4-4m-4 4l4 4" /></svg>
                         </button>
-                    </li>
-                </ul>
-            </div>
-            <div>
-                <div class="text-xs font-bold text-purple-600 bg-purple-50 px-2 py-1 rounded inline-block mb-1">지능형 질문</div>
-                <ul class="space-y-1">
-                    <li>
-                        <button class="w-full text-left text-sm text-slate-700 hover:bg-purple-50 hover:text-purple-700 px-3 py-2.5 rounded-lg transition-colors example-btn flex items-center justify-between group">
-                            <span class="flex items-center"><svg class="w-4 h-4 text-purple-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>특별히 관리해야 할 맨홀 5곳을 지도에 표시해줘</span>
-                            <svg class="w-5 h-5 text-slate-300 group-hover:text-purple-500 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7v4a3 3 0 0 1-3 3H5m0 0l4-4m-4 4l4 4" /></svg>
+                    </div>
+                </div>
+
+                <!-- 지능형 -->
+                <div>
+                    <h5 class="text-xs font-bold text-slate-500 uppercase tracking-wider mb-1.5 pl-1">지능형 질문</h5>
+                    <div class="space-y-1">
+                        <button class="example-btn group w-full flex items-center justify-between gap-2 py-1.5 px-2.5 rounded-lg bg-white border border-slate-200 hover:border-purple-300 hover:bg-purple-50/50 hover:shadow-sm transition-all duration-200 text-left">
+                            <div class="flex items-center gap-2.5">
+                                <svg class="w-4 h-4 text-purple-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/></svg>
+                                <span class="text-sm text-slate-700 font-medium group-hover:text-slate-900">특별히 관리해야 할 맨홀 5곳을 지도에 표시해줘</span>
+                            </div>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-purple-500 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7v4a3 3 0 0 1-3 3H5m0 0l4-4m-4 4l4 4" /></svg>
                         </button>
-                    </li>
-                    <li>
-                        <button class="w-full text-left text-sm text-slate-700 hover:bg-purple-50 hover:text-purple-700 px-3 py-2.5 rounded-lg transition-colors example-btn flex items-center justify-between group">
-                            <span class="flex items-center"><svg class="w-4 h-4 text-purple-500 mr-2 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/></svg>데이터를 분석하여 점검이 시급한 역을 추천해줘</span>
-                            <svg class="w-5 h-5 text-slate-300 group-hover:text-purple-500 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7v4a3 3 0 0 1-3 3H5m0 0l4-4m-4 4l4 4" /></svg>
+                        <button class="example-btn group w-full flex items-center justify-between gap-2 py-1.5 px-2.5 rounded-lg bg-white border border-slate-200 hover:border-purple-300 hover:bg-purple-50/50 hover:shadow-sm transition-all duration-200 text-left">
+                            <div class="flex items-center gap-2.5">
+                                <svg class="w-4 h-4 text-purple-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
+                                <span class="text-sm text-slate-700 font-medium group-hover:text-slate-900">데이터를 분석하여 점검이 시급한 역을 추천해줘</span>
+                            </div>
+                            <svg class="w-4 h-4 text-slate-300 group-hover:text-purple-500 transition-colors flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7v4a3 3 0 0 1-3 3H5m0 0l4-4m-4 4l4 4" /></svg>
                         </button>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
         </div>
     `;
@@ -195,6 +228,11 @@ export function initChatHelp() {
     helpBtn.addEventListener('click', (e) => {
         e.stopPropagation();
         popup.classList.toggle('hidden');
+    });
+
+    popup.querySelector('#close-help-popup').addEventListener('click', (e) => {
+        e.stopPropagation();
+        popup.classList.add('hidden');
     });
 
     popup.querySelectorAll('.example-btn').forEach(btn => {
