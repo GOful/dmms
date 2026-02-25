@@ -236,10 +236,24 @@ export function initChatHelp() {
     });
 
     popup.querySelectorAll('.example-btn').forEach(btn => {
-        btn.addEventListener('click', () => {
-            input.value = btn.innerText.trim(); // 텍스트만 입력
+        btn.addEventListener('click', (e) => {
+            e.preventDefault(); // 기본 클릭 동작 방지
+
+            // 정확한 질문 텍스트만 추출 (아이콘 텍스트 제외)
+            const textSpan = btn.querySelector('span.text-slate-700');
+            const text = textSpan ? textSpan.innerText.trim() : btn.innerText.trim();
+
+            // [핵심] 모바일 키보드 방지: 값을 넣는 동안 잠시 readonly 처리
+            input.readOnly = true;
+            input.value = text;
             popup.classList.add('hidden');
-            input.blur(); // [수정] 모바일 키보드 자동 실행 방지 (포커스 해제)
+            input.blur();
+
+            // 짧은 지연 후 readonly 해제 (키보드가 뜨지 않도록 처리 후 복구)
+            setTimeout(() => {
+                input.readOnly = false;
+                input.blur(); // 안전장치로 한 번 더 포커스 해제
+            }, 50);
         });
     });
 
