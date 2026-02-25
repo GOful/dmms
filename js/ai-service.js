@@ -220,6 +220,5 @@ export async function askAI(rawData) {
         appendBotError("서비스 연결이 원활하지 않습니다. 다시 시도해 주세요.");
     } finally {
         setChatInputDisabled(false);
-        chatInput.focus();
     }
 }
