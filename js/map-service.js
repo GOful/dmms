@@ -524,7 +524,12 @@ export function filterMarkers(targetIds) {
 
     // 필터링된 마커들이 한눈에 보이도록 지도 범위 재설정
     if (hasVisibleMarker) {
-        state.map.setBounds(bounds);
+        // [수정] 마커가 화면 가장자리에 꽉 차는 것을 방지하기 위해 패딩(여백)을 적용
+        // 상, 우, 하, 좌 80px 정도의 여백을 주어 지도가 조금 더 멀리서(줌 아웃) 보이도록 설정
+        state.map.setBounds(bounds, 80, 80, 80, 80);
+
+        // [추가] 사용자의 요청에 따라 한 단계 더 줌아웃 (더 넓은 범위 표시)
+        state.map.setLevel(state.map.getLevel() + 1);
     }
 
     // [추가] 필터링 상태에 따라 초기화 버튼 표시/숨김 토글
