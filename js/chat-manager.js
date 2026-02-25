@@ -239,7 +239,7 @@ export function initChatHelp() {
         btn.addEventListener('click', () => {
             input.value = btn.innerText.trim(); // 텍스트만 입력
             popup.classList.add('hidden');
-            input.focus();
+            input.blur(); // [수정] 모바일 키보드 자동 실행 방지 (포커스 해제)
         });
     });
 
