@@ -8,7 +8,7 @@ on:
     - cron: '0 * * * *' # 매 시간 정각마다 자동 실행 (날씨 데이터 갱신용)
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
 
@@ -38,7 +38,7 @@ jobs:
           python-version: '3.x'
 
       # 3. 의존성 설치 및 날씨 데이터 갱신 스크립트 실행
-      # .env 파일 대신 환경 변수로 KMA_API_KEY를 직접 주입합니다.
+      # 갱신된 weather_data.json은 커밋하지 않고 Pages 배포 아티팩트에만 포함된다.
       - name: Fetch Weather Data
         env:
           KMA_API_KEY: ${{ secrets.KMA_API_KEY }}
@@ -46,16 +46,6 @@ jobs:
         run: |
           pip install requests python-dotenv
           python fetch_weather.py
-
-      # [추가] 갱신된 날씨 데이터를 저장소에 커밋 및 푸시
-      - name: Commit and Push Weather Data
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add weather_data.json
-          # [skip ci]를 추가하여 무한 배포 루프 방지
-          git commit -m "chore(data): update weather_data.json [skip ci]" || echo "No changes to commit"
-          git push
 
       - name: Setup Pages
         uses: actions/configure-pages@v5
