@@ -1,4 +1,5 @@
 # Environment Variables & Secrets
 .env
 js/apikey.js
+js/auth-config.js
 __pycache__/

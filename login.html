@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>로그인 · DMMS</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['"Noto Sans KR"', 'sans-serif'],
+                        display: ['"Space Grotesk"', '"Noto Sans KR"', 'sans-serif'],
+                    }
+                }
+            }
+        };
+    </script>
+    <script src="js/auth-config.js"></script>
+    <style>
+        html, body { height: 100%; }
+        body {
+            background:
+                radial-gradient(900px 600px at 10% 15%, rgba(253, 224, 71, 0.45), transparent 60%),
+                radial-gradient(700px 500px at 90% 85%, rgba(147, 197, 253, 0.5), transparent 60%),
+                radial-gradient(600px 400px at 80% 10%, rgba(252, 211, 77, 0.28), transparent 65%),
+                linear-gradient(135deg, #fffbeb 0%, #fefce8 40%, #f0f9ff 100%);
+            background-attachment: fixed;
+            overflow: hidden;
+        }
+        body::before {
+            content: "";
+            position: fixed; inset: 0;
+            background-image: radial-gradient(rgba(15, 23, 42, 0.06) 1px, transparent 1px);
+            background-size: 26px 26px;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .blob {
+            position: fixed;
+            border-radius: 9999px;
+            filter: blur(70px);
+            opacity: 0.5;
+            pointer-events: none;
+            z-index: 0;
+        }
+        .blob-1 { width: 360px; height: 360px; background: #fde68a; top: -100px; left: -60px; animation: float 18s ease-in-out infinite; }
+        .blob-2 { width: 420px; height: 420px; background: #bfdbfe; bottom: -140px; right: -100px; animation: float 22s ease-in-out infinite reverse; }
+        .blob-3 { width: 280px; height: 280px; background: #fed7aa; top: 55%; left: 70%; opacity: 0.35; animation: float 26s ease-in-out infinite; }
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(40px, 30px) scale(1.08); }
+        }
+        .card {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(18px) saturate(160%);
+            -webkit-backdrop-filter: blur(18px) saturate(160%);
+            border: 1px solid rgba(255, 255, 255, 0.8);
+            box-shadow:
+                0 30px 80px -20px rgba(15, 23, 42, 0.18),
+                0 8px 24px -8px rgba(15, 23, 42, 0.08),
+                inset 0 1px 0 rgba(255, 255, 255, 0.9);
+        }
+        .bolt-wrap {
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px; height: 64px;
+            border-radius: 18px;
+            background: linear-gradient(145deg, #fde047 0%, #fbbf24 55%, #f59e0b 100%);
+            box-shadow:
+                0 16px 32px -10px rgba(245, 158, 11, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+        .bolt-wrap::after {
+            content: "";
+            position: absolute; inset: -14px;
+            border-radius: 22px;
+            background: radial-gradient(closest-side, rgba(251, 191, 36, 0.4), transparent 70%);
+            z-index: -1;
+            animation: pulse 3s ease-in-out infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.08); }
+        }
+        .field {
+            background: rgba(248, 250, 252, 0.95);
+            border: 1px solid rgba(203, 213, 225, 0.9);
+            color: #0f172a;
+            transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+        }
+        .field::placeholder { color: #94a3b8; }
+        .field:focus {
+            outline: none;
+            background: #ffffff;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 4px rgba(251, 191, 36, 0.18);
+        }
+        .cta {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: #0f172a;
+            font-weight: 700;
+            letter-spacing: 0.01em;
+            box-shadow:
+                0 12px 28px -10px rgba(245, 158, 11, 0.55),
+                inset 0 1px 0 rgba(255, 255, 255, 0.45);
+            transition: transform 0.12s ease, box-shadow 0.18s ease, filter 0.18s ease;
+        }
+        .cta:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow:
+                0 18px 36px -10px rgba(245, 158, 11, 0.65),
+                inset 0 1px 0 rgba(255, 255, 255, 0.55);
+        }
+        .cta:active:not(:disabled) { transform: translateY(0); }
+        .cta:disabled { filter: grayscale(0.25) brightness(0.92); cursor: not-allowed; }
+        .spinner {
+            width: 16px; height: 16px;
+            border: 2px solid rgba(15, 23, 42, 0.25);
+            border-top-color: #0f172a;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .shake { animation: shake 0.4s ease-in-out; }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20% { transform: translateX(-8px); }
+            40% { transform: translateX(8px); }
+            60% { transform: translateX(-5px); }
+            80% { transform: translateX(5px); }
+        }
+        .eye-btn {
+            color: #94a3b8;
+            transition: color 0.15s ease;
+        }
+        .eye-btn:hover { color: #f59e0b; }
+        .brand-chip {
+            background: rgba(251, 191, 36, 0.15);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+            color: #92400e;
+            letter-spacing: 0.18em;
+        }
+    </style>
+</head>
+<body class="font-sans">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+    <div class="blob blob-3"></div>
+
+    <main class="relative z-10 min-h-screen flex items-center justify-center px-5 py-10">
+        <div class="card w-full max-w-[400px] rounded-3xl p-8 sm:p-10">
+
+            <div class="flex items-center justify-between mb-8">
+                <span class="brand-chip text-[10px] font-display font-bold uppercase px-2.5 py-1 rounded-full">DMMS · v1</span>
+                <span class="text-[11px] text-slate-500">대구교통공사</span>
+            </div>
+
+            <div class="flex flex-col items-center text-center mb-8">
+                <div class="bolt-wrap mb-5">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="#fffbeb" class="w-8 h-8">
+                        <path d="M13 2L3 14h7l-1 8 10-12h-7l1-8z"/>
+                    </svg>
+                </div>
+                <h1 class="font-display text-2xl sm:text-[26px] font-bold text-slate-900 tracking-tight">
+                    맨홀관리 시스템
+                </h1>
+                <p class="text-sm text-slate-500 mt-1.5">
+                    접속하려면 비밀번호를 입력하세요
+                </p>
+            </div>
+
+            <form id="loginForm" class="space-y-4" autocomplete="off">
+                <div>
+                    <label for="pw" class="block text-xs font-medium text-slate-600 mb-2 tracking-wide">
+                        비밀번호
+                    </label>
+                    <div class="relative">
+                        <input id="pw" type="password" required autofocus
+                            class="field w-full pl-4 pr-11 py-3 rounded-xl text-sm"
+                            placeholder="관리자가 배포한 비밀번호">
+                        <button type="button" id="togglePw" aria-label="비밀번호 표시"
+                            class="eye-btn absolute inset-y-0 right-0 flex items-center pr-3">
+                            <svg id="eyeOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+                                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+                            <svg id="eyeClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 hidden">
+                                <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-6.5 0-10-7-10-7a19.4 19.4 0 0 1 4.22-5.19"/>
+                                <path d="M1 1l22 22"/>
+                                <path d="M9.9 4.24A10.94 10.94 0 0 1 12 4c6.5 0 10 7 10 7a19.5 19.5 0 0 1-2.17 3.22"/>
+                                <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <button id="submitBtn" type="submit"
+                    class="cta w-full flex items-center justify-center gap-2 py-3 rounded-xl text-sm">
+                    <span id="btnLabel">로그인</span>
+                    <span id="btnSpinner" class="spinner hidden"></span>
+                </button>
+
+                <p id="errorMsg" class="hidden text-xs text-red-500 text-center pt-1"></p>
+            </form>
+
+            <div class="mt-8 pt-6 border-t border-slate-200/70 text-center">
+                <p class="text-[11px] text-slate-400 leading-relaxed">
+                    비밀번호는 관리자가 주기적으로 재발급합니다.<br>
+                    문의는 시스템 관리자에게.
+                </p>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        (function () {
+            const form = document.getElementById('loginForm');
+            const pwInput = document.getElementById('pw');
+            const submitBtn = document.getElementById('submitBtn');
+            const btnLabel = document.getElementById('btnLabel');
+            const btnSpinner = document.getElementById('btnSpinner');
+            const errorMsg = document.getElementById('errorMsg');
+            const togglePw = document.getElementById('togglePw');
+            const eyeOpen = document.getElementById('eyeOpen');
+            const eyeClose = document.getElementById('eyeClose');
+            const card = document.querySelector('.card');
+
+            function showError(msg) {
+                errorMsg.textContent = msg;
+                errorMsg.classList.remove('hidden');
+                card.classList.remove('shake');
+                void card.offsetWidth;
+                card.classList.add('shake');
+            }
+            function clearError() { errorMsg.classList.add('hidden'); }
+            function setLoading(on) {
+                submitBtn.disabled = on;
+                btnLabel.textContent = on ? '확인 중' : '로그인';
+                btnSpinner.classList.toggle('hidden', !on);
+            }
+
+            async function pbkdf2Hex(password, saltStr, iterations) {
+                const enc = new TextEncoder();
+                const keyMaterial = await crypto.subtle.importKey(
+                    'raw', enc.encode(password), { name: 'PBKDF2' }, false, ['deriveBits']
+                );
+                const bits = await crypto.subtle.deriveBits(
+                    { name: 'PBKDF2', salt: enc.encode(saltStr), iterations, hash: 'SHA-256' },
+                    keyMaterial, 256
+                );
+                return Array.from(new Uint8Array(bits))
+                    .map(b => b.toString(16).padStart(2, '0')).join('');
+            }
+
+            togglePw.addEventListener('click', () => {
+                const showing = pwInput.type === 'text';
+                pwInput.type = showing ? 'password' : 'text';
+                eyeOpen.classList.toggle('hidden', !showing);
+                eyeClose.classList.toggle('hidden', showing);
+                pwInput.focus();
+            });
+
+            if (!window.__AUTH_HASH) {
+                showError('인증 설정이 로드되지 않았습니다. 관리자에게 문의하세요.');
+                submitBtn.disabled = true;
+                return;
+            }
+
+            if (localStorage.getItem('dmms_auth_hash') === window.__AUTH_HASH) {
+                location.replace('index.html');
+                return;
+            }
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                clearError();
+                setLoading(true);
+                try {
+                    const hash = await pbkdf2Hex(
+                        pwInput.value,
+                        window.__AUTH_SALT,
+                        window.__AUTH_ITERS
+                    );
+                    if (hash === window.__AUTH_HASH) {
+                        localStorage.setItem('dmms_auth_hash', hash);
+                        location.replace('index.html');
+                    } else {
+                        showError('비밀번호가 올바르지 않습니다.');
+                        pwInput.value = '';
+                        pwInput.focus();
+                    }
+                } catch (err) {
+                    showError('인증 처리 중 오류가 발생했습니다.');
+                    console.error(err);
+                } finally {
+                    setLoading(false);
+                }
+            });
+        })();
+    </script>
+</body>
+</html>
