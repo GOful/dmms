@@ -275,46 +275,61 @@ function showManholeOverlay(mh, stationName, position) {
     }
     
     const content = template.content.cloneNode(true);
-    const waterLevel = Math.floor(Math.random() * 300) + 200;
+    const isAdmin = window.__DMMS_MODE && window.__DMMS_MODE.getMode() === 'admin';
 
-    // 데이터 채우기
+    // 기본 정보 (위치/ID는 admin에서도 정확한 값 표시)
     content.querySelector('.data-name').textContent = mh.name;
     content.querySelector('.data-station-name').textContent = stationName;
     content.querySelector('.data-id').textContent = mh.id;
     content.querySelector('.data-coords').textContent = `${mh.lat.toFixed(4)}, ${mh.lng.toFixed(4)}`;
-    content.querySelector('.data-complaint-cnt').textContent = mh.complaint_cnt || 0;
-    content.querySelector('.data-repair-cnt').textContent = mh.repair_cnt || 0;
-    content.querySelector('.data-flood-freq').textContent = mh.flood_freq || 0;
 
-    // [수정] 수위 5단계 그래픽 시각화
-    const maxLevel = 500; // 최대 수위 기준 (예: 500mm)
-    let levelStep = Math.ceil((waterLevel / maxLevel) * 5);
-    if (levelStep < 1) levelStep = 1;
-    if (levelStep > 5) levelStep = 5;
+    if (isAdmin) {
+        // 관리 모드: 통계/수위는 아직 DB 미연결 — 준비 중 표시
+        const pendingBadge = '<span class="text-xs text-slate-400 italic">준비 중</span>';
+        content.querySelector('.data-complaint-cnt').innerHTML = pendingBadge;
+        content.querySelector('.data-repair-cnt').innerHTML = pendingBadge;
+        content.querySelector('.data-flood-freq').innerHTML = pendingBadge;
 
-    // 단계별 설정 (정상 -> 심각)
-    const stepConfig = {
-        1: { label: '정상', color: 'bg-green-500', textClass: 'text-green-700' },
-        2: { label: '주의', color: 'bg-blue-500', textClass: 'text-blue-700' },
-        3: { label: '경계', color: 'bg-yellow-400', textClass: 'text-yellow-600' },
-        4: { label: '위험', color: 'bg-orange-500', textClass: 'text-orange-700' },
-        5: { label: '심각', color: 'bg-red-600', textClass: 'text-red-700' }
-    };
+        const waterLevelEl = content.querySelector('.data-water-level');
+        waterLevelEl.classList.add('flex', 'items-center', 'gap-2');
+        waterLevelEl.innerHTML = `
+            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 text-xs font-medium">
+                <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
+                준비 중
+            </span>
+        `;
+    } else {
+        const waterLevel = Math.floor(Math.random() * 300) + 200;
+        content.querySelector('.data-complaint-cnt').textContent = mh.complaint_cnt || 0;
+        content.querySelector('.data-repair-cnt').textContent = mh.repair_cnt || 0;
+        content.querySelector('.data-flood-freq').textContent = mh.flood_freq || 0;
 
-    const config = stepConfig[levelStep];
+        // 수위 5단계 그래픽 시각화
+        const maxLevel = 500;
+        let levelStep = Math.ceil((waterLevel / maxLevel) * 5);
+        if (levelStep < 1) levelStep = 1;
+        if (levelStep > 5) levelStep = 5;
 
-    // 5개 막대 생성
-    const barsHtml = Array.from({length: 5}, (_, i) => 
-        `<div class="w-1.5 h-3 rounded-sm ${i < levelStep ? config.color : 'bg-slate-200'}"></div>`
-    ).join('');
+        const stepConfig = {
+            1: { label: '정상', color: 'bg-green-500', textClass: 'text-green-700' },
+            2: { label: '주의', color: 'bg-blue-500', textClass: 'text-blue-700' },
+            3: { label: '경계', color: 'bg-yellow-400', textClass: 'text-yellow-600' },
+            4: { label: '위험', color: 'bg-orange-500', textClass: 'text-orange-700' },
+            5: { label: '심각', color: 'bg-red-600', textClass: 'text-red-700' }
+        };
+        const config = stepConfig[levelStep];
+        const barsHtml = Array.from({length: 5}, (_, i) =>
+            `<div class="w-1.5 h-3 rounded-sm ${i < levelStep ? config.color : 'bg-slate-200'}"></div>`
+        ).join('');
 
-    const waterLevelEl = content.querySelector('.data-water-level');
-    waterLevelEl.classList.add('flex', 'items-center', 'gap-2'); 
-    waterLevelEl.innerHTML = `
-        <div class="flex gap-0.5">${barsHtml}</div>
-        <span class="font-bold text-xs ${config.textClass}">${config.label}</span>
-        <span class="text-xs text-slate-500">(${waterLevel}mm)</span>
-    `;
+        const waterLevelEl = content.querySelector('.data-water-level');
+        waterLevelEl.classList.add('flex', 'items-center', 'gap-2');
+        waterLevelEl.innerHTML = `
+            <div class="flex gap-0.5">${barsHtml}</div>
+            <span class="font-bold text-xs ${config.textClass}">${config.label}</span>
+            <span class="text-xs text-slate-500">(${waterLevel}mm)</span>
+        `;
+    }
 
     // 이벤트 리스너 연결
     content.querySelector('.close-overlay-btn').addEventListener('click', () => {

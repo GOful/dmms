@@ -104,7 +104,8 @@ async function init() {
 
     // --- 데이터 로드 및 렌더링 ---
     try {
-        const res = await fetch('manholes.json');
+        const dataFile = window.__DMMS_MODE.dataPath('manholes.json');
+        const res = await fetch(dataFile);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         rawData = await res.json();
         
@@ -115,7 +116,8 @@ async function init() {
 
     } catch (e) {
         console.error("데이터 로드 실패:", e);
-        document.getElementById('tree-container').innerHTML = `<p class="p-4 text-red-600">manholes.json 로드에 실패했습니다. 파일 경로 및 JSON 형식을 확인하세요.</p>`;
+        const failedFile = window.__DMMS_MODE.dataPath('manholes.json');
+        document.getElementById('tree-container').innerHTML = `<p class="p-4 text-red-600">${failedFile} 로드에 실패했습니다. 파일 경로 및 JSON 형식을 확인하세요.</p>`;
     }
 }
 

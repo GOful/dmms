@@ -20,7 +20,7 @@ const PDF_MENU_TARGETS = [
 async function loadEquipmentData() {
     if (equipmentData) return equipmentData;
     try {
-        const response = await fetch('equipment_data.json');
+        const response = await fetch(window.__DMMS_MODE.dataPath('equipment_data.json'));
         equipmentData = await response.json();
         return equipmentData;
     } catch (error) {
@@ -291,7 +291,15 @@ export function openManholeDetailModal(mh) {
     const modalBody = document.getElementById('modal-body');
 
     modalTitle.innerText = `${mh.name} 상세 정보`;
-    
+
+    const isAdmin = window.__DMMS_MODE && window.__DMMS_MODE.getMode() === 'admin';
+
+    if (isAdmin) {
+        modalBody.innerHTML = renderAdminPendingDetail(mh);
+        modalOverlay.style.display = 'flex';
+        return;
+    }
+
     // 더미 데이터 생성
     const historyData = generateDummyHistory();
     const waterLevelData = generateDummyWaterLevel();
@@ -378,6 +386,38 @@ export function openManholeDetailModal(mh) {
     `;
 
     modalOverlay.style.display = 'flex';
+}
+
+/** [헬퍼] 관리 모드 — 실데이터 미연결 상태의 상세 모달 본문 */
+function renderAdminPendingDetail(mh) {
+    return `
+        <div class="space-y-6">
+            <!-- 기본 정보 -->
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <h4 class="font-bold text-slate-700 mb-2 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    기본 정보
+                </h4>
+                <div class="grid grid-cols-2 gap-4 text-sm">
+                    <div><span class="text-slate-500">ID:</span> <span class="font-medium">${mh.id}</span></div>
+                    <div><span class="text-slate-500">위치:</span> <span class="font-medium">${mh.lat.toFixed(5)}, ${mh.lng.toFixed(5)}</span></div>
+                    <div><span class="text-slate-500">설치년도:</span> <span class="text-slate-400 italic">준비 중</span></div>
+                </div>
+            </div>
+
+            <!-- 준비 중 안내 -->
+            <div class="border border-dashed border-slate-300 rounded-lg p-8 bg-slate-50/60 text-center">
+                <div class="inline-flex items-center justify-center w-12 h-12 rounded-full bg-slate-200 text-slate-500 mb-3">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                </div>
+                <h4 class="font-bold text-slate-700 mb-1">상세 데이터 준비 중</h4>
+                <p class="text-sm text-slate-500 leading-relaxed">
+                    유지보수 이력 · 연간 수위 등 상세 정보는 DB 시스템 구축 후<br>
+                    실제 운영 데이터와 연동될 예정입니다.
+                </p>
+            </div>
+        </div>
+    `;
 }
 
 /** [헬퍼] 이력 더미 데이터 생성 */

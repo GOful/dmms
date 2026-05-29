@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <script src="js/mode.js"></script>
     <script src="js/auth-config.js"></script>
     <script src="js/auth-guard.js"></script>
     <title>대구교통공사 맨홀관리 시스템(DMMS)</title>
@@ -89,9 +90,51 @@
             </li>
         </ul>
 
+        <!-- 모드 뱃지 + 인증 액션 (데스크탑) -->
+        <div class="hidden md:flex items-center gap-3 ml-3">
+            <span id="mode-badge-demo" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider bg-amber-500/15 border border-amber-400/40 text-amber-300">
+                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+                DEMO · 시연 데이터
+            </span>
+            <span id="mode-badge-admin" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider bg-emerald-500/15 border border-emerald-400/40 text-emerald-300">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
+                ADMIN · 실데이터
+            </span>
+            <a id="login-link" href="login.html" class="hidden text-xs font-medium text-slate-300 hover:text-white border border-slate-700 hover:border-slate-500 px-3 py-1.5 rounded-md transition-colors">
+                관리자 로그인
+            </a>
+            <button id="logout-btn" class="hidden text-xs font-medium text-slate-300 hover:text-white border border-slate-700 hover:border-slate-500 px-3 py-1.5 rounded-md transition-colors">
+                로그아웃
+            </button>
+        </div>
+
         <!-- 모바일 햄버거 버튼 (우측 이동) -->
         <button class="md:hidden text-2xl p-1 text-slate-300 hover:text-white transition-colors" id="navbar-toggle">☰</button>
     </nav>
+
+    <!-- 모드 뱃지/액션 초기화 (어떤 모듈에도 의존하지 않음) -->
+    <script>
+        (function () {
+            var mode = window.__DMMS_MODE.getMode();
+            var demoBadge = document.getElementById('mode-badge-demo');
+            var adminBadge = document.getElementById('mode-badge-admin');
+            var loginLink = document.getElementById('login-link');
+            var logoutBtn = document.getElementById('logout-btn');
+            if (mode === 'admin') {
+                adminBadge.classList.remove('hidden');
+                adminBadge.classList.add('inline-flex');
+                logoutBtn.classList.remove('hidden');
+            } else {
+                demoBadge.classList.remove('hidden');
+                demoBadge.classList.add('inline-flex');
+                loginLink.classList.remove('hidden');
+            }
+            logoutBtn.addEventListener('click', function () {
+                localStorage.removeItem('dmms_auth_hash');
+                location.replace('login.html');
+            });
+        })();
+    </script>
 
     <!-- 메인 앱 컨테이너 (Sidebar Toggle을 위한 group 클래스 사용) -->
     <div id="app-container" class="flex flex-1 overflow-hidden relative group sidebar-hidden">

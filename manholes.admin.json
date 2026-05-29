@@ -1,0 +1,139 @@
+{
+  "lines": [
+    {
+      "lineTitle": "1호선",
+      "lineId": "line1",
+      "stations": [
+        {
+          "stationName": "월배기지",
+          "stationId": "st1_a01_wolbae",
+          "manholes": [
+            {"id": "MH-1-A01-01", "name": "월배기지 #1", "lat": 35.8093956, "lng": 128.5122688, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A01-02", "name": "월배기지 #2", "lat": 35.8094788, "lng": 128.5124901, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A01-03", "name": "월배기지 #3", "lat": 35.8103669, "lng": 128.5145219, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A01-04", "name": "월배기지 #4", "lat": 35.8106803, "lng": 128.5142158, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A01-05", "name": "월배기지 #5", "lat": 35.8110996, "lng": 128.5143184, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A01-06", "name": "월배기지 #6", "lat": 35.8113362, "lng": 128.5150449, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A01-07", "name": "월배기지 #7", "lat": 35.8113601, "lng": 128.5164973, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0}
+          ]
+        },
+        {
+          "stationName": "신천",
+          "stationId": "st1_a02_sincheon",
+          "manholes": [
+            {"id": "MH-1-A02-01", "name": "신천 #1", "lat": 35.8625326, "lng": 128.6178922, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A02-02", "name": "신천 #2", "lat": 35.8640452, "lng": 128.6180535, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A02-03", "name": "신천 #3", "lat": 35.8645101, "lng": 128.6181051, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A02-04", "name": "신천 #4", "lat": 35.8652924, "lng": 128.6181624, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A02-05", "name": "신천 #5", "lat": 35.8665552, "lng": 128.6182664, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A02-06", "name": "신천 #6", "lat": 35.867776, "lng": 128.6183975, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A02-07", "name": "신천 #7", "lat": 35.8691576, "lng": 128.6198106, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A02-08", "name": "신천 #8", "lat": 35.8707709, "lng": 128.6196903, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A02-09", "name": "신천 #9", "lat": 35.8732494, "lng": 128.6183418, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A02-10", "name": "신천 #10", "lat": 35.8764521, "lng": 128.6175418, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A02-11", "name": "신천 #11", "lat": 35.8744426, "lng": 128.6168495, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0}
+          ]
+        },
+        {
+          "stationName": "안심",
+          "stationId": "st1_a03_ansim",
+          "manholes": [
+            {"id": "MH-1-A03-01", "name": "안심 #1", "lat": 35.8725172, "lng": 128.7390898, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0}
+          ]
+        },
+        {
+          "stationName": "서부정류장",
+          "stationId": "st1_a04_seobu",
+          "manholes": [
+            {"id": "MH-1-A04-01", "name": "서부정류장 #1", "lat": 35.8381804, "lng": 128.5950401, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A04-02", "name": "서부정류장 #2", "lat": 35.8401343, "lng": 128.5954495, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A04-03", "name": "서부정류장 #3", "lat": 35.840689, "lng": 128.5979265, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A04-04", "name": "서부정류장 #4", "lat": 35.842819, "lng": 128.5980683, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A04-05", "name": "서부정류장 #5", "lat": 35.8448538, "lng": 128.5982212, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A04-06", "name": "서부정류장 #6", "lat": 35.8450188, "lng": 128.5957382, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A04-07", "name": "서부정류장 #7", "lat": 35.8451452, "lng": 128.5936742, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A04-08", "name": "서부정류장 #8", "lat": 35.845296, "lng": 128.5915599, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A04-09", "name": "서부정류장 #9", "lat": 35.8447669, "lng": 128.5892931, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0}
+          ]
+        },
+        {
+          "stationName": "방촌",
+          "stationId": "st1_a05_bangchon",
+          "manholes": [
+            {"id": "MH-1-A05-01", "name": "방촌 #1", "lat": 35.87492, "lng": 128.6419, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-02", "name": "방촌 #2", "lat": 35.87558, "lng": 128.643, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-03", "name": "방촌 #3", "lat": 35.87652, "lng": 128.6447, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-04", "name": "방촌 #4", "lat": 35.87701, "lng": 128.6455, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-05", "name": "방촌 #5", "lat": 35.87775, "lng": 128.6475, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-06", "name": "방촌 #6", "lat": 35.87843, "lng": 128.6495, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-07", "name": "방촌 #7", "lat": 35.87809, "lng": 128.652, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-08", "name": "방촌 #8", "lat": 35.87687, "lng": 128.6537, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-09", "name": "방촌 #9", "lat": 35.87595, "lng": 128.6556, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-10", "name": "방촌 #10", "lat": 35.87592, "lng": 128.6565, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-11", "name": "방촌 #11", "lat": 35.87638, "lng": 128.6589, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-12", "name": "방촌 #12", "lat": 35.87704, "lng": 128.6617, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-13", "name": "방촌 #13", "lat": 35.87744, "lng": 128.6644, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-14", "name": "방촌 #14", "lat": 35.87706, "lng": 128.667, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-15", "name": "방촌 #15", "lat": 35.87668, "lng": 128.669, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-16", "name": "방촌 #16", "lat": 35.87621, "lng": 128.6714, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-17", "name": "방촌 #17", "lat": 35.87573, "lng": 128.6739, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-18", "name": "방촌 #18", "lat": 35.87828, "lng": 128.6747, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-19", "name": "방촌 #19", "lat": 35.8785, "lng": 128.674, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A05-20", "name": "방촌 #20", "lat": 35.87927, "lng": 128.6714, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0}
+          ]
+        },
+        {
+          "stationName": "반월당",
+          "stationId": "st1_a06_banwoldang",
+          "manholes": [
+            {"id": "MH-1-A06-01", "name": "반월당 #1", "lat": 35.8649014, "lng": 128.5975097, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A06-02", "name": "반월당 #2", "lat": 35.8651155, "lng": 128.5960986, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A06-03", "name": "반월당 #3", "lat": 35.865244, "lng": 128.5936765, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A06-04", "name": "반월당 #4", "lat": 35.8636499, "lng": 128.5932581, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0}
+          ]
+        },
+        {
+          "stationName": "금락",
+          "stationId": "st1_a07_geumrak",
+          "manholes": [
+            {"id": "MH-1-A07-01", "name": "금락 #01", "lat": 35.939334, "lng": 128.825251, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-02", "name": "금락 #02", "lat": 35.936750, "lng": 128.824889, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-03", "name": "금락 #03", "lat": 35.934167, "lng": 128.824806, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-04", "name": "금락 #04", "lat": 35.933444, "lng": 128.827167, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-05", "name": "금락 #05", "lat": 35.932556, "lng": 128.827472, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-06", "name": "금락 #06", "lat": 35.931583, "lng": 128.827944, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-07", "name": "금락 #07", "lat": 35.930194, "lng": 128.827361, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-08", "name": "금락 #08", "lat": 35.928333, "lng": 128.826389, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-09", "name": "금락 #09", "lat": 35.926222, "lng": 128.825222, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-10", "name": "금락 #10", "lat": 35.924250, "lng": 128.824111, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-11", "name": "금락 #11", "lat": 35.922194, "lng": 128.822944, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-12", "name": "금락 #12", "lat": 35.921500, "lng": 128.825278, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-13", "name": "금락 #13", "lat": 35.920972, "lng": 128.827194, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-14", "name": "금락 #14", "lat": 35.918139, "lng": 128.826111, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-15", "name": "금락 #15", "lat": 35.917250, "lng": 128.827778, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-16", "name": "금락 #16", "lat": 35.916389, "lng": 128.828194, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-17", "name": "금락 #17", "lat": 35.914667, "lng": 128.825361, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-18", "name": "금락 #18", "lat": 35.914917, "lng": 128.824861, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-19", "name": "금락 #19", "lat": 35.914167, "lng": 128.825917, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-20", "name": "금락 #20", "lat": 35.913750, "lng": 128.825667, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-21", "name": "금락 #21", "lat": 35.913806, "lng": 128.825111, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-22", "name": "금락 #22", "lat": 35.913139, "lng": 128.823306, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-23", "name": "금락 #23", "lat": 35.912056, "lng": 128.821472, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-24", "name": "금락 #24", "lat": 35.910806, "lng": 128.819194, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-25", "name": "금락 #25", "lat": 35.909472, "lng": 128.817000, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-26", "name": "금락 #26", "lat": 35.908417, "lng": 128.816000, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A07-27", "name": "금락 #27", "lat": 35.907167, "lng": 128.814000, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0}
+          ]
+        },
+        {
+          "stationName": "숙천",
+          "stationId": "st1_a08_sukcheon",
+          "manholes": [
+            {"id": "MH-1-A08-01", "name": "숙천 #01", "lat": 35.873389, "lng": 128.741722, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0},
+            {"id": "MH-1-A08-02", "name": "숙천 #02", "lat": 35.872667, "lng": 128.740167, "flood_cnt": 0, "repair_cnt": 0, "complaint_cnt": 0}
+          ]
+        }
+      ]
+    }
+  ]
+}
