@@ -30,16 +30,26 @@ const svgSelectedMarkerHtml = `
 
 let starImg = null;
 
-// 기본 맨홀 마커 이미지 (슬레이트 색상 + 번개 아이콘)
-const svgMarkerHtml = `
+// 라인별 마커 색상 정의 (배경 / 점선 원 stroke)
+const LINE_COLORS = {
+    line1: { bg: '#dc2626', innerStroke: '#991b1b' }, // 1호선 빨강
+    line2: { bg: '#15803d', innerStroke: '#14532d' }, // 2호선 초록 (진한 녹색)
+    default: { bg: '#334155', innerStroke: '#475569' } // 기본(슬레이트)
+};
+
+// 맨홀 마커 SVG 생성기 (배경/내부 점선 색을 라인별로 받음)
+function makeMarkerSvg(bg, innerStroke) {
+    return `
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
   <defs><filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/></filter></defs>
-  <circle cx="32" cy="32" r="28" fill="#334155" stroke="#cbd5e1" stroke-width="3" filter="url(#shadow)"/>
-  <circle cx="32" cy="32" r="22" fill="none" stroke="#475569" stroke-width="1" stroke-dasharray="4 2"/>
+  <circle cx="32" cy="32" r="28" fill="${bg}" stroke="#ffffff" stroke-width="3" filter="url(#shadow)"/>
+  <circle cx="32" cy="32" r="22" fill="none" stroke="${innerStroke}" stroke-width="1" stroke-dasharray="4 2"/>
   <path d="M34 14L20 34H30L28 50L42 30H32L34 14Z" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5" stroke-linejoin="round"/>
 </svg>`;
+}
 
-let normalImg = null;
+// 라인별 MarkerImage 캐시 (initMap에서 채워짐)
+const normalImgByLine = {};
 
 // ========================================
 // 초기화
@@ -56,11 +66,15 @@ export function initMap() {
         { offset: new kakao.maps.Point(25, 25) } // [추가] 앵커를 중앙으로 설정
     );
 
-    normalImg = new kakao.maps.MarkerImage(
-        `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svgMarkerHtml.trim())}`,
-        new kakao.maps.Size(44, 44),
-        { offset: new kakao.maps.Point(22, 22) } // [추가] 앵커를 중앙으로 설정 (기본값은 하단 중앙)
-    );
+    // 라인별 마커 이미지 사전 생성
+    Object.keys(LINE_COLORS).forEach(key => {
+        const c = LINE_COLORS[key];
+        normalImgByLine[key] = new kakao.maps.MarkerImage(
+            `data:image/svg+xml;charset=utf-8,${encodeURIComponent(makeMarkerSvg(c.bg, c.innerStroke).trim())}`,
+            new kakao.maps.Size(44, 44),
+            { offset: new kakao.maps.Point(22, 22) }
+        );
+    });
 
     state.map = new kakao.maps.Map(document.getElementById('map'), {
         center: new kakao.maps.LatLng(35.8714, 128.6014),
@@ -201,9 +215,10 @@ export function initMapResizer() {
 /**
  * [기능] 개별 맨홀 마커를 생성하고 클릭 이벤트를 등록합니다.
  */
-export function createMarker(mh, pos, stationName, onSelect) {
-    const marker = new kakao.maps.Marker({ position: pos, map: state.map, image: normalImg });
-    state.markersMap[mh.id] = { marker, pos, data: mh, stationName };
+export function createMarker(mh, pos, stationName, onSelect, lineId) {
+    const image = normalImgByLine[lineId] || normalImgByLine.default;
+    const marker = new kakao.maps.Marker({ position: pos, map: state.map, image });
+    state.markersMap[mh.id] = { marker, pos, data: mh, stationName, lineId };
     kakao.maps.event.addListener(marker, 'click', () => onSelect(mh.id));
 }
 
@@ -284,7 +299,7 @@ function showManholeOverlay(mh, stationName, position) {
     content.querySelector('.data-coords').textContent = `${mh.lat.toFixed(4)}, ${mh.lng.toFixed(4)}`;
 
     if (isAdmin) {
-        // 관리 모드: 통계/수위는 아직 DB 미연결 — 준비 중 표시
+        // 관리용 화면: 통계/수위는 아직 DB 미연결 — 준비 중 표시
         const pendingBadge = '<span class="text-xs text-slate-400 italic">준비 중</span>';
         content.querySelector('.data-complaint-cnt').innerHTML = pendingBadge;
         content.querySelector('.data-repair-cnt').innerHTML = pendingBadge;

@@ -205,7 +205,7 @@ function generateDummyTableHTML(title) {
 }
 
 /**
- * [헬퍼] 장비 관리 테이블을 생성하고 모달에 렌더링합니다. (Template 사용)
+ * [헬퍼] 장비관리 테이블을 생성하고 모달에 렌더링합니다. (Template 사용)
  * @param {object} dataObj - 테이블 데이터 (headers, items)
  * @param {string} manualType - 매뉴얼 버튼에 연결할 PDF 파일명
  */
@@ -268,7 +268,7 @@ function generateAirRespiratorTableHTML(dataObj) {
 }
 
 /**
- * [기능] 비상구조 장비 관리 테이블 및 매뉴얼 버튼 HTML을 생성합니다.
+ * [기능] 비상구조 장비관리 테이블 및 매뉴얼 버튼 HTML을 생성합니다.
  */
 function generateEmergencyRescueTableHTML(dataObj) {
     _createEquipmentTable(dataObj, 'emergency_rescue');
@@ -388,7 +388,7 @@ export function openManholeDetailModal(mh) {
     modalOverlay.style.display = 'flex';
 }
 
-/** [헬퍼] 관리 모드 — 실데이터 미연결 상태의 상세 모달 본문 */
+/** [헬퍼] 관리용 화면 — 실데이터 미연결 상태의 상세 모달 본문 */
 function renderAdminPendingDetail(mh) {
     return `
         <div class="space-y-6">

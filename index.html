@@ -62,6 +62,8 @@
                 대구교통공사 맨홀관리 시스템 <span class="font-light text-slate-400">(DMMS)</span>
             </a>
         </div>
+        <!-- 우측 그룹 (데스크탑 메뉴 + 모드 뱃지/액션 + 모바일 햄버거) -->
+        <div class="flex items-center gap-4 h-full">
         <!-- 데스크탑 메뉴 -->
         <ul class="hidden md:flex gap-1 h-full" id="menu-list">
        
@@ -72,7 +74,7 @@
                 </ul>
             </li>
             <li class="relative group h-full flex items-center">
-                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">장비 관리</a>
+                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">장비관리</a>
                 <ul class="absolute top-14 left-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
                     <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="device-reg">복합가스측정기</a></li>
                     <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="remote-control">삼각구조대</a></li>
@@ -92,13 +94,13 @@
 
         <!-- 모드 뱃지 + 인증 액션 (데스크탑) -->
         <div class="hidden md:flex items-center gap-3 ml-3">
-            <span id="mode-badge-demo" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider bg-amber-500/15 border border-amber-400/40 text-amber-300">
+            <span id="mode-badge-demo" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-full text-xs text-slate-300 border border-slate-700">
                 <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                DEMO · 시연 데이터
+                시연용 화면
             </span>
-            <span id="mode-badge-admin" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-full text-[10px] font-bold tracking-wider bg-emerald-500/15 border border-emerald-400/40 text-emerald-300">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span>
-                ADMIN · 실데이터
+            <span id="mode-badge-admin" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-full text-xs text-slate-300 border border-slate-700">
+                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
+                관리용 화면
             </span>
             <a id="login-link" href="login.html" class="hidden text-xs font-medium text-slate-300 hover:text-white border border-slate-700 hover:border-slate-500 px-3 py-1.5 rounded-md transition-colors">
                 관리자 로그인
@@ -110,6 +112,7 @@
 
         <!-- 모바일 햄버거 버튼 (우측 이동) -->
         <button class="md:hidden text-2xl p-1 text-slate-300 hover:text-white transition-colors" id="navbar-toggle">☰</button>
+        </div>
     </nav>
 
     <!-- 모드 뱃지/액션 초기화 (어떤 모듈에도 의존하지 않음) -->
@@ -302,8 +305,8 @@
                 <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-2">점검업무</div>
                 <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="inspection_6m">6개월 검사표</a>
                 
-                <!-- 장비 관리 -->
-                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-4">장비 관리</div>
+                <!-- 장비관리 -->
+                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-4">장비관리</div>
                 <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="device-reg">복합가스측정기</a>
                 <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="remote-control">비상구조</a>
                 <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="status-check">공기호흡기</a>

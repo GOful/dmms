@@ -16,7 +16,7 @@ function createAllMarkers(data, onSelect) {
         line.stations.forEach(st => {
             st.manholes.forEach(mh => {
                 const pos = new kakao.maps.LatLng(mh.lat, mh.lng);
-                createMarker(mh, pos, st.stationName, onSelect);
+                createMarker(mh, pos, st.stationName, onSelect, line.lineId);
             });
         });
     });
