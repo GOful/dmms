@@ -1,104 +1,21 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
     <title>로그인 · 대구교통공사 맨홀관리 시스템(DMMS)</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Noto Sans KR"', 'sans-serif'],
-                    }
-                }
-            }
-        };
-    </script>
+    <script src="js/tailwind.config.js"></script>
+    <link rel="stylesheet" href="css/login.css">
+
     <script src="js/mode.js"></script>
     <script src="js/auth-config.js"></script>
-    <style>
-        html, body { height: 100%; }
-        body {
-            background: #f8fafc;
-            overflow: hidden;
-        }
-        /* index.html의 slate-900 헤더 톤을 좌측 패널로 확장 */
-        .brand-panel {
-            background:
-                radial-gradient(900px 600px at 20% 20%, rgba(37, 99, 235, 0.25), transparent 60%),
-                radial-gradient(700px 500px at 80% 80%, rgba(59, 130, 246, 0.15), transparent 60%),
-                linear-gradient(160deg, #0f172a 0%, #1e293b 60%, #0f172a 100%);
-        }
-        .brand-panel::before {
-            content: "";
-            position: absolute; inset: 0;
-            background-image:
-                linear-gradient(rgba(148, 163, 184, 0.06) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(148, 163, 184, 0.06) 1px, transparent 1px);
-            background-size: 32px 32px;
-            mask-image: radial-gradient(ellipse at center, black 40%, transparent 80%);
-            pointer-events: none;
-        }
-        .field {
-            background: #ffffff;
-            border: 1px solid #e2e8f0;
-            color: #0f172a;
-            transition: border-color 0.18s ease, box-shadow 0.18s ease;
-        }
-        .field::placeholder { color: #94a3b8; }
-        .field:focus {
-            outline: none;
-            border-color: #2563eb;
-            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
-        }
-        .cta {
-            background: #0f172a;
-            color: #ffffff;
-            font-weight: 600;
-            letter-spacing: 0.01em;
-            transition: background 0.18s ease, transform 0.12s ease;
-        }
-        .cta:hover:not(:disabled) {
-            background: #1e293b;
-        }
-        .cta:active:not(:disabled) { transform: translateY(1px); }
-        .cta:disabled { background: #64748b; cursor: not-allowed; }
-        .spinner {
-            width: 16px; height: 16px;
-            border: 2px solid rgba(255, 255, 255, 0.35);
-            border-top-color: #ffffff;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-        }
-        @keyframes spin { to { transform: rotate(360deg); } }
-        .shake { animation: shake 0.35s ease-in-out; }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-6px); }
-            50% { transform: translateX(6px); }
-            75% { transform: translateX(-4px); }
-        }
-        .eye-btn {
-            color: #94a3b8;
-            transition: color 0.15s ease;
-        }
-        .eye-btn:hover { color: #2563eb; }
-        .pulse-dot {
-            animation: pulseDot 2s ease-in-out infinite;
-        }
-        @keyframes pulseDot {
-            0%, 100% { opacity: 1; transform: scale(1); }
-            50% { opacity: 0.6; transform: scale(0.85); }
-        }
-    </style>
 </head>
 <body class="font-sans text-slate-800">
-
     <main class="h-screen w-screen flex">
 
         <!-- 좌측 브랜드 패널 (데스크탑 전용) -->
@@ -110,7 +27,6 @@
                     <div class="text-xs text-slate-400">Daegu Transportation Corp.</div>
                 </div>
             </div>
-
             <div class="relative z-10 max-w-md">
                 <div class="inline-flex items-center gap-2 mb-5 px-3 py-1 rounded-full bg-blue-500/15 border border-blue-400/30 text-xs font-medium text-blue-300 tracking-wide">
                     <span class="w-1.5 h-1.5 rounded-full bg-green-400 pulse-dot"></span>
@@ -121,17 +37,14 @@
                     <span class="text-blue-400">DMMS</span>
                 </h2>
             </div>
-
-            <div class="relative z-10 text-xs text-slate-500">
-                &copy; 2026 Electric Conversion Team · All rights reserved.
-            </div>
+            <div class="relative z-10 text-xs text-slate-500">&copy; 2026 Electric Conversion Team · All rights reserved.</div>
         </aside>
 
-        <!-- 우측 로그인 폼 -->
+        <!-- 우측 로그인 영역 -->
         <section class="flex-1 flex items-center justify-center px-6 py-10 bg-slate-50">
             <div class="w-full max-w-[380px]">
 
-                <!-- 모바일 전용 로고 (좌측 패널이 숨겨질 때 표시) -->
+                <!-- 모바일 로고 (좌측 패널이 숨겨질 때) -->
                 <div class="lg:hidden flex items-center gap-3 mb-10">
                     <img src="img/logo.svg" alt="DMMS" class="h-8 w-auto">
                     <div class="leading-tight">
@@ -140,191 +53,67 @@
                     </div>
                 </div>
 
-                <div id="loginCard">
-                    <!-- 관리자 로그인 카드 -->
+                <div id="login-card">
+                    <!-- 관리자 로그인 -->
                     <div class="rounded-xl border border-slate-200 bg-white p-5 mb-5">
                         <div class="flex items-center gap-2.5 mb-4">
                             <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-slate-900 text-white">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
-                                </svg>
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
                             </span>
-                            <div>
-                                <div class="text-sm font-bold text-slate-900" id="adminCardTitle">관리자 로그인</div>
-                            </div>
+                            <div id="admin-card-title" class="text-sm font-bold text-slate-900">관리자 로그인</div>
                         </div>
 
                         <!-- 로컬 개발 환경 전용: 비밀번호 없이 접속 -->
-                        <a id="adminLocalEntry" href="index.html?mode=admin"
-                            class="cta hidden w-full flex items-center justify-center gap-2 py-3 rounded-lg text-sm">
+                        <a id="local-entry" href="index.html?mode=admin" class="cta hidden w-full flex items-center justify-center gap-2 py-3 rounded-lg text-sm">
                             관리자 페이지 접속
                         </a>
 
-                        <form id="loginForm" autocomplete="off">
-                            <div>
-                                <label for="pw" class="block text-xs font-semibold text-slate-700 mb-2 tracking-wide">
-                                    비밀번호
-                                </label>
-                                <div class="relative">
-                                    <input id="pw" type="password" required
-                                        class="field w-full pl-4 pr-11 py-3 rounded-lg text-sm"
-                                        placeholder="관리자 비밀번호">
-                                    <button type="button" id="togglePw" aria-label="비밀번호 표시"
-                                        class="eye-btn absolute inset-y-0 right-0 flex items-center pr-3">
-                                        <svg id="eyeOpen" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
-                                            <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/>
-                                            <circle cx="12" cy="12" r="3"/>
-                                        </svg>
-                                        <svg id="eyeClose" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5 hidden">
-                                            <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-6.5 0-10-7-10-7a19.4 19.4 0 0 1 4.22-5.19"/>
-                                            <path d="M1 1l22 22"/>
-                                            <path d="M9.9 4.24A10.94 10.94 0 0 1 12 4c6.5 0 10 7 10 7a19.5 19.5 0 0 1-2.17 3.22"/>
-                                            <path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/>
-                                        </svg>
-                                    </button>
-                                </div>
+                        <form id="login-form" autocomplete="off">
+                            <label for="password" class="block text-xs font-semibold text-slate-700 mb-2 tracking-wide">비밀번호</label>
+                            <div class="relative">
+                                <input id="password" type="password" required placeholder="관리자 비밀번호"
+                                    class="field w-full pl-4 pr-11 py-3 rounded-lg text-sm">
+                                <button type="button" id="toggle-password" aria-label="비밀번호 표시" class="eye-btn absolute inset-y-0 right-0 flex items-center pr-3">
+                                    <svg id="eye-open" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/>
+                                    </svg>
+                                    <svg id="eye-closed" class="w-5 h-5 hidden" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-6.5 0-10-7-10-7a19.4 19.4 0 0 1 4.22-5.19"/><path d="M1 1l22 22"/>
+                                        <path d="M9.9 4.24A10.94 10.94 0 0 1 12 4c6.5 0 10 7 10 7a19.5 19.5 0 0 1-2.17 3.22"/><path d="M14.12 14.12a3 3 0 1 1-4.24-4.24"/>
+                                    </svg>
+                                </button>
                             </div>
-
-                            <button id="submitBtn" type="submit"
-                                class="cta w-full flex items-center justify-center gap-2 py-3 rounded-lg text-sm mt-4">
-                                <span id="btnLabel">로그인</span>
-                                <span id="btnSpinner" class="spinner hidden"></span>
+                            <button id="submit-btn" type="submit" class="cta w-full flex items-center justify-center gap-2 py-3 rounded-lg text-sm mt-4">
+                                <span id="submit-label">로그인</span>
+                                <span id="submit-spinner" class="spinner hidden"></span>
                             </button>
-
-                            <p id="errorMsg" class="hidden text-xs text-red-600 bg-red-50 border border-red-100 px-3 py-2.5 rounded-lg mt-3"></p>
+                            <p id="error-msg" class="hidden text-xs text-red-600 bg-red-50 border border-red-100 px-3 py-2.5 rounded-lg mt-3"></p>
                         </form>
                     </div>
 
-                    <!-- 구분선 -->
                     <div class="flex items-center gap-3 my-5">
                         <div class="flex-1 h-px bg-slate-200"></div>
                         <span class="text-[11px] text-slate-400 tracking-widest">OR</span>
                         <div class="flex-1 h-px bg-slate-200"></div>
                     </div>
 
-                    <!-- 시연 페이지 진입 카드 -->
-                    <a href="index.html?mode=demo"
-                        class="group block rounded-xl border border-slate-200 hover:border-slate-400 bg-white hover:bg-slate-50 p-5 transition-colors">
+                    <!-- 시연 페이지 -->
+                    <a href="index.html?mode=demo" class="group block rounded-xl border border-slate-200 hover:border-slate-400 bg-white hover:bg-slate-50 p-5 transition-colors">
                         <div class="flex items-center gap-3">
                             <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-slate-900 text-white shrink-0">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
-                                    <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/>
-                                    <circle cx="12" cy="12" r="3"/>
-                                </svg>
+                                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg>
                             </span>
-                            <div class="flex-1 min-w-0">
-                                <div class="text-sm font-bold text-slate-900">시연 페이지 둘러보기</div>
-                            </div>
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 text-slate-400 group-hover:text-slate-700 group-hover:translate-x-0.5 transition-all">
-                                <polyline points="9 18 15 12 9 6"/>
-                            </svg>
+                            <div class="flex-1 text-sm font-bold text-slate-900">시연 페이지 둘러보기</div>
+                            <svg class="w-4 h-4 text-slate-400 group-hover:text-slate-700 group-hover:translate-x-0.5 transition-all" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
                         </div>
                     </a>
                 </div>
 
-                <!-- 모바일 전용 푸터 -->
-                <div class="lg:hidden mt-12 text-center text-[11px] text-slate-400">
-                    &copy; 2026 Electric Conversion Team
-                </div>
+                <div class="lg:hidden mt-12 text-center text-[11px] text-slate-400">&copy; 2026 Electric Conversion Team</div>
             </div>
         </section>
     </main>
 
-    <script>
-        // 로컬 개발 환경에서는 비밀번호 폼을 숨기고 직접 접속 버튼만 노출
-        (function () {
-            if (!window.__DMMS_MODE || !window.__DMMS_MODE.isLocal()) return;
-            document.getElementById('loginForm').classList.add('hidden');
-            document.getElementById('adminLocalEntry').classList.remove('hidden');
-            document.getElementById('adminCardTitle').textContent = '관리자 페이지 (로컬)';
-        })();
-    </script>
-
-    <script>
-        (function () {
-            const form = document.getElementById('loginForm');
-            const pwInput = document.getElementById('pw');
-            const submitBtn = document.getElementById('submitBtn');
-            const btnLabel = document.getElementById('btnLabel');
-            const btnSpinner = document.getElementById('btnSpinner');
-            const errorMsg = document.getElementById('errorMsg');
-            const togglePw = document.getElementById('togglePw');
-            const eyeOpen = document.getElementById('eyeOpen');
-            const eyeClose = document.getElementById('eyeClose');
-            const card = document.getElementById('loginCard');
-
-            function showError(msg) {
-                errorMsg.textContent = msg;
-                errorMsg.classList.remove('hidden');
-                card.classList.remove('shake');
-                void card.offsetWidth;
-                card.classList.add('shake');
-            }
-            function clearError() { errorMsg.classList.add('hidden'); }
-            function setLoading(on) {
-                submitBtn.disabled = on;
-                btnLabel.textContent = on ? '확인 중' : '로그인';
-                btnSpinner.classList.toggle('hidden', !on);
-            }
-
-            async function pbkdf2Hex(password, saltStr, iterations) {
-                const enc = new TextEncoder();
-                const keyMaterial = await crypto.subtle.importKey(
-                    'raw', enc.encode(password), { name: 'PBKDF2' }, false, ['deriveBits']
-                );
-                const bits = await crypto.subtle.deriveBits(
-                    { name: 'PBKDF2', salt: enc.encode(saltStr), iterations, hash: 'SHA-256' },
-                    keyMaterial, 256
-                );
-                return Array.from(new Uint8Array(bits))
-                    .map(b => b.toString(16).padStart(2, '0')).join('');
-            }
-
-            togglePw.addEventListener('click', () => {
-                const showing = pwInput.type === 'text';
-                pwInput.type = showing ? 'password' : 'text';
-                eyeOpen.classList.toggle('hidden', !showing);
-                eyeClose.classList.toggle('hidden', showing);
-                pwInput.focus();
-            });
-
-            if (!window.__AUTH_HASH) {
-                showError('인증 설정이 로드되지 않았습니다. 관리자에게 문의하세요.');
-                submitBtn.disabled = true;
-                return;
-            }
-
-            if (localStorage.getItem('dmms_auth_hash') === window.__AUTH_HASH) {
-                location.replace('index.html?mode=admin');
-                return;
-            }
-
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                clearError();
-                setLoading(true);
-                try {
-                    const hash = await pbkdf2Hex(
-                        pwInput.value,
-                        window.__AUTH_SALT,
-                        window.__AUTH_ITERS
-                    );
-                    if (hash === window.__AUTH_HASH) {
-                        localStorage.setItem('dmms_auth_hash', hash);
-                        location.replace('index.html?mode=admin');
-                    } else {
-                        showError('비밀번호가 올바르지 않습니다.');
-                        pwInput.value = '';
-                        pwInput.focus();
-                    }
-                } catch (err) {
-                    showError('인증 처리 중 오류가 발생했습니다.');
-                    console.error(err);
-                } finally {
-                    setLoading(false);
-                }
-            });
-        })();
-    </script>
+    <script src="js/login.js"></script>
 </body>
 </html>

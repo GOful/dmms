@@ -1,237 +1,169 @@
 """
-data/맨홀이력.xlsx → manhole_history.admin.json 변환 스크립트
+맨홀이력 엑셀 → 웹 데이터(manhole_history.admin.json) 변환
 
-엑셀이 원본(Source of Truth)이며, 엑셀을 수정한 뒤 이 스크립트를 다시 실행하면 웹에 반영된다.
     python scripts/build_manhole_history.py
 
-- 외부 패키지 없이 표준 라이브러리만 사용 (xlsx = zip + xml)
-- 맨홀 매칭: 엑셀 '구간' + '번호' → manholes.admin.json 의 name ("월배기지 #1")
-- 침수 판정: 비고에 '침수'가 포함된 연도 (전력케이블 접속개소 침수 기록)
-- 보수 사진: data/{연도}_repair/{구간}{번호}.png
+엑셀(data/맨홀이력.xlsx)이 원본이며, 엑셀을 고친 뒤 다시 실행하면 웹에 반영된다.
+배포(GitHub Actions) 때도 자동 실행된다.
+
+- 맨홀 매칭 : 엑셀 '구간' + '번호'  ↔  manholes.admin.json 의 name ("월배기지 #1")
+- 침수 판정 : 비고에 '침수'가 들어간 연도 (전력케이블 접속개소 침수)
+- 보수 사진 : data/{연도}_repair/{구간}{번호}.png
 """
 import json
-import os
 import re
 import sys
-import zipfile
-import xml.etree.ElementTree as ET
 from datetime import datetime
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-XLSX_PATH = os.path.join(ROOT, 'data', '맨홀이력.xlsx')
-MANHOLES_PATH = os.path.join(ROOT, 'manholes.admin.json')
-OUTPUT_PATH = os.path.join(ROOT, 'manhole_history.admin.json')
+from excel_io import ROOT, NUMBER_COL, SECTION_COL, data_rows, parse_columns, read_sheets, to_number
 
-NS = {
-    'm': 'http://schemas.openxmlformats.org/spreadsheetml/2006/main',
-    'r': 'http://schemas.openxmlformats.org/officeDocument/2006/relationships',
-}
-INFER_TAG = '(수위추정)'  # scripts/infer_flood.py 가 기록한 비고 표시
-FIELD_NAMES = {'보수': 'repair', '수위': 'level', '등급': 'grade', '비고': 'note'}
+MANHOLES_PATH = ROOT / 'manholes.admin.json'
+OUTPUT_PATH = ROOT / 'manhole_history.admin.json'
+PHOTO_DIR_RE = re.compile(r'(\d{4})_repair')
+PHOTO_EXTS = {'.png', '.jpg', '.jpeg', '.webp'}
+
+INFER_TAG = '(수위추정)'                 # infer_flood.py 가 기록한 비고 표시 (엑셀 관리용, 웹에는 숨김)
+HIDDEN_NOTES = {'관로구방수장치보수필요'}  # 웹에 표시하지 않는 비고 (공백 제거 후 비교)
 
 
-def col_index(col):
-    """'AB' → 27 (0-based)"""
-    n = 0
-    for ch in col:
-        n = n * 26 + (ord(ch) - 64)
-    return n - 1
-
-
-def read_sheets(path):
-    """{시트명: {행번호: {열문자: 값}}} 형태로 모든 셀 값을 읽는다."""
-    z = zipfile.ZipFile(path)
-    shared = []
-    if 'xl/sharedStrings.xml' in z.namelist():
-        for si in ET.fromstring(z.read('xl/sharedStrings.xml')).findall('m:si', NS):
-            shared.append(''.join(t.text or '' for t in si.iter(f"{{{NS['m']}}}t")))
-
-    rels = ET.fromstring(z.read('xl/_rels/workbook.xml.rels'))
-    rel_map = {r.get('Id'): r.get('Target') for r in rels}
-    workbook = ET.fromstring(z.read('xl/workbook.xml'))
-
-    sheets = {}
-    for s in workbook.find('m:sheets', NS):
-        target = rel_map[s.get(f"{{{NS['r']}}}id")].lstrip('/')
-        if not target.startswith('xl/'):
-            target = 'xl/' + target
-        rows = {}
-        for row in ET.fromstring(z.read(target)).iter(f"{{{NS['m']}}}row"):
-            cells = {}
-            for c in row.findall('m:c', NS):
-                v = c.find('m:v', NS)
-                if c.get('t') == 'inlineStr':
-                    val = ''.join(t.text or '' for t in c.iter(f"{{{NS['m']}}}t"))
-                elif v is None:
-                    continue
-                elif c.get('t') == 's':
-                    val = shared[int(v.text)]
-                else:
-                    val = v.text
-                val = val.strip() if isinstance(val, str) else val
-                if val != '':
-                    cells[re.match(r'[A-Z]+', c.get('r')).group()] = val
-            rows[int(row.get('r'))] = cells
-        sheets[s.get('name')] = rows
-    return sheets
-
-
-def parse_columns(rows):
-    """1행(연도, 병합셀) + 2행(보수/수위/등급/비고)으로 {열문자: (연도, 필드)} 매핑을 만든다."""
-    year_starts = sorted(
-        ((col_index(col), int(float(v))) for col, v in rows.get(1, {}).items() if re.fullmatch(r'\d{4}(\.0)?', str(v))),
-    )
-    mapping = {}
-    for col, header in rows.get(2, {}).items():
-        field = FIELD_NAMES.get(header)
-        if not field:
-            continue
-        idx = col_index(col)
-        year = None
-        for start, y in year_starts:
-            if start <= idx:
-                year = y
-        if year is not None:
-            mapping[col] = (year, field)
-    return mapping
-
-
-def to_number(v):
-    try:
-        f = float(v)
-        return int(f) if f.is_integer() else f
-    except (TypeError, ValueError):
-        return None
+def load_manhole_ids():
+    """{'월배기지#1': 'MH-1-A01-01'} — 공백을 뺀 맨홀 이름 → ID"""
+    data = json.loads(MANHOLES_PATH.read_text(encoding='utf-8'))
+    return {mh['name'].replace(' ', ''): mh['id']
+            for line in data['lines'] for st in line['stations'] for mh in st['manholes']}
 
 
 def find_photos():
-    """{(연도, '구간번호'): '상대경로'}"""
+    """{(연도, '구간번호'): 'data/2014_repair/만촌1.png'}"""
     photos = {}
-    data_dir = os.path.join(ROOT, 'data')
-    for d in os.listdir(data_dir):
-        m = re.fullmatch(r'(\d{4})_repair', d)
-        if not m:
+    for folder in (ROOT / 'data').iterdir():
+        m = PHOTO_DIR_RE.fullmatch(folder.name)
+        if not (m and folder.is_dir()):
             continue
-        for f in os.listdir(os.path.join(data_dir, d)):
-            stem, ext = os.path.splitext(f)
-            if ext.lower() in ('.png', '.jpg', '.jpeg', '.webp'):
-                photos[(int(m.group(1)), stem)] = f'data/{d}/{f}'
+        for file in folder.iterdir():
+            if file.suffix.lower() in PHOTO_EXTS:
+                photos[(int(m.group(1)), file.stem)] = file.relative_to(ROOT).as_posix()
     return photos
 
 
+def clean_note(note):
+    """웹에 보여줄 비고: 수위추정 표시 제거, 숨김 비고는 None"""
+    if not note:
+        return None
+    note = note.replace(INFER_TAG, '').strip()
+    return None if note.replace(' ', '') in HIDDEN_NOTES else note
+
+
+def build_records(cells, columns, photos_by_year):
+    """맨홀 1행 → 연도별 기록 목록 (값이 하나도 없는 연도는 제외)"""
+    by_year = {}
+
+    def record(year):
+        return by_year.setdefault(year, {'year': year, 'repair': False, 'level': None,
+                                         'grade': None, 'note': None, 'photo': None})
+
+    for col, (year, field) in columns.items():
+        value = cells.get(col)
+        rec = record(year)
+        if value is None:
+            continue
+        if field == 'repair':
+            rec['repair'] = value.upper() == 'O'
+        elif field == 'level':
+            rec['level'] = to_number(value)
+        else:
+            rec[field] = value
+
+    # 엑셀에 열이 없는 연도(예: 2026)의 사진도 포함
+    for year, path in photos_by_year.items():
+        record(year)['photo'] = path
+
+    records = []
+    for year in sorted(by_year):
+        rec = by_year[year]
+        rec['note'] = clean_note(rec['note'])
+        rec['flood'] = bool(rec['note'] and '침수' in rec['note'])
+        if rec['repair'] or rec['level'] is not None or rec['grade'] or rec['note'] or rec['photo']:
+            records.append(rec)
+    return records
+
+
+def summarize(records):
+    """연도별 기록 → 화면용 요약값 (보수·침수 횟수, 수위 통계)"""
+    levels = [r for r in records if r['level'] is not None]
+    # 최대/최저가 여러 해면 가장 최근 연도 기준
+    max_rec = max(reversed(levels), key=lambda r: r['level'], default=None)
+    min_rec = min(reversed(levels), key=lambda r: r['level'], default=None)
+    latest = levels[-1] if levels else None
+    prev = levels[-2] if len(levels) > 1 else None
+    grades = [r for r in records if r['grade']]
+    return {
+        'repair_cnt': sum(r['repair'] for r in records),
+        'flood_cnt': sum(r['flood'] for r in records),
+        'flood_years': [r['year'] for r in records if r['flood']],
+        'last_repair_year': max((r['year'] for r in records if r['repair']), default=None),
+        'latest_level': latest and latest['level'],
+        'latest_level_year': latest and latest['year'],
+        'prev_level': prev and prev['level'],
+        'avg_level': round(sum(r['level'] for r in levels) / len(levels)) if levels else None,
+        'max_level': max_rec and max_rec['level'],
+        'max_level_year': max_rec and max_rec['year'],
+        'min_level': min_rec and min_rec['level'],
+        'min_level_year': min_rec and min_rec['year'],
+        'level_years': [levels[0]['year'], levels[-1]['year']] if levels else None,
+        # 등급은 기준이 불명확해 화면에 표시하지 않지만, 추후 사용을 위해 데이터에는 유지
+        'grade': grades[-1]['grade'] if grades else None,
+        'grade_year': grades[-1]['year'] if grades else None,
+    }
+
+
 def main():
-    with open(MANHOLES_PATH, encoding='utf-8') as fp:
-        manholes = json.load(fp)
-    name_to_id = {}
-    for line in manholes['lines']:
-        for st in line['stations']:
-            for mh in st['manholes']:
-                name_to_id[mh['name'].replace(' ', '')] = mh['id']
-
-    sheets = read_sheets(XLSX_PATH)
+    name_to_id = load_manhole_ids()
     photos = find_photos()
-    used_photos = set()
-    result = {}
-    unmatched = []
-    all_years = set()
-    note_years = set()  # 비고가 한 건이라도 기록된 연도 = 침수 판정 가능 연도
-    for sheet_name, rows in sheets.items():
+    used_photos, unmatched = set(), []
+    manholes, all_years, note_years = {}, set(), set()
+
+    for sheet_name, rows in read_sheets().items():
         columns = parse_columns(rows)
-        for r in sorted(rows):
-            cells = rows[r]
-            if r < 3 or 'B' not in cells or 'C' not in cells:
-                continue
-            section, no = cells['B'], to_number(cells['C'])
-            key = f'{section}#{no}'
-            mh_id = name_to_id.get(key)
+        all_years |= {year for year, _ in columns.values()}
+        for _, cells in data_rows(rows):
+            section, no = cells[SECTION_COL], to_number(cells[NUMBER_COL])
+            mh_id = name_to_id.get(f'{section}#{no}')
             if not mh_id:
-                unmatched.append(f'{sheet_name} {key}')
+                unmatched.append(f'{sheet_name} {section}#{no}')
                 continue
 
-            by_year = {}
-            for col, (year, field) in columns.items():
-                all_years.add(year)
-                rec = by_year.setdefault(year, {'year': year, 'repair': False, 'level': None, 'grade': None, 'note': None})
-                val = cells.get(col)
-                if val is None:
-                    continue
-                if field == 'repair':
-                    rec['repair'] = str(val).upper() == 'O'
-                elif field == 'level':
-                    rec['level'] = to_number(val)
-                else:
-                    rec[field] = str(val)
+            photos_by_year = {y: p for (y, stem), p in photos.items() if stem == f'{section}{no}'}
+            used_photos |= {(y, f'{section}{no}') for y in photos_by_year}
+            records = build_records(cells, columns, photos_by_year)
+            note_years |= {y for col, (y, f) in columns.items() if f == 'note' and cells.get(col)}
 
-            # 엑셀에 없는 연도(예: 2026)의 사진도 이력에 포함
-            for (year, stem), path in photos.items():
-                if stem == f'{section}{no}':
-                    by_year.setdefault(year, {'year': year, 'repair': False, 'level': None, 'grade': None, 'note': None})
-                    by_year[year]['photo'] = path
-                    used_photos.add((year, stem))
-
-            records = []
-            for year in sorted(by_year):
-                rec = by_year[year]
-                if rec['note']:
-                    # 수위추정 표시는 엑셀 관리용 — 웹 데이터에는 남기지 않음
-                    rec['note'] = rec['note'].replace(INFER_TAG, '').strip()
-                    note_years.add(year)
-                rec['flood'] = bool(rec['note'] and '침수' in rec['note'])
-                rec.setdefault('photo', None)
-                # 아무 값도 없는 연도는 제외
-                if rec['repair'] or rec['level'] is not None or rec['grade'] or rec['note'] or rec['photo']:
-                    records.append(rec)
-
-            levels = [x for x in records if x['level'] is not None]
-            grades = [x for x in records if x['grade']]
-            latest = levels[-1] if levels else None
-            prev = levels[-2] if len(levels) > 1 else None
-            # 최대/최저가 여러 해면 가장 최근 연도 기준
-            max_rec = max(reversed(levels), key=lambda x: x['level']) if levels else None
-            min_rec = min(reversed(levels), key=lambda x: x['level']) if levels else None
-            result[mh_id] = {
-                'line': sheet_name,
-                'section': section,
-                'no': no,
-                'repair_cnt': sum(1 for x in records if x['repair']),
-                'flood_cnt': sum(1 for x in records if x['flood']),                'latest_level': latest['level'] if latest else None,
-                'latest_level_year': latest['year'] if latest else None,
-                'prev_level': prev['level'] if prev else None,
-                'avg_level': round(sum(x['level'] for x in levels) / len(levels)) if levels else None,
-                'max_level': max_rec['level'] if max_rec else None,
-                'max_level_year': max_rec['year'] if max_rec else None,
-                'min_level': min_rec['level'] if min_rec else None,
-                'min_level_year': min_rec['year'] if min_rec else None,
-                'level_years': [levels[0]['year'], levels[-1]['year']] if levels else None,
-                'flood_years': [x['year'] for x in records if x['flood']],
-                'grade': grades[-1]['grade'] if grades else None,
-                'grade_year': grades[-1]['year'] if grades else None,
-                'last_repair_year': max((x['year'] for x in records if x['repair']), default=None),
-                'records': records,
-            }
+            manholes[mh_id] = {'line': sheet_name, 'section': section, 'no': no,
+                               **summarize(records), 'records': records}
 
     output = {
         'generated_at': datetime.now().isoformat(timespec='seconds'),
         'years': sorted(all_years),
-        'flood_check_years': sorted(note_years),
-        'manholes': result,
+        'flood_check_years': sorted(note_years),  # 비고가 기록된 연도 = 침수 판정이 가능한 연도
+        'manholes': manholes,
     }
-    with open(OUTPUT_PATH, 'w', encoding='utf-8') as fp:
-        json.dump(output, fp, ensure_ascii=False, indent=1)
+    OUTPUT_PATH.write_text(json.dumps(output, ensure_ascii=False, indent=1), encoding='utf-8')
 
-    # --- 검증 리포트 ---
-    print(f'[완료] {len(result)}개 맨홀 → {os.path.relpath(OUTPUT_PATH, ROOT)}')
-    missing_in_excel = sorted(set(name_to_id.values()) - set(result))
+    # ── 검증 리포트 ──
+    print(f'[완료] {len(manholes)}개 맨홀 → {OUTPUT_PATH.relative_to(ROOT)}')
     if unmatched:
         print(f'[경고] manholes.admin.json 에 없는 엑셀 행 {len(unmatched)}개: {", ".join(unmatched)}')
-    if missing_in_excel:
-        print(f'[경고] 엑셀에 없는 맨홀 {len(missing_in_excel)}개: {", ".join(missing_in_excel)}')
-    orphan_photos = sorted(set(photos) - used_photos)
-    if orphan_photos:
-        print(f'[경고] 매칭되지 않은 사진: {", ".join(f"{y} {s}" for y, s in orphan_photos)}')
-    photo_no_mark = [f'{r["year"]} {v["section"]}{v["no"]}' for v in result.values() for r in v['records'] if r['photo'] and not r['repair']]
-    if photo_no_mark:
-        print(f'[확인] 보수 사진은 있으나 엑셀 보수 표시(O)가 없음: {", ".join(photo_no_mark)}')
+    missing = sorted(set(name_to_id.values()) - set(manholes))
+    if missing:
+        print(f'[경고] 엑셀에 없는 맨홀 {len(missing)}개: {", ".join(missing)}')
+    orphan = sorted(set(photos) - used_photos)
+    if orphan:
+        print(f'[경고] 맨홀과 연결되지 않은 사진: {", ".join(f"{y} {s}" for y, s in orphan)}')
+    no_mark = [f'{r["year"]} {m["section"]}{m["no"]}'
+               for m in manholes.values() for r in m['records'] if r['photo'] and not r['repair']]
+    if no_mark:
+        print(f'[확인] 보수 사진은 있으나 엑셀 보수 표시(O)가 없음: {", ".join(no_mark)}')
+    return 0
 
 
 if __name__ == '__main__':

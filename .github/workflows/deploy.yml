@@ -1,11 +1,14 @@
+# GitHub Pages 배포
+#   - main 에 push 할 때, 매시간 정각(날씨 갱신), 수동 실행(Actions > Run workflow) 시 실행
+#   - 저장소에 60일간 커밋이 없으면 GitHub 가 이 워크플로를 자동으로 끈다 → Actions 화면에서 다시 켜야 함
 name: Deploy to GitHub Pages
 
 on:
   push:
     branches: ["main"]
-  workflow_dispatch: # 수동 실행 버튼 활성화
+  workflow_dispatch:
   schedule:
-    - cron: '0 * * * *' # 매 시간 정각마다 자동 실행 (날씨 데이터 갱신용)
+    - cron: '0 * * * *'
 
 permissions:
   contents: read
@@ -26,20 +29,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      # 1. JS용 API 키 파일 생성 (GitHub Secrets 사용)
-      - name: Create API Key File
-        run: |
-          echo "export const GOOGLE_API_KEY = '${{ secrets.GOOGLE_API_KEY }}';" > js/apikey.js
-
-      # 2. 파이썬 환경 설정
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.x'
 
-      # 3. 로그인 비밀번호 해시 파일 생성 (GitHub Secrets 사용)
-      # SITE_PASSWORD(평문) -> PBKDF2-SHA256 해시 -> js/auth-config.js 생성
-      - name: Create Auth Config File
+      # AI 챗봇용 Google API 키 (Secrets: GOOGLE_API_KEY) → js/apikey.js
+      - name: Create API key file
+        run: |
+          echo "export const GOOGLE_API_KEY = '${{ secrets.GOOGLE_API_KEY }}';" > js/apikey.js
+
+      # 관리자 비밀번호 (Secrets: SITE_PASSWORD) → PBKDF2-SHA256 해시만 js/auth-config.js 에 기록
+      - name: Create auth config file
         env:
           SITE_PASSWORD: ${{ secrets.SITE_PASSWORD }}
         run: |
@@ -49,23 +50,24 @@ jobs:
           fi
           python - <<'PYEOF'
           import hashlib, os
-          pw = os.environ['SITE_PASSWORD'].encode('utf-8')
-          salt = b'dmms-v1'
-          iters = 200000
-          h = hashlib.pbkdf2_hmac('sha256', pw, salt, iters).hex()
+          salt, iters = 'dmms-v1', 200000
+          h = hashlib.pbkdf2_hmac('sha256', os.environ['SITE_PASSWORD'].encode('utf-8'), salt.encode(), iters).hex()
           with open('js/auth-config.js', 'w', encoding='utf-8') as f:
-              f.write(f"window.__AUTH_SALT='dmms-v1';window.__AUTH_ITERS={iters};window.__AUTH_HASH='{h}';")
+              f.write(f"window.__AUTH_SALT='{salt}';window.__AUTH_ITERS={iters};window.__AUTH_HASH='{h}';")
           PYEOF
 
-      # 4. 의존성 설치 및 날씨 데이터 갱신 스크립트 실행
-      # 갱신된 weather_data.json은 커밋하지 않고 Pages 배포 아티팩트에만 포함된다.
-      - name: Fetch Weather Data
+      # 맨홀이력 엑셀 → 웹 데이터 (엑셀만 고쳐 push 해도 반영되도록)
+      - name: Build manhole history
+        run: python scripts/build_manhole_history.py
+
+      # 기상청 실황 → 날씨 데이터 (Secrets: KMA_API_KEY, 커밋하지 않고 배포본에만 포함)
+      - name: Fetch weather data
         env:
           KMA_API_KEY: ${{ secrets.KMA_API_KEY }}
           TZ: 'Asia/Seoul'
         run: |
-          pip install requests python-dotenv
-          python fetch_weather.py
+          pip install requests
+          python scripts/fetch_weather.py
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

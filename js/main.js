@@ -1,151 +1,54 @@
-import { initMap, selectManhole, relayoutMap, initMapResizer, createMarker } from './map-service.js';
-import { renderTree, toggleGroup, selectManholeInSidebar } from './tree-manager.js';
-import { toggleSidebar, toggleChat, setupMenuEvents, openManholeDetailModal } from './ui-controller.js';
-import { askAI } from './ai-service.js';
-import { initChatHelp } from './chat-manager.js';
-
-let rawData = null;
-
 /**
- * [초기화] 모든 맨홀 데이터에 대해 지도 마커를 생성합니다.
- * @param {object} data - 맨홀 데이터
- * @param {function} onSelect - 마커 선택 시 실행될 콜백 함수
+ * 앱 진입점 — 각 모듈을 초기화하고 서로 연결한다
+ *
+ *   지도(map/)  ──이벤트──▶  main  ──▶  사이드바 · 상세정보 모달
+ *   (모듈끼리 직접 참조하지 않고 config.js 의 EVENTS 로 주고받음)
  */
-function createAllMarkers(data, onSelect) {
-    data.lines.forEach(line => {
-        line.stations.forEach(st => {
-            st.manholes.forEach(mh => {
-                const pos = new kakao.maps.LatLng(mh.lat, mh.lng);
-                createMarker(mh, pos, st.stationName, onSelect, line.lineId);
-            });
-        });
-    });
-}
-
-function updateDateTime() {
-    const now = new Date();
-    // 포맷: MM.DD(요일) HH:mm
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const date = String(now.getDate()).padStart(2, '0');
-    const day = ['일', '월', '화', '수', '목', '금', '토'][now.getDay()];
-    const hours = String(now.getHours()).padStart(2, '0');
-    const minutes = String(now.getMinutes()).padStart(2, '0');
-
-    const formattedDateTime = `${month}.${date}(${day}) ${hours}:${minutes}`;
-    
-    const displayElement = document.getElementById('datetime-display');
-    if (displayElement) {
-        displayElement.innerText = formattedDateTime;
-    }
-}
-
-/**
- * [이벤트 위임] 트리 컨테이너의 클릭 이벤트를 처리합니다.
- * @param {Event} e - 클릭 이벤트 객체
- */
-function handleTreeClick(e) {
-    const manholeItem = e.target.closest('.manhole-item');
-    if (manholeItem && manholeItem.dataset.manholeId) {
-        selectManhole(manholeItem.dataset.manholeId);
-        return;
-    }
-
-    const groupHeader = e.target.closest('.tree-group-header');
-    if (groupHeader && groupHeader.dataset.groupId) {
-        toggleGroup(groupHeader.dataset.groupId);
-        return;
-    }
-}
-
-/**
- * [이벤트 리스너] 애플리케이션 전역 커스텀 이벤트를 설정합니다.
- */
-function setupGlobalEventListeners() {
-    // map-service에서 맨홀이 선택되었을 때 발생하는 이벤트
-    document.addEventListener('manholeselected', (e) => {
-        selectManholeInSidebar(e.detail.manholeId);
-    });
-
-    // map-service에서 맨홀 상세보기 버튼이 클릭되었을 때 발생하는 이벤트
-    document.addEventListener('manholedetailrequested', (e) => {
-        openManholeDetailModal(e.detail.manholeData);
-    });
-}
-
-/**
- * [초기화] manhole_history.admin.json 의 요약값과 연도별 이력을 각 맨홀 객체에 병합합니다.
- * (scripts/build_manhole_history.py 로 data/맨홀이력.xlsx 에서 생성)
- */
-async function mergeManholeHistory(data) {
-    try {
-        const res = await fetch('manhole_history.admin.json');
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        const history = await res.json();
-        data.lines.forEach(line => {
-            line.stations.forEach(st => {
-                st.manholes.forEach(mh => {
-                    const h = history.manholes[mh.id];
-                    if (h) Object.assign(mh, h, { hasHistory: true, flood_check_years: history.flood_check_years });
-                });
-            });
-        });
-    } catch (e) {
-        console.error('맨홀 이력 데이터 로드 실패:', e);
-    }
-}
+import { EVENTS } from './config.js';
+import { loadManholes } from './data.js';
+import { formatDateTime } from './utils.js';
+import { initMap, addManholeMarkers, selectManhole, relayoutMap } from './map/map.js';
+import { initModal } from './ui/modal.js';
+import { initMenu } from './ui/menu.js';
+import { initSidebar, renderTree, showTreeError, highlightManhole, filterTree } from './ui/sidebar.js';
+import { openManholeDetail } from './ui/manhole-detail.js';
+import { initChat } from './ui/chat.js';
+import { askAI } from './ai.js';
 
 async function init() {
-    // --- 주요 UI 이벤트 설정 ---
-    document.getElementById('toggle-sidebar-btn-desktop').addEventListener('click', toggleSidebar);
-    document.getElementById('toggle-chat-btn').addEventListener('click', toggleChat);
-    document.getElementById('send-btn').addEventListener('click', () => askAI(rawData));
-    document.getElementById('chat-input').addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            askAI(rawData);
-        }
-    });
+    initModal();
+    initMenu();
+    initSidebar({ onSelect: selectManhole, onToggle: relayoutMap });
+    startClock();
 
-    // --- 메뉴 및 트리 이벤트 설정 ---
-    setupMenuEvents();
-    document.getElementById('tree-container').addEventListener('click', handleTreeClick);
-    
-    // --- 전역 커스텀 이벤트 리스너 설정 ---
-    setupGlobalEventListeners();
+    // 카카오맵을 못 불러와도(도메인 미등록·네트워크 오류) 목록·메뉴·AI 는 동작하도록 분리
+    const mapReady = typeof kakao !== 'undefined';
+    if (mapReady) initMap();
+    else console.error('카카오맵 SDK 를 불러오지 못했습니다.');
 
-    // --- 날짜/시간 업데이트 ---
-    updateDateTime();
-    setInterval(updateDateTime, 60000);
+    document.addEventListener(EVENTS.SELECT, (e) => highlightManhole(e.detail.id));
+    document.addEventListener(EVENTS.FILTER, (e) => filterTree(e.detail.ids));
+    document.addEventListener(EVENTS.DETAIL, (e) => openManholeDetail(e.detail.manhole));
 
-    // --- 지도 초기화 ---
-    initMap();
-    initMapResizer();
+    let data = null;
+    initChat({ onSend: (question) => data && askAI(question, data) });
 
-    // --- AI 채팅 도움말 초기화 ---
-    initChatHelp();
-
-    // --- 데이터 로드 및 렌더링 ---
     try {
-        const dataFile = window.__DMMS_MODE.dataPath('manholes.json');
-        const res = await fetch(dataFile);
-        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
-        rawData = await res.json();
-
-        // 관리 모드: 엑셀에서 변환한 맨홀 이력(맨홀보수/수위/접속개소 침수)을 병합
-        if (window.__DMMS_MODE.getMode() === 'admin') {
-            await mergeManholeHistory(rawData);
-        }
-
-        // 1. 지도에 모든 마커 생성
-        createAllMarkers(rawData, selectManhole);
-        // 2. 사이드바 트리 메뉴 렌더링
-        renderTree(rawData);
-
+        data = await loadManholes();
+        renderTree(data);
+        if (mapReady) addManholeMarkers(data);
     } catch (e) {
-        console.error("데이터 로드 실패:", e);
-        const failedFile = window.__DMMS_MODE.dataPath('manholes.json');
-        document.getElementById('tree-container').innerHTML = `<p class="p-4 text-red-600">${failedFile} 로드에 실패했습니다. 파일 경로 및 JSON 형식을 확인하세요.</p>`;
+        console.error('맨홀 데이터 로드 실패:', e);
+        showTreeError(`${window.DMMS.dataPath('manholes.json')} 로드에 실패했습니다. 파일 경로와 JSON 형식을 확인하세요.`);
     }
+}
+
+/** 지도 컨트롤 패널의 날짜·시간 (1분마다 갱신) */
+function startClock() {
+    const el = document.getElementById('datetime-display');
+    const update = () => { el.textContent = formatDateTime(); };
+    update();
+    setInterval(update, 60 * 1000);
 }
 
 init();

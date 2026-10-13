@@ -1,5 +1,16 @@
-# Environment Variables & Secrets
+# 비밀 값 (배포 시 GitHub Actions 가 생성)
 .env
 js/apikey.js
 js/auth-config.js
-__pycache__/data/flood_inference_report.csv
+
+# 배포 시 매시간 새로 받는 날씨 데이터
+weather_data.json
+weather_data.admin.json
+
+# 로컬 검토용 산출물
+data/flood_inference_report.csv
+
+# 개발 환경
+__pycache__/
+.venv/
+.claude/settings.local.json

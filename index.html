@@ -1,449 +1,172 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>대구교통공사 맨홀관리 시스템(DMMS)</title>
+
+    <!-- 모드 판별 → 배포 시 생성되는 인증 설정 → 접근 제어 (화면이 그려지기 전에 실행) -->
     <script src="js/mode.js"></script>
     <script src="js/auth-config.js"></script>
     <script src="js/auth-guard.js"></script>
-    <title>대구교통공사 맨홀관리 시스템(DMMS)</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700&display=swap" rel="stylesheet">
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
-    <!-- PDF.js (모바일 PDF 뷰어용) -->
+    <script src="js/tailwind.config.js"></script>
+    <!-- PDF.js (사용매뉴얼 뷰어) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['"Noto Sans KR"', 'sans-serif'],
-                    },
-                    keyframes: {
-                        fadeIn: {
-                            'from': { opacity: '0', transform: 'translateY(-10px)' },
-                            'to': { opacity: '1', transform: 'translateY(0)' },
-                        },
-                        slideUp: {
-                            'from': { opacity: '0', transform: 'translate(-50%, 20px)' },
-                            'to': { opacity: '1', transform: 'translate(-50%, 0)' },
-                        },
-                        'gradient-flow': {
-                            '0%, 100%': { 'background-position': '0% 50%' },
-                            '50%': { 'background-position': '100% 50%' },
-                        }
-                    },
-                    animation: {
-                        'gradient-flow': 'gradient-flow 3s ease infinite',
-                    }
-                }
-            },
-            plugins: [
-                function({ addBase }) {
-                    addBase({
-                        '::-webkit-scrollbar': { width: '6px' },
-                        '::-webkit-scrollbar-track': { background: 'transparent' },
-                        '::-webkit-scrollbar-thumb': { backgroundColor: '#cbd5e1', borderRadius: '3px' },
-                        '::-webkit-scrollbar-thumb:hover': { backgroundColor: '#94a3b8' },
-                    })
-                }
-            ]
-        }
-    </script>
 </head>
 <body class="h-screen w-screen overflow-hidden bg-slate-50 text-slate-800 flex flex-col font-sans">
-    <!-- 네비게이션 바 -->
+
+    <!-- ========== 상단 내비게이션 ========== -->
     <nav class="bg-slate-900 text-white h-16 flex items-center justify-between px-4 shadow-lg z-[60] shrink-0 relative">
         <div class="flex items-center gap-3">
             <img src="img/logo.svg" alt="DMMS" class="h-8 w-auto">
-            <a href="#" class="text-lg font-bold tracking-tight text-slate-100 hover:text-white transition-colors">
+            <span class="text-lg font-bold tracking-tight text-slate-100">
                 대구교통공사 맨홀관리 시스템 <span class="font-light text-slate-400">(DMMS)</span>
-            </a>
+            </span>
         </div>
-        <!-- 우측 그룹 (데스크탑 메뉴 + 모드 뱃지/액션 + 모바일 햄버거) -->
         <div class="flex items-center gap-4 h-full">
-        <!-- 데스크탑 메뉴 -->
-        <ul class="hidden md:flex gap-1 h-full" id="menu-list">
-       
-            <li class="relative group h-full flex items-center">
-                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">점검업무</a>
-                <ul class="absolute top-14 left-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="inspection_6m">6개월 검사표</a></li>
-                </ul>
-            </li>
-            <li class="relative group h-full flex items-center">
-                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">장비관리</a>
-                <ul class="absolute top-14 left-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="device-reg">복합가스측정기</a></li>
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="remote-control">삼각구조대</a></li>
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="status-check">공기호흡기</a></li>
-                </ul>
-            </li>
-            <li class="relative group h-full flex items-center">
-                <a href="#" class="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-md transition-colors">안전작업</a>
-                <ul class="absolute top-14 right-0 w-48 bg-white text-slate-800 rounded-lg shadow-xl border border-slate-100 hidden group-hover:block overflow-hidden z-50">
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="confined_space_program">밀폐공간 작업프로그램</a></li>
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="work_permit">작업허가서</a></li>
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="cpr">인공호흡 및 심폐소생술</a></li>
-                    <li><a href="#" class="block px-4 py-3 text-sm hover:bg-slate-50 hover:text-blue-600 transition-colors spa-link" data-target="related_laws">관계법령</a></li>
-                </ul>
-            </li>
-        </ul>
-
-        <!-- 모드 뱃지 + 인증 액션 (데스크탑) -->
-        <div class="hidden md:flex items-center gap-3 ml-3">
-            <span id="mode-badge-demo" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-full text-xs text-slate-300 border border-slate-700">
-                <span class="w-1.5 h-1.5 rounded-full bg-amber-400"></span>
-                시연용 화면
-            </span>
-            <span id="mode-badge-admin" class="hidden items-center gap-1.5 px-2.5 py-1 rounded-full text-xs text-slate-300 border border-slate-700">
-                <span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                관리용 화면
-            </span>
-            <a id="login-link" href="login.html" class="hidden text-xs font-medium text-slate-300 hover:text-white border border-slate-700 hover:border-slate-500 px-3 py-1.5 rounded-md transition-colors">
-                관리자 로그인
-            </a>
-            <button id="logout-btn" class="hidden text-xs font-medium text-slate-300 hover:text-white border border-slate-700 hover:border-slate-500 px-3 py-1.5 rounded-md transition-colors">
-                로그아웃
-            </button>
-        </div>
-
-        <!-- 모바일 햄버거 버튼 (우측 이동) -->
-        <button class="md:hidden text-2xl p-1 text-slate-300 hover:text-white transition-colors" id="navbar-toggle">☰</button>
+            <!-- 메뉴 · 모드 뱃지 · 로그인/로그아웃 (js/ui/menu.js 가 채움) -->
+            <ul id="desktop-menu" class="hidden md:flex gap-1 h-full"></ul>
+            <div id="header-actions" class="hidden md:flex items-center gap-3 ml-3"></div>
+            <button id="mobile-menu-open-btn" class="md:hidden text-2xl p-1 text-slate-300 hover:text-white transition-colors" aria-label="전체 메뉴">☰</button>
         </div>
     </nav>
 
-    <!-- 모드 뱃지/액션 초기화 (어떤 모듈에도 의존하지 않음) -->
-    <script>
-        (function () {
-            var mode = window.__DMMS_MODE.getMode();
-            var demoBadge = document.getElementById('mode-badge-demo');
-            var adminBadge = document.getElementById('mode-badge-admin');
-            var loginLink = document.getElementById('login-link');
-            var logoutBtn = document.getElementById('logout-btn');
-            if (mode === 'admin') {
-                adminBadge.classList.remove('hidden');
-                adminBadge.classList.add('inline-flex');
-                logoutBtn.classList.remove('hidden');
-            } else {
-                demoBadge.classList.remove('hidden');
-                demoBadge.classList.add('inline-flex');
-                loginLink.classList.remove('hidden');
-            }
-            logoutBtn.addEventListener('click', function () {
-                localStorage.removeItem('dmms_auth_hash');
-                location.replace('login.html');
-            });
-        })();
-    </script>
+    <!-- ========== 본문 ========== -->
+    <div id="app-container" class="group sidebar-hidden flex flex-1 overflow-hidden relative">
 
-    <!-- 메인 앱 컨테이너 (Sidebar Toggle을 위한 group 클래스 사용) -->
-    <div id="app-container" class="flex flex-1 overflow-hidden relative group sidebar-hidden">
-        
-        <!-- 사이드바 -->
-        <div id="sidebar" class="w-80 bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 absolute z-40 h-full group-[.sidebar-hidden]:-translate-x-full shadow-xl">
-            <div class="p-4 border-b border-slate-100 flex items-center gap-2 bg-slate-50">
-                <span class="w-2 h-0 bg-blue-600 rounded-full"></span>
-                <span class="font-bold text-slate-700">관리맨홀 목록</span>
-            </div>
-            <div id="sidebar-main-content" class="flex-1 overflow-hidden flex flex-col">
-                <div id="tree-container" class="flex-1 overflow-y-auto p-2"></div>
-            </div>
+        <!-- 사이드바 (맨홀 목록) -->
+        <aside class="w-80 bg-white border-r border-slate-200 flex flex-col transition-transform duration-300 absolute z-40 h-full shadow-xl group-[.sidebar-hidden]:-translate-x-full">
+            <div class="p-4 border-b border-slate-100 bg-slate-50 font-bold text-slate-700">관리맨홀 목록</div>
+            <div id="tree-container" class="flex-1 overflow-y-auto p-2"></div>
             <footer class="p-3 text-center text-xs text-slate-400 border-t border-slate-100 bg-slate-50">
                 &copy; 2026 Copyright Electric Conversion Team
             </footer>
-        </div>
+        </aside>
 
-        <!-- 메인 콘텐츠 (지도) -->
-        <div id="main-content" class="flex-1 flex flex-col relative w-full bg-slate-200">
-            
-            <!-- 사이드바 토글 버튼 (데스크탑) -->
-            <button id="toggle-sidebar-btn-desktop" class="absolute top-4 left-80 z-50 bg-slate-800 p-2 rounded-lg shadow-lg border border-slate-700 text-white hover:bg-slate-700 hover:text-blue-300 transition-all duration-300 group-[.sidebar-hidden]:left-4">
-                <!-- 열려있을 때: 접기 아이콘 -->
-                <svg class="group-[.sidebar-hidden]:hidden" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
-                <!-- 닫혀있을 때: 목록펼치기 텍스트 -->
+        <!-- 지도 영역 -->
+        <main id="main-content" class="flex-1 flex flex-col relative w-full bg-slate-200">
+
+            <!-- 사이드바 열기/닫기 -->
+            <button id="sidebar-toggle-btn" class="absolute top-4 left-80 z-50 bg-slate-800 p-2 rounded-lg shadow-lg border border-slate-700 text-white hover:bg-slate-700 hover:text-blue-300 transition-all duration-300 group-[.sidebar-hidden]:left-4">
+                <svg class="group-[.sidebar-hidden]:hidden" viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
                 <span class="hidden group-[.sidebar-hidden]:block text-xs font-bold px-1 whitespace-nowrap">목록펼치기</span>
             </button>
 
-            <!-- 지도 컨트롤 패널 -->
-            <!-- 모바일(md 미만)에서는 접힌 상태로 시작, 헤더를 눌러 펼침 -->
+            <!-- 지도 컨트롤 패널 (모바일은 접힌 상태로 시작) -->
             <div id="map-controls" class="group/controls absolute top-4 right-4 z-20 bg-white p-3 max-md:p-2 rounded-xl shadow-xl border border-slate-300 flex flex-col gap-3 md:min-w-[180px]">
                 <button type="button" id="map-controls-toggle" aria-expanded="false" aria-controls="map-controls-body"
                     class="flex items-center justify-center gap-1.5 md:cursor-default md:pointer-events-none md:border-b md:border-slate-200 md:pb-2 group-[.expanded]/controls:border-b group-[.expanded]/controls:border-slate-200 group-[.expanded]/controls:pb-2">
                     <span id="datetime-display" class="text-sm font-bold text-slate-700 tabular-nums"></span>
                     <svg class="md:hidden w-4 h-4 text-slate-500 transition-transform group-[.expanded]/controls:rotate-180" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M19 9l-7 7-7-7"/></svg>
                 </button>
-                <div id="map-controls-body" class="max-md:hidden flex flex-col gap-2">
-                    <label class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-blue-600 transition-colors">
-                        <input type="checkbox" id="traffic-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
-                        </svg>
-                        <span>실시간 교통정보</span>
+                <div id="map-controls-body" class="max-md:hidden flex flex-col gap-2 text-sm text-slate-600">
+                    <label class="flex items-center gap-2 cursor-pointer hover:text-blue-600 transition-colors">
+                        <input type="checkbox" id="traffic-checkbox" class="accent-blue-600 w-4 h-4">
+                        <svg class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/></svg>
+                        실시간 교통정보
                     </label>
-                    <label class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-blue-600 transition-colors">
-                        <input type="checkbox" id="weather-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
-                        </svg>
-                        <span>현재 날씨</span>
+                    <label class="flex items-center gap-2 cursor-pointer hover:text-blue-600 transition-colors">
+                        <input type="checkbox" id="weather-checkbox" class="accent-blue-600 w-4 h-4">
+                        <svg class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z"/></svg>
+                        현재 날씨
                     </label>
-                    <label class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-blue-600 transition-colors">
-                        <input type="checkbox" id="roadview-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                        </svg>
-                        <span>로드뷰</span>
+                    <label class="flex items-center gap-2 cursor-pointer hover:text-blue-600 transition-colors">
+                        <input type="checkbox" id="roadview-checkbox" class="accent-blue-600 w-4 h-4">
+                        <svg class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+                        로드뷰
                     </label>
-                    <label class="flex items-center gap-2 text-sm text-slate-600 cursor-pointer hover:text-blue-600 transition-colors">
-                        <input type="checkbox" id="location-checkbox" class="accent-blue-600 w-4 h-4 rounded border-slate-300"> 
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                        </svg>
-                        <span>내 위치 표시</span>
-                        <svg id="location-loading" class="animate-spin h-4 w-4 text-blue-600 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
+                    <label class="flex items-center gap-2 cursor-pointer hover:text-blue-600 transition-colors">
+                        <input type="checkbox" id="location-checkbox" class="accent-blue-600 w-4 h-4">
+                        <svg class="h-4 w-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/></svg>
+                        내 위치 표시
+                        <svg id="location-loading" class="hidden animate-spin h-4 w-4 text-blue-600" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"/><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"/></svg>
                     </label>
                 </div>
             </div>
 
-            <!-- 카카오맵 -->
-            <div id="map" class="flex-1 w-full h-full"></div>
-            
-            <!-- 리사이저 -->
-            <div id="map-resizer" class="hidden h-2 bg-slate-300 hover:bg-blue-400 cursor-row-resize z-30 transition-colors"></div>
-            
-            <!-- 로드뷰 -->
-            <div id="roadview" class="hidden h-1/3 w-full bg-slate-800 relative z-20 border-t border-slate-300"></div>
-
-            <!-- [추가] 필터링 상태 알림 및 초기화 버튼 (평소엔 숨김) -->
-            <div id="map-filter-control" class="absolute top-6 left-1/2 -translate-x-1/2 z-30 hidden animate-[fadeIn_0.3s_ease-out]">
+            <!-- AI 지도 필터 해제 (필터 중에만 표시) -->
+            <div id="map-filter-control" class="hidden absolute top-6 left-1/2 -translate-x-1/2 z-30 animate-[fadeIn_0.3s_ease-out]">
                 <button id="reset-filter-btn" class="bg-slate-800/90 backdrop-blur text-white px-4 py-2 rounded-full shadow-lg flex items-center gap-2 hover:bg-slate-700 transition-all hover:scale-105 border border-slate-600">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                    </svg>
+                    <svg class="h-4 w-4 text-yellow-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/></svg>
                     <span class="text-sm font-bold">필터 해제 (전체 보기)</span>
                 </button>
             </div>
-        </div>
-        
-        <!-- AI 챗봇 컨테이너 -->
-        <div id="ai-chat-container" class="fixed bottom-24 right-6 w-96 max-w-[90vw] h-[500px] max-h-[70vh] bg-white rounded-2xl shadow-2xl border border-slate-100 flex flex-col z-50 transition-all duration-300 opacity-0 translate-y-4 scale-95 invisible [&.show]:opacity-100 [&.show]:translate-y-0 [&.show]:scale-100 [&.show]:visible">
+
+            <div id="map" class="flex-1 w-full h-full"></div>
+            <!-- 지도 ↕ 로드뷰 높이 조절 -->
+            <div id="map-resizer" class="hidden h-2 bg-slate-300 hover:bg-blue-400 cursor-row-resize touch-none z-30 transition-colors"></div>
+            <div id="roadview" class="hidden h-1/3 w-full bg-slate-800 relative z-20 border-t border-slate-300"></div>
+        </main>
+
+        <!-- AI 대화창 -->
+        <div id="chat-container" class="fixed bottom-24 right-6 w-96 max-w-[90vw] h-[500px] max-h-[70vh] bg-white rounded-2xl shadow-2xl border border-slate-100 flex flex-col z-50 transition-all duration-300 opacity-0 translate-y-4 scale-95 invisible [&.show]:opacity-100 [&.show]:translate-y-0 [&.show]:scale-100 [&.show]:visible">
             <div class="bg-slate-900 p-4 rounded-t-2xl flex justify-between items-center text-white">
                 <div class="flex items-center gap-2">
                     <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
                     <span class="font-medium">AI 대화창</span>
                 </div>
-                <button onclick="document.getElementById('toggle-chat-btn').click()" class="text-slate-400 hover:text-white"><svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg></button>
+                <button id="chat-close-btn" class="text-slate-400 hover:text-white" aria-label="닫기">
+                    <svg class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"/></svg>
+                </button>
             </div>
-            
             <div id="chat-history" class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50 flex flex-col">
                 <div class="self-start bg-white border border-slate-200 text-slate-600 px-4 py-3 rounded-2xl rounded-tl-none shadow-sm max-w-[85%] text-sm">
                     안녕하세요! 맨홀관리 AI입니다. 무엇을 도와드릴까요?
                 </div>
             </div>
-            
             <div class="p-3 bg-white border-t border-slate-100 rounded-b-2xl">
-                <div class="flex gap-2">
+                <div class="relative flex gap-2">
                     <input type="text" id="chat-input" placeholder="질문을 입력하세요..." autocomplete="off" class="flex-1 bg-slate-100 border-0 rounded-xl px-4 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:bg-white transition-all outline-none">
-                    <button id="send-btn" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-xl transition-colors shadow-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
-                </button>
+                    <button id="chat-send-btn" class="bg-blue-600 hover:bg-blue-700 text-white p-2 rounded-xl transition-colors shadow-sm" aria-label="보내기">
+                        <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z"/></svg>
+                    </button>
                 </div>
             </div>
         </div>
 
-        <!-- 챗봇 토글 버튼 -->
-        <button id="toggle-chat-btn" class="fixed bottom-8 right-8 z-50 group">
-            <!-- 2. 그라데이션 및 아이콘 컨테이너 -->
-            <div class="relative w-16 h-16 rounded-full flex items-center justify-center shadow-2xl text-white transition-transform transform group-hover:scale-110 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-[length:200%_200%] animate-gradient-flow border-2 border-white/30">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
-                    <text x="12" y="14" font-size="10" text-anchor="middle" stroke="none" fill="currentColor" font-weight="bold" style="font-family: sans-serif;">AI</text>
+        <!-- AI 대화창 열기 -->
+        <button id="chat-toggle-btn" class="fixed bottom-8 right-8 z-50 group/chat" aria-label="AI 대화창">
+            <div class="w-16 h-16 rounded-full flex items-center justify-center shadow-2xl text-white transition-transform group-hover/chat:scale-110 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 bg-[length:200%_200%] animate-gradient-flow border-2 border-white/30">
+                <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+                    <text x="12" y="14" font-size="10" text-anchor="middle" stroke="none" fill="currentColor" font-weight="bold" font-family="sans-serif">AI</text>
                 </svg>
             </div>
         </button>
     </div>
 
-    <!-- SPA 모달 -->
-    <div id="spa-modal-overlay" class="fixed inset-0 bg-black/50 z-[60] hidden justify-center items-center backdrop-blur-sm">
+    <!-- ========== 공용 모달 (메뉴 화면 · 맨홀 상세정보) ========== -->
+    <div id="modal-overlay" class="hidden fixed inset-0 bg-black/50 z-[60] justify-center items-center backdrop-blur-sm">
         <div class="bg-white w-[800px] max-w-[95%] rounded-xl shadow-2xl overflow-hidden animate-[fadeIn_0.2s_ease-out]">
             <div class="bg-slate-900 text-white px-5 py-4 flex justify-between items-center">
-                <h3 id="modal-title" class="font-bold text-lg">제목</h3>
-                <button id="modal-close-btn" class="text-slate-400 hover:text-white text-2xl leading-none">&times;</button>
+                <h3 id="modal-title" class="font-bold text-lg"></h3>
+                <button id="modal-close-btn" class="text-slate-400 hover:text-white text-2xl leading-none" aria-label="닫기">&times;</button>
             </div>
-            <div class="p-6 max-h-[70vh] overflow-y-auto text-slate-700 leading-relaxed" id="modal-body">
-                내용이 들어갑니다.
-            </div>
+            <div id="modal-body" class="p-6 max-h-[70vh] overflow-y-auto text-slate-700 leading-relaxed"></div>
         </div>
     </div>
 
-    <!-- 카카오맵 SDK -->
-    <script type="text/javascript" src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=bfdc537ae38f2581f61b334ea4034de6&libraries=services"></script>
-    <!-- 앱 진입점 -->
-    <script type="module" src="js/main.js"></script>
-
-
-    <!-- [새로 설계된 모바일 메뉴] 슬라이딩 드로어 방식 -->
-    <div id="mobile-menu-container" class="relative z-[100]" style="display: none;">
-        <!-- 배경 (Backdrop) -->
+    <!-- ========== 모바일 메뉴 (오른쪽 서랍) ========== -->
+    <div id="mobile-menu" class="hidden relative z-[100]">
         <div id="mobile-menu-backdrop" class="fixed inset-0 bg-black/50 transition-opacity duration-300 opacity-0"></div>
-        
-        <!-- 슬라이딩 메뉴 패널 -->
-        <div id="mobile-menu-panel" class="fixed inset-y-0 right-0 w-72 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col h-full">
-            <!-- 헤더 -->
+        <div id="mobile-menu-panel" class="fixed inset-y-0 right-0 w-72 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 flex flex-col">
             <div class="flex items-center justify-between p-4 border-b border-slate-100 bg-slate-50">
                 <h2 class="text-lg font-bold text-slate-800">전체 메뉴</h2>
-                <button id="mobile-menu-close-btn" class="p-2 text-slate-500 hover:text-slate-700 rounded-full hover:bg-slate-200 transition-colors">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
+                <button id="mobile-menu-close-btn" class="p-2 text-slate-500 hover:text-slate-700 rounded-full hover:bg-slate-200 transition-colors" aria-label="닫기">
+                    <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
                 </button>
             </div>
-            
-            <!-- 메뉴 목록 -->
-            <div class="flex-1 overflow-y-auto py-4 px-2 space-y-1">
-                <!-- 점검업무 -->
-                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-2">점검업무</div>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="inspection_6m">6개월 검사표</a>
-                
-                <!-- 장비관리 -->
-                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-4">장비관리</div>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="device-reg">복합가스측정기</a>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="remote-control">비상구조</a>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="status-check">공기호흡기</a>
-
-                <!-- 안전작업 -->
-                <div class="px-4 py-2 text-xs font-bold text-slate-400 uppercase mt-4">안전작업</div>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="confined_space_program">밀폐공간 작업프로그램</a>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="work_permit">작업허가서</a>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="cpr">인공호흡 및 심폐소생술</a>
-                <a href="#" class="block px-4 py-3 text-sm font-medium text-slate-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg transition-colors spa-link" data-target="related_laws">관계법령</a>
-            </div>
-            
-            <!-- 푸터 -->
-            <div class="p-4 border-t border-slate-100 bg-slate-50 text-center">
-                <p class="text-xs text-slate-400">DMMS Mobile v1.0</p>
-            </div>
+            <nav id="mobile-menu-list" class="flex-1 overflow-y-auto py-4 px-2 space-y-1"></nav>
         </div>
     </div>
 
-    <!-- ========== TEMPLATES ========== -->
-    <template id="equipment-table-template">
-        <div class="flex flex-col gap-4 mb-6">
-            <div class="flex justify-end items-center">
-                <button class="manual-btn px-3 py-1.5 bg-indigo-600 hover:bg-indigo-700 text-white text-sm rounded-lg shadow-sm transition-colors flex items-center gap-1">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-4 h-4">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.042A8.967 8.967 0 006 3.75c-1.052 0-2.062.18-3 .512v14.25A8.987 8.987 0 016 18c2.305 0 4.408.867 6 2.292m0-14.25a8.966 8.966 0 016-2.292c1.052 0 2.062.18 3 .512v14.25A8.987 8.987 0 0018 18a8.967 8.967 0 00-6 2.292m0-14.25v14.25" />
-                    </svg>
-                    <span>사용매뉴얼</span>
-                </button>
-            </div>
-        </div>
-        <div class="overflow-x-auto border border-slate-200 rounded-lg">
-            <table class="w-full text-sm text-left text-slate-600">
-                <thead class="text-xs text-slate-700 uppercase bg-slate-50 border-b border-slate-200">
-                    <tr class="table-headers"></tr>
-                </thead>
-                <tbody class="table-body divide-y divide-slate-100">
-                </tbody>
-            </table>
-        </div>
-    </template>
-
-    <template id="manhole-overlay-template">
-        <div class="absolute bottom-14 left-1/2 -translate-x-1/2 w-auto min-w-[300px] max-w-[90vw] bg-white/95 backdrop-blur-md rounded-xl shadow-2xl border border-slate-200 overflow-hidden animate-[fadeIn_0.2s_ease-out] z-50">
-            <div class="p-4 relative">
-                <div class="absolute top-2 right-2">
-                    <button class="close-overlay-btn text-slate-400 hover:text-slate-600 p-1 rounded-full hover:bg-slate-100 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
-                    </button>
-                </div>
-                <div class="flex justify-between items-start mb-3">
-                    <div class="flex-1 pr-8">
-                        <h3 class="text-lg font-bold text-slate-800 flex flex-wrap items-center gap-2">
-                            <span class="data-name">맨홀이름</span>
-                            <span class="data-station-name text-xs font-normal px-2 py-0.5 bg-blue-100 text-blue-700 rounded-full">역이름</span>
-                        </h3>
-                        <p class="text-xs text-slate-500 mt-1">
-                            ID: <span class="data-id"></span> | 좌표: <span class="data-coords"></span>
-                        </p>
-                    </div>
-                </div>
-                <div class="data-flood-alert hidden mb-3 flex items-center gap-2 px-3 py-2 rounded-lg bg-red-50 border border-red-200 text-red-700">
-                    <svg class="w-4 h-4 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
-                    <div class="text-xs leading-tight">
-                        <div class="font-bold">접속개소 침수 이력 <span class="data-flood-alert-cnt"></span>회</div>
-                        <div class="data-flood-alert-years text-red-500"></div>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-2 text-center">
-                    <div class="bg-slate-50 p-2 rounded-lg border border-slate-100 group hover:border-blue-200 transition-colors">
-                        <div class="text-xs text-slate-500 mb-1">맨홀보수</div>
-                        <div class="font-bold text-blue-600 text-lg"><span class="data-repair-cnt">0</span><span class="text-xs font-normal text-slate-400 ml-0.5">회</span></div>
-                    </div>
-                    <div class="data-flood-tile bg-slate-50 p-2 rounded-lg border border-slate-100 group hover:border-blue-200 transition-colors">
-                        <div class="text-xs text-slate-500 mb-1">접속개소 침수</div>
-                        <div class="font-bold text-red-500 text-lg"><span class="data-flood-cnt">0</span><span class="text-xs font-normal text-slate-400 ml-0.5">회</span></div>
-                    </div>
-                </div>
-                <div class="mt-3 grid grid-cols-3 text-center rounded-lg border border-slate-100 divide-x divide-slate-100">
-                    <div class="py-1.5">
-                        <div class="text-[11px] text-slate-500">평균수위</div>
-                        <div class="text-sm font-bold text-slate-700 data-avg-level">-</div>
-                    </div>
-                    <div class="py-1.5">
-                        <div class="text-[11px] text-slate-500">최대수위</div>
-                        <div class="text-sm font-bold text-slate-700 data-max-level">-</div>
-                    </div>
-                    <div class="py-1.5">
-                        <div class="text-[11px] text-slate-500">최저수위</div>
-                        <div class="text-sm font-bold text-slate-700 data-min-level">-</div>
-                    </div>
-                </div>
-                <div class="mt-3 pt-3 border-t border-slate-100 flex justify-between items-center">
-                    <div class="text-xs text-slate-500 flex items-center gap-1">
-                        <span class="data-water-level-label">최근수위</span> <span class="font-bold text-slate-700 text-sm data-water-level">-</span>
-                    </div>
-                    <button class="detail-view-btn text-xs bg-slate-800 text-white px-3 py-1.5 rounded-lg hover:bg-slate-700 transition-colors shadow-sm">상세보기</button>
-                </div>
-            </div>
-        </div>
-    </template>
-
-    <template id="line-group-template">
-        <div>
-            <div class="tree-group-header flex justify-between items-center p-3 cursor-pointer hover:bg-slate-50 border-b border-slate-100 font-bold text-slate-700 select-none transition-colors sticky top-0 bg-white z-10 shadow-sm">
-                <span class="flex items-center">
-                    <span class="line-icon"></span>
-                    <span class="line-title"></span>
-                    <span class="line-count text-sm text-slate-400 font-normal ml-1"></span>
-                </span> 
-                <span class="arrow-icon text-slate-400 text-xs">▼</span>
-            </div>
-            <div class="stations-container hidden"></div>
-        </div>
-    </template>
-
-    <template id="station-group-template">
-        <div>
-            <div class="tree-group-header flex justify-between items-center p-2 pl-8 cursor-pointer hover:bg-slate-50 border-b border-slate-50 text-sm font-medium text-slate-600 select-none transition-colors sticky top-[45px] bg-slate-50/95 backdrop-blur-sm z-0">
-                <span>
-                    <span class="station-name"></span>
-                    <span class="station-count text-xs text-slate-400 font-normal"></span>
-                </span> 
-                <span class="arrow-icon text-slate-400 text-xs">▼</span>
-            </div>
-            <div class="manholes-container hidden"></div>
-        </div>
-    </template>
-
-    <template id="manhole-item-template">
-        <div class="manhole-item pl-12 py-2 pr-4 cursor-pointer text-sm text-slate-500 border-b border-slate-50 hover:bg-blue-50 hover:text-blue-600 transition-colors border-l-4 border-transparent">
-        </div>
-    </template>
+    <!-- 카카오맵 SDK → 앱 -->
+    <script src="https://dapi.kakao.com/v2/maps/sdk.js?appkey=bfdc537ae38f2581f61b334ea4034de6&libraries=services"></script>
+    <script type="module" src="js/main.js"></script>
 </body>
 </html>
