@@ -1,4 +1,5 @@
 import { filterTree, selectManholeInSidebar } from './tree-manager.js';
+import { levelDelta } from './manhole-format.js';
 // ========================================
 // 상태 변수 & 상수
 // ========================================
@@ -100,6 +101,16 @@ function setupMapControls() {
     const mapResizer = document.getElementById('map-resizer');
     const resetFilterBtn = document.getElementById('reset-filter-btn');
     const locationCheckbox = document.getElementById('location-checkbox');
+
+    // 모바일: 컨트롤 패널 접기/펼치기 (데스크탑은 항상 펼침 — md 이상에서는 버튼이 비활성)
+    const controls = document.getElementById('map-controls');
+    const controlsToggle = document.getElementById('map-controls-toggle');
+    const controlsBody = document.getElementById('map-controls-body');
+    controlsToggle?.addEventListener('click', () => {
+        const expanded = controls.classList.toggle('expanded');
+        controlsBody.classList.toggle('max-md:hidden', !expanded);
+        controlsToggle.setAttribute('aria-expanded', String(expanded));
+    });
 
     trafficCheckbox.addEventListener('change', (e) => {
         if (e.target.checked) {
@@ -298,52 +309,48 @@ function showManholeOverlay(mh, stationName, position) {
     content.querySelector('.data-id').textContent = mh.id;
     content.querySelector('.data-coords').textContent = `${mh.lat.toFixed(4)}, ${mh.lng.toFixed(4)}`;
 
-    if (isAdmin) {
-        // 관리용 화면: 통계/수위는 아직 DB 미연결 — 준비 중 표시
-        const pendingBadge = '<span class="text-xs text-slate-400 italic">준비 중</span>';
-        content.querySelector('.data-complaint-cnt').innerHTML = pendingBadge;
-        content.querySelector('.data-repair-cnt').innerHTML = pendingBadge;
-        content.querySelector('.data-flood-freq').innerHTML = pendingBadge;
-
-        const waterLevelEl = content.querySelector('.data-water-level');
-        waterLevelEl.classList.add('flex', 'items-center', 'gap-2');
-        waterLevelEl.innerHTML = `
-            <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 text-xs font-medium">
-                <span class="w-1.5 h-1.5 rounded-full bg-slate-400"></span>
-                준비 중
-            </span>
-        `;
-    } else {
-        const waterLevel = Math.floor(Math.random() * 300) + 200;
-        content.querySelector('.data-complaint-cnt').textContent = mh.complaint_cnt || 0;
-        content.querySelector('.data-repair-cnt').textContent = mh.repair_cnt || 0;
-        content.querySelector('.data-flood-freq').textContent = mh.flood_freq || 0;
-
-        // 수위 5단계 그래픽 시각화
-        const maxLevel = 500;
-        let levelStep = Math.ceil((waterLevel / maxLevel) * 5);
-        if (levelStep < 1) levelStep = 1;
-        if (levelStep > 5) levelStep = 5;
-
-        const stepConfig = {
-            1: { label: '정상', color: 'bg-green-500', textClass: 'text-green-700' },
-            2: { label: '주의', color: 'bg-blue-500', textClass: 'text-blue-700' },
-            3: { label: '경계', color: 'bg-yellow-400', textClass: 'text-yellow-600' },
-            4: { label: '위험', color: 'bg-orange-500', textClass: 'text-orange-700' },
-            5: { label: '심각', color: 'bg-red-600', textClass: 'text-red-700' }
+    let levelStats = mh;
+    if (!isAdmin) {
+        // 시연 화면: 실데이터가 없으므로 임의 수위 5개년으로 통계 표시
+        const levels = Array.from({ length: 5 }, () => Math.floor(Math.random() * 300) + 200);
+        levelStats = {
+            latest_level: levels[4], prev_level: levels[3],
+            avg_level: Math.round(levels.reduce((a, b) => a + b, 0) / levels.length),
+            max_level: Math.max(...levels), min_level: Math.min(...levels),
         };
-        const config = stepConfig[levelStep];
-        const barsHtml = Array.from({length: 5}, (_, i) =>
-            `<div class="w-1.5 h-3 rounded-sm ${i < levelStep ? config.color : 'bg-slate-200'}"></div>`
-        ).join('');
+    }
 
-        const waterLevelEl = content.querySelector('.data-water-level');
-        waterLevelEl.classList.add('flex', 'items-center', 'gap-2');
-        waterLevelEl.innerHTML = `
-            <div class="flex gap-0.5">${barsHtml}</div>
-            <span class="font-bold text-xs ${config.textClass}">${config.label}</span>
-            <span class="text-xs text-slate-500">(${waterLevel}mm)</span>
-        `;
+    content.querySelector('.data-repair-cnt').textContent = mh.repair_cnt || 0;
+    content.querySelector('.data-flood-cnt').textContent = mh.flood_cnt || 0;
+    // 접속개소 침수 이력 강조
+    if (mh.flood_cnt > 0) {
+        content.querySelector('.data-flood-tile').classList.replace('bg-slate-50', 'bg-red-50');
+        content.querySelector('.data-flood-tile').classList.replace('border-slate-100', 'border-red-200');
+        if (mh.flood_years?.length) {
+            const alertEl = content.querySelector('.data-flood-alert');
+            alertEl.classList.remove('hidden');
+            content.querySelector('.data-flood-alert-cnt').textContent = mh.flood_cnt;
+            content.querySelector('.data-flood-alert-years').textContent = mh.flood_years.map(y => `${y}년`).join(' · ');
+        }
+    }
+
+    // 평균/최대/최저 수위
+    const fmtLevel = (v, year) => v == null ? '-'
+        : `${v.toLocaleString()}<span class="text-[10px] font-normal text-slate-400">mm</span>${year ? `<div class="text-[10px] font-normal text-slate-400">${year}년</div>` : ''}`;
+    content.querySelector('.data-avg-level').innerHTML = fmtLevel(levelStats.avg_level);
+    content.querySelector('.data-max-level').innerHTML = fmtLevel(levelStats.max_level, levelStats.max_level_year);
+    content.querySelector('.data-min-level').innerHTML = fmtLevel(levelStats.min_level, levelStats.min_level_year);
+
+    // 최근 수위 (전년 대비 증감만 표시, 별도 단계 구분 없음)
+    const waterLevelEl = content.querySelector('.data-water-level');
+    waterLevelEl.classList.add('flex', 'items-center', 'gap-1.5');
+    if (levelStats.latest_level != null) {
+        if (levelStats.latest_level_year) {
+            content.querySelector('.data-water-level-label').textContent = `최근수위(${levelStats.latest_level_year})`;
+        }
+        waterLevelEl.innerHTML = `<span>${levelStats.latest_level.toLocaleString()}mm</span>${levelDelta(levelStats.latest_level, levelStats.prev_level)}`;
+    } else {
+        waterLevelEl.innerHTML = '<span class="text-xs font-normal text-slate-400">측정 기록 없음</span>';
     }
 
     // 이벤트 리스너 연결

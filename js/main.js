@@ -72,6 +72,28 @@ function setupGlobalEventListeners() {
     });
 }
 
+/**
+ * [초기화] manhole_history.admin.json 의 요약값과 연도별 이력을 각 맨홀 객체에 병합합니다.
+ * (scripts/build_manhole_history.py 로 data/맨홀이력.xlsx 에서 생성)
+ */
+async function mergeManholeHistory(data) {
+    try {
+        const res = await fetch('manhole_history.admin.json');
+        if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
+        const history = await res.json();
+        data.lines.forEach(line => {
+            line.stations.forEach(st => {
+                st.manholes.forEach(mh => {
+                    const h = history.manholes[mh.id];
+                    if (h) Object.assign(mh, h, { hasHistory: true, flood_check_years: history.flood_check_years });
+                });
+            });
+        });
+    } catch (e) {
+        console.error('맨홀 이력 데이터 로드 실패:', e);
+    }
+}
+
 async function init() {
     // --- 주요 UI 이벤트 설정 ---
     document.getElementById('toggle-sidebar-btn-desktop').addEventListener('click', toggleSidebar);
@@ -108,7 +130,12 @@ async function init() {
         const res = await fetch(dataFile);
         if (!res.ok) throw new Error(`HTTP error! status: ${res.status}`);
         rawData = await res.json();
-        
+
+        // 관리 모드: 엑셀에서 변환한 맨홀 이력(맨홀보수/수위/접속개소 침수)을 병합
+        if (window.__DMMS_MODE.getMode() === 'admin') {
+            await mergeManholeHistory(rawData);
+        }
+
         // 1. 지도에 모든 마커 생성
         createAllMarkers(rawData, selectManhole);
         // 2. 사이드바 트리 메뉴 렌더링

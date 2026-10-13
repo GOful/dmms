@@ -1,5 +1,6 @@
 import { relayoutMap } from './map-service.js';
 import { viewPdfManual } from './pdf-manager.js';
+import { levelDelta } from './manhole-format.js';
 
 let equipmentData = null; // 장비 데이터 캐싱용 변수
 let currentMenuTarget = null; // 현재 활성화된 메뉴 타겟 저장
@@ -295,7 +296,8 @@ export function openManholeDetailModal(mh) {
     const isAdmin = window.__DMMS_MODE && window.__DMMS_MODE.getMode() === 'admin';
 
     if (isAdmin) {
-        modalBody.innerHTML = renderAdminPendingDetail(mh);
+        modalBody.innerHTML = mh.hasHistory ? renderAdminHistoryDetail(mh) : renderAdminPendingDetail(mh);
+        setupPhotoLightbox(modalBody);
         modalOverlay.style.display = 'flex';
         return;
     }
@@ -303,6 +305,7 @@ export function openManholeDetailModal(mh) {
     // 더미 데이터 생성
     const historyData = generateDummyHistory();
     const waterLevelData = generateDummyWaterLevel();
+    const levels = waterLevelData.map(item => item.level);
 
     modalBody.innerHTML = `
         <div class="space-y-6">
@@ -319,7 +322,7 @@ export function openManholeDetailModal(mh) {
                 </div>
             </div>
 
-            <!-- 이력 정보 (민원, 수선, 침수) -->
+            <!-- 이력 정보 (보수, 침수) -->
             <div>
                 <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
                     <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
@@ -359,13 +362,19 @@ export function openManholeDetailModal(mh) {
                     <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
                     연간 수위 데이터 (최근 5년)
                 </h4>
+                <div class="grid grid-cols-3 gap-2 mb-3 text-center">
+                    ${[['평균수위', Math.round(levels.reduce((a, b) => a + b, 0) / levels.length)], ['최대수위', Math.max(...levels)], ['최저수위', Math.min(...levels)]].map(([label, v]) => `
+                        <div class="p-3 rounded-lg border border-slate-200">
+                            <div class="text-xs text-slate-500 mb-1">${label}</div>
+                            <div class="font-bold text-lg text-slate-800">${v}<span class="text-xs font-normal text-slate-400 ml-0.5">mm</span></div>
+                        </div>`).join('')}
+                </div>
                 <div class="overflow-x-auto border border-slate-200 rounded-lg">
                     <table class="min-w-full divide-y divide-slate-200">
                         <thead class="bg-slate-50">
                             <tr>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">년도</th>
                                 <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">수위</th>
-                                <th class="px-4 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">상태</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white divide-y divide-slate-200 text-sm">
@@ -373,9 +382,6 @@ export function openManholeDetailModal(mh) {
                                 <tr class="hover:bg-slate-50">
                                     <td class="px-4 py-3 whitespace-nowrap font-medium text-slate-700">${item.year}년</td>
                                     <td class="px-4 py-3 whitespace-nowrap text-slate-600">${item.level}mm</td>
-                                    <td class="px-4 py-3 whitespace-nowrap">
-                                        <span class="px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">정상</span>
-                                    </td>
                                 </tr>
                             `).join('')}
                         </tbody>
@@ -386,6 +392,251 @@ export function openManholeDetailModal(mh) {
     `;
 
     modalOverlay.style.display = 'flex';
+}
+
+/** [헬퍼] HTML 이스케이프 */
+function escapeHtml(str) {
+    return String(str).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+
+/** [헬퍼] 관리용 화면 — 엑셀 이력 데이터 기반 상세 모달 본문 */
+function renderAdminHistoryDetail(mh) {
+    const records = mh.records || [];
+    const statTile = (label, valueHtml, sub = '', extraClass = 'bg-white border-slate-200') => `
+        <div class="p-3 rounded-lg border text-center ${extraClass}">
+            <div class="text-xs text-slate-500 mb-1">${label}</div>
+            <div class="font-bold text-lg text-slate-800">${valueHtml}</div>
+            ${sub ? `<div class="text-[11px] text-slate-400 mt-0.5">${sub}</div>` : ''}
+        </div>`;
+    const mm = v => v == null ? '-' : `${v.toLocaleString()}<span class="text-xs font-normal text-slate-400 ml-0.5">mm</span>`;
+    const levelRange = mh.level_years ? `${mh.level_years[0]}~${mh.level_years[1]}년` : '';
+
+    return `
+        <div class="space-y-6">
+            ${renderFloodSection(mh)}
+
+            <!-- 기본 정보 -->
+            <div class="bg-slate-50 p-4 rounded-lg border border-slate-200">
+                <h4 class="font-bold text-slate-700 mb-2 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    기본 정보
+                </h4>
+                <div class="grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
+                    <div><span class="text-slate-500">ID:</span> <span class="font-medium">${mh.id}</span></div>
+                    <div><span class="text-slate-500">위치:</span> <span class="font-medium">${mh.lat.toFixed(5)}, ${mh.lng.toFixed(5)}</span></div>
+                    <div><span class="text-slate-500">구간:</span> <span class="font-medium">${mh.line} ${mh.section} #${mh.no}</span></div>
+                    <div><span class="text-slate-500">최근 맨홀보수:</span> <span class="font-medium">${mh.last_repair_year ? `${mh.last_repair_year}년` : '이력 없음'}</span></div>
+                </div>
+                <div class="grid grid-cols-2 gap-2 mt-4">
+                    ${statTile('맨홀보수', `<span class="text-blue-600">${mh.repair_cnt}</span><span class="text-xs font-normal text-slate-400 ml-0.5">회</span>`)}
+                    ${statTile('접속개소 침수', `<span class="text-red-600">${mh.flood_cnt}</span><span class="text-xs font-normal text-slate-400 ml-0.5">회</span>`, '',
+                        mh.flood_cnt > 0 ? 'bg-red-50 border-red-200' : 'bg-white border-slate-200')}
+                </div>
+            </div>
+
+            <!-- 수위 -->
+            <div>
+                <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"></path></svg>
+                    수위 ${levelRange ? `<span class="text-xs font-normal text-slate-400">(${levelRange} 측정)</span>` : ''}
+                </h4>
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-3">
+                    ${statTile('평균수위', mm(mh.avg_level))}
+                    ${statTile('최대수위', mm(mh.max_level), mh.max_level_year ? `${mh.max_level_year}년` : '')}
+                    ${statTile('최저수위', mm(mh.min_level), mh.min_level_year ? `${mh.min_level_year}년` : '')}
+                    ${statTile('최근수위', `${mm(mh.latest_level)} ${levelDelta(mh.latest_level, mh.prev_level)}`, mh.latest_level_year ? `${mh.latest_level_year}년` : '')}
+                </div>
+                <div class="border border-slate-200 rounded-lg p-3 bg-white">
+                    ${renderLevelChart(records, mh.avg_level)}
+                    <div class="flex flex-wrap gap-4 justify-end text-[11px] text-slate-500 mt-1">
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-blue-600"></span>수위</span>
+                        <span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-full bg-red-500"></span>접속개소 침수</span>                        <span class="flex items-center gap-1"><span class="w-3 border-t-2 border-dashed border-slate-400"></span>평균</span>
+                        <span class="flex items-center gap-1"><span class="w-3 border-t-2 border-dashed border-emerald-500"></span>맨홀보수</span>
+                    </div>
+                </div>
+            </div>
+
+            ${renderRepairGallery(records)}
+
+            <!-- 연도별 이력 -->
+            <div>
+                <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                    <svg class="w-5 h-5 text-orange-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    연도별 점검·맨홀보수 이력
+                </h4>
+                <div class="overflow-x-auto border border-slate-200 rounded-lg">
+                    <table class="min-w-full divide-y divide-slate-200 text-sm">
+                        <thead class="bg-slate-50">
+                            <tr class="text-xs font-medium text-slate-500">
+                                <th class="px-3 py-2 text-left">연도</th>
+                                <th class="px-3 py-2 text-right">수위</th>
+                                <th class="px-3 py-2 text-center">맨홀보수</th>
+                                <th class="px-3 py-2 text-left">비고</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white divide-y divide-slate-100">
+                            ${records.filter(r => r.level != null || r.repair || r.note).reverse().map(r => `
+                                <tr class="${r.flood ? 'bg-red-50 shadow-[inset_4px_0_0_#ef4444]' : 'hover:bg-slate-50'}">
+                                    <td class="px-3 py-2 whitespace-nowrap font-medium ${r.flood ? 'text-red-700' : 'text-slate-700'}">${r.year}</td>
+                                    <td class="px-3 py-2 whitespace-nowrap text-right ${r.flood ? 'text-red-700 font-semibold' : 'text-slate-600'}">${r.level != null ? `${r.level.toLocaleString()}mm` : '<span class="text-slate-300">-</span>'}</td>
+                                    <td class="px-3 py-2 whitespace-nowrap text-center">${r.repair ? '<span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">시행</span>' : ''}</td>
+                                    <td class="px-3 py-2 text-slate-600 min-w-[140px]">
+                                        ${renderNoteCell(r)}
+                                    </td>
+                                </tr>`).join('') || '<tr><td colspan="4" class="px-3 py-6 text-center text-slate-400">기록된 이력이 없습니다.</td></tr>'}
+                        </tbody>
+                    </table>
+                </div>
+                <p class="text-[11px] text-slate-400 mt-2 leading-relaxed">
+                    ※ 맨홀보수: 맨홀 보수공사 시행 연도 · 접속개소 침수: 맨홀 하부 전력케이블 접속개소가 잠긴 연도
+                </p>
+            </div>
+        </div>
+    `;
+}
+
+/** [헬퍼] 연도별 이력 표의 비고 칸 (침수 뱃지 + 원문 비고) */
+function renderNoteCell(r) {
+    const badge = r.flood ? '<span class="px-1.5 py-0.5 mr-1 text-[11px] font-bold rounded bg-red-600 text-white">접속개소 침수</span>' : '';
+    // 뱃지와 같은 뜻의 비고 원문은 중복 표시하지 않음
+    const redundant = !r.note || (r.flood && /^(접속제\s*)?침수$/.test(r.note));
+    return badge + (redundant ? '' : escapeHtml(r.note));
+}
+
+/** [헬퍼] 접속개소 침수 이력 강조 영역 (침수 연도 표시) */
+function renderFloodSection(mh) {
+    const checkYears = mh.flood_check_years || [];
+    if (checkYears.length === 0) return '';
+    const chips = (mh.flood_years || [])
+        .map(y => `<span class="px-2.5 py-1 rounded-md text-xs font-bold bg-red-600 text-white">${y} 침수</span>`).join('');
+    const range = `${checkYears[0]}~${checkYears[checkYears.length - 1]}년`;
+
+    if (mh.flood_cnt > 0) {
+        return `
+            <div class="rounded-lg border-2 border-red-300 bg-red-50 p-4">
+                <div class="flex items-start gap-3">
+                    <svg class="w-6 h-6 text-red-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M8.257 3.099c.765-1.36 2.722-1.36 3.486 0l5.58 9.92c.75 1.334-.213 2.98-1.742 2.98H4.42c-1.53 0-2.493-1.646-1.743-2.98l5.58-9.92zM11 13a1 1 0 11-2 0 1 1 0 012 0zm-1-8a1 1 0 00-1 1v3a1 1 0 002 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                    <div class="flex-1">
+                        <div class="font-bold text-red-700">전력케이블 접속개소 침수 이력 ${mh.flood_cnt}회</div>
+                        <div class="text-xs text-red-600/80 mt-0.5">${range} 중 ${mh.flood_cnt}개 연도에서 접속개소 침수 — 배수·방수 조치 상태 점검 필요</div>
+                        <div class="flex flex-wrap gap-1.5 mt-3">${chips}</div>
+                    </div>
+                </div>
+            </div>`;
+    }
+    return `
+        <div class="rounded-lg border border-green-200 bg-green-50 px-4 py-3">
+            <div class="flex items-center gap-2 text-sm font-bold text-green-700">
+                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                접속개소 침수 이력 없음 <span class="text-xs font-normal text-green-600">(${range} 기록 기준)</span>
+            </div>
+        </div>`;
+}
+
+/** [헬퍼] 연도별 맨홀보수 사진 갤러리 */
+function renderRepairGallery(records) {
+    const items = records.filter(r => r.repair || r.photo).reverse();
+    if (items.length === 0) return '';
+    return `
+        <div>
+            <h4 class="font-bold text-slate-700 mb-3 flex items-center gap-2">
+                <svg class="w-5 h-5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                연도별 맨홀보수 이력 <span class="text-xs font-normal text-slate-400">(${items.length}건)</span>
+            </h4>
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3">
+                ${items.map(r => `
+                    <div class="rounded-lg border border-slate-200 overflow-hidden bg-white">
+                        ${r.photo
+                            ? `<button type="button" class="block w-full aspect-[4/3] bg-slate-100" data-photo="${encodeURI(r.photo)}" data-caption="${r.year}년 맨홀보수">
+                                    <img src="${encodeURI(r.photo)}" loading="lazy" alt="${r.year}년 맨홀보수 사진" class="w-full h-full object-cover hover:opacity-90 transition-opacity">
+                               </button>`
+                            : '<div class="w-full aspect-[4/3] bg-slate-50 flex items-center justify-center text-xs text-slate-400">사진 없음</div>'}
+                        <div class="px-3 py-2 flex items-center justify-between gap-2">
+                            <span class="font-bold text-slate-700">${r.year}년</span>
+                            ${r.repair
+                                ? '<span class="px-2 py-0.5 text-[11px] font-semibold rounded-full bg-blue-100 text-blue-700">맨홀보수</span>'
+                                : '<span class="px-2 py-0.5 text-[11px] font-semibold rounded-full bg-amber-100 text-amber-700" title="맨홀보수 사진은 있으나 엑셀에 보수(O) 표시가 없습니다">엑셀 미기재</span>'}
+                        </div>
+                    </div>`).join('')}
+            </div>
+        </div>`;
+}
+
+/** [기능] 모달 내 사진 클릭 시 확대 보기 (라이트박스) */
+function setupPhotoLightbox(container) {
+    container.querySelectorAll('[data-photo]').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const box = document.createElement('div');
+            box.className = 'fixed inset-0 z-[80] bg-black/80 flex flex-col items-center justify-center p-4 cursor-zoom-out';
+            box.innerHTML = `
+                <img src="${btn.dataset.photo}" alt="" class="max-w-full max-h-[85vh] rounded-lg shadow-2xl">
+                <div class="mt-3 text-sm text-white/90">${escapeHtml(btn.dataset.caption || '')}</div>`;
+            const close = () => { box.remove(); document.removeEventListener('keydown', onKey, true); };
+            const onKey = e => { if (e.key === 'Escape') { e.stopPropagation(); close(); } };
+            box.addEventListener('click', close);
+            document.addEventListener('keydown', onKey, true);
+            document.body.appendChild(box);
+        });
+    });
+}
+
+/** [헬퍼] 연도별 수위 꺾은선 차트 (인라인 SVG) */
+function renderLevelChart(records, avgLevel) {
+    const points = records.filter(r => r.level != null);
+    if (points.length === 0) {
+        return '<div class="py-8 text-center text-sm text-slate-400">수위 측정 기록이 없습니다.</div>';
+    }
+
+    const W = 600, H = 210, padL = 56, padR = 24, padT = 24, padB = 28;
+    // 사진만 있는 연도(엑셀 미기재)는 축 범위에서 제외
+    records = records.filter(r => r.level != null || r.repair || r.note);
+    const years = records.map(r => r.year);
+    const minYear = Math.min(...years), maxYear = Math.max(...years);
+    // 최고점이 상단에 붙지 않도록 10% 여유를 두고 500mm 단위로 올림
+    const maxLevel = Math.max(500, Math.ceil(Math.max(...points.map(p => p.level)) * 1.1 / 500) * 500);
+    const x = y => padL + (maxYear === minYear ? (W - padL - padR) / 2 : (y - minYear) / (maxYear - minYear) * (W - padL - padR));
+    const y = v => padT + (1 - v / maxLevel) * (H - padT - padB);
+
+    const gridLines = Array.from({ length: maxLevel / 500 + 1 }, (_, i) => i * 500)
+        .filter((v, _, arr) => arr.length <= 7 || v % 1000 === 0)
+        .map(v => `
+            <line x1="${padL}" x2="${W - padR}" y1="${y(v)}" y2="${y(v)}" stroke="#e2e8f0" stroke-width="1"/>
+            <text x="${padL - 6}" y="${y(v) + 4}" text-anchor="end" font-size="11" fill="#94a3b8">${v.toLocaleString()}</text>`).join('');
+
+    const yearLabels = [];
+    for (let yr = minYear; yr <= maxYear; yr++) {
+        yearLabels.push(`<text x="${x(yr)}" y="${H - 8}" text-anchor="middle" font-size="10.5" fill="#64748b">${yr}년</text>`);
+    }
+
+    // 침수 연도 배경 강조
+    const floodBands = records.filter(r => r.flood).map(r => `
+        <rect x="${x(r.year) - 14}" y="${padT}" width="28" height="${H - padT - padB}" fill="#fee2e2" opacity="0.7"/>`).join('');
+
+    const repairLines = records.filter(r => r.repair).map(r => `
+        <line x1="${x(r.year)}" x2="${x(r.year)}" y1="${padT}" y2="${H - padB}" stroke="#10b981" stroke-width="1.5" stroke-dasharray="4 3"/>
+        <text x="${x(r.year)}" y="${padT - 8}" text-anchor="middle" font-size="10" font-weight="600" fill="#059669">맨홀보수</text>`).join('');
+
+    const avgLine = avgLevel != null ? `
+        <line x1="${padL}" x2="${W - padR}" y1="${y(avgLevel)}" y2="${y(avgLevel)}" stroke="#94a3b8" stroke-width="1" stroke-dasharray="6 4"/>
+        <text x="${W - padR}" y="${y(avgLevel) - 4}" text-anchor="end" font-size="10" fill="#64748b">평균 ${avgLevel.toLocaleString()}</text>` : '';
+
+    const path = points.map((p, i) => `${i ? 'L' : 'M'}${x(p.year)},${y(p.level)}`).join(' ');
+    const dots = points.map(p => `
+        <circle cx="${x(p.year)}" cy="${y(p.level)}" r="${p.flood ? 5.5 : 4.5}" fill="${p.flood ? '#ef4444' : '#2563eb'}" stroke="#fff" stroke-width="1.5">
+            <title>${p.year}년 ${p.level.toLocaleString()}mm${p.flood ? ' (접속개소 침수)' : ''}</title>
+        </circle>`).join('');
+
+    return `
+        <svg viewBox="0 0 ${W} ${H}" class="w-full h-auto" role="img" aria-label="연도별 수위 추이">
+            ${floodBands}
+            ${gridLines}
+            <text x="4" y="${padT - 8}" font-size="10" fill="#94a3b8">(mm)</text>
+            ${avgLine}
+            ${repairLines}
+            <path d="${path}" fill="none" stroke="#2563eb" stroke-width="2" stroke-linejoin="round"/>
+            ${dots}
+            ${yearLabels.join('')}
+        </svg>`;
 }
 
 /** [헬퍼] 관리용 화면 — 실데이터 미연결 상태의 상세 모달 본문 */
@@ -426,7 +677,7 @@ function generateDummyHistory() {
         { date: '2025-01-15', type: '점검', content: '정기 안전 점검 수행', result: '이상 없음' },
         { date: '2024-08-23', type: '침수', content: '집중호우로 인한 일시적 수위 상승', result: '배수 조치 완료' },
         { date: '2024-05-10', type: '수선', content: '맨홀 뚜껑 소음 관련 민원 조치', result: '고무 패킹 교체' },
-        { date: '2023-11-05', type: '민원', content: '주변 보도블럭 침하 신고', result: '현장 확인 후 보수' }
+        { date: '2023-11-05', type: '점검', content: '주변 보도블럭 침하 확인', result: '현장 확인 후 보수' }
     ];
 }
 

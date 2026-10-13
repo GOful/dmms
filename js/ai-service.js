@@ -23,17 +23,17 @@ const model = genAI.getGenerativeModel({
  * [내부 기능] 사용자의 질문과 데이터를 바탕으로 AI에게 보낼 프롬프트를 생성합니다.
  */
 function _buildPrompt(userMsg, rawData) {
-    const infraKeywords = ['맨홀', '역', '호선', '좌표', '위도', '경도', '침수', '수선', '민원', '위험', '데이터', '목록', '어디', '가장', '제일', '상태', '분석', '점검', '관리', '지역'];
+    const infraKeywords = ['맨홀', '역', '호선', '좌표', '위도', '경도', '침수', '수선', '보수', '수위', '위험', '데이터', '목록', '어디', '가장', '제일', '상태', '분석', '점검', '관리', '지역'];
     const isRelated = infraKeywords.some(key => userMsg.includes(key));
 
     if (isRelated) {
         // [최적화] AI에게 위도/경도 좌표까지 보낼 필요는 없음 (토큰 절약)
         // AI는 ID와 상태값만 판단하고, 위치 표시는 JS가 담당함
-        let contextData = "ID,이름,역,침수,수선,민원\n";
+        let contextData = "ID,이름,역,접속개소침수횟수,맨홀보수횟수,최근수위(mm),평균수위(mm),최대수위(mm)\n";
         rawData.lines.forEach(line => {
             line.stations.forEach(st => {
-                st.manholes.forEach(mh => {        
-                    contextData += `${mh.id},${mh.name},${st.stationName},${mh.flood_cnt || 0},${mh.repair_cnt || 0},${mh.complaint_cnt || 0}\n`;
+                st.manholes.forEach(mh => {
+                    contextData += `${mh.id},${mh.name},${st.stationName},${mh.flood_cnt || 0},${mh.repair_cnt || 0},${mh.latest_level ?? '-'},${mh.avg_level ?? '-'},${mh.max_level ?? '-'}\n`;
                 });
             });
         });
@@ -45,7 +45,7 @@ function _buildPrompt(userMsg, rawData) {
 <Instruction>
 1. 반드시 제공된 [Data]에 기반해 답변
 2. 반드시 답변 시 HTML 태그(<ul>, <li>, <strong>, <br>)를 적절히 섞어 가독성 높이기
-3. 위험 시설물(침수/민원 높음) 언급 시 반드시 주의점검에 대한 내용을 마지막 강조
+3. 침수는 맨홀 하부 전력케이블 접속개소가 잠긴 경우, 보수는 맨홀 보수공사를 뜻함. 위험 시설물(침수/맨홀보수 많음, 수위 높음) 언급 시 반드시 주의점검에 대한 내용을 마지막 강조
 4. [중요] 사용자가 지도 표시(찍어줘, 보여줘 등)를 요청하면, 아래 JSON 형식으로 응답하고 'message' 필드에는 선택된 맨홀들의 데이터(침수 횟수, 상태 등)와 선정 이유를 HTML 태그(<ul>, <li>)를 사용하여 요약해 주세요:
 
 \`\`\`json
@@ -55,12 +55,12 @@ function _buildPrompt(userMsg, rawData) {
   "message": "요청하신 침수 위험 지역 2곳을 표시했습니다.<br><ul><li><strong>MH-001</strong>: 침수 5회 (심각)</li>...</ul>"
 }
 \`\`\`
-   - [매우 중요] '수선 5회 이상', '침수 1회 이상', '3회 넘는' 등 수치 조건을 제시한 경우, 절대 직접 ID를 나열하지 말고 반드시 'apply_filter' 도구를 사용하세요 (시스템이 정확히 계산합니다):
+   - [매우 중요] '맨홀보수 3회 이상', '침수 1회 이상', '수위 1000mm 넘는' 등 수치 조건을 제시한 경우, 절대 직접 ID를 나열하지 말고 반드시 'apply_filter' 도구를 사용하세요 (시스템이 정확히 계산합니다):
 \`\`\`json
 {
   "tool": "apply_filter",
   "criteria": {
-    "field": "repair_cnt", // 데이터 필드명 (repair_cnt, flood_cnt, complaint_cnt, risk_score)
+    "field": "repair_cnt", // 데이터 필드명 (repair_cnt: 맨홀보수횟수, flood_cnt: 접속개소 침수횟수, latest_level: 최근수위(mm), avg_level: 평균수위(mm), max_level: 최대수위(mm), risk_score)
     "operator": ">=", // 연산자 (>=, <=, >, <, ==) *주의: "넘는/초과"는 ">", "이상"은 ">="
     "value": 5, // 기준 값 (숫자)
     "limit": null // [선택] 사용자가 "5곳만", "상위 3개" 처럼 개수를 명시하지 않으면 null 또는 생략
@@ -138,8 +138,8 @@ export async function askAI(rawData) {
                             st.manholes.forEach(mh => {
                                 let dataValue = 0;
                                 if (field === 'risk_score') {
-                                    // [추가] 종합 위험도 계산 (가중치: 침수 3, 수선 2, 민원 1)
-                                    dataValue = (mh.flood_cnt || 0) * 3 + (mh.repair_cnt || 0) * 2 + (mh.complaint_cnt || 0) * 1;
+                                    // [추가] 종합 위험도 계산 (가중치: 접속개소 침수 3, 맨홀보수 2)
+                                    dataValue = (mh.flood_cnt || 0) * 3 + (mh.repair_cnt || 0) * 2;
                                 } else {
                                     dataValue = mh[field] || 0;
                                 }
@@ -187,10 +187,10 @@ export async function askAI(rawData) {
                     filterMarkers(matchedIds);
                     
                     // [수정] 결과 메시지를 JS가 직접 생성 (AI 환각 방지)
-                    const fieldNameMap = { 'repair_cnt': '수선', 'flood_cnt': '침수', 'complaint_cnt': '민원', 'risk_score': '종합 위험도' };
+                    const fieldNameMap = { 'repair_cnt': '맨홀보수', 'flood_cnt': '접속개소 침수', 'latest_level': '최근수위', 'avg_level': '평균수위', 'max_level': '최대수위','risk_score': '종합 위험도' };
                     const fieldName = fieldNameMap[field] || field;
                     const limitText = finalLimit ? ` (상위 ${finalLimit}곳)` : '';
-                    const unit = field === 'risk_score' ? '점' : '회';
+                    const unit = field === 'risk_score' ? '점' : field.endsWith('_level') ? 'mm' : '회';
 
                     if (matchedIds.length > 0) {
                         const listHtml = matchedDetails.map(item => 

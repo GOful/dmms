@@ -1,0 +1,9691 @@
+{
+ "generated_at": "2026-10-12T21:39:03",
+ "years": [
+  2014,
+  2016,
+  2017,
+  2018,
+  2019,
+  2020,
+  2021,
+  2022,
+  2023,
+  2024,
+  2025
+ ],
+ "flood_check_years": [
+  2019,
+  2020,
+  2021,
+  2022,
+  2023,
+  2024,
+  2025
+ ],
+ "manholes": {
+  "MH-1-A01-01": {
+   "line": "1호선",
+   "section": "월배기지",
+   "no": 1,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 400,
+   "latest_level_year": 2025,
+   "prev_level": 300,
+   "avg_level": 314,
+   "max_level": 400,
+   "max_level_year": 2025,
+   "min_level": 200,
+   "min_level_year": 2019,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 300,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 300,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 300,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A01-02": {
+   "line": "1호선",
+   "section": "월배기지",
+   "no": 2,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 514,
+   "max_level": 600,
+   "max_level_year": 2025,
+   "min_level": 400,
+   "min_level_year": 2021,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 400,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A01-03": {
+   "line": "1호선",
+   "section": "월배기지",
+   "no": 3,
+   "repair_cnt": 1,
+   "flood_cnt": 3,
+   "latest_level": 900,
+   "latest_level_year": 2025,
+   "prev_level": 1400,
+   "avg_level": 1314,
+   "max_level": 1800,
+   "max_level_year": 2022,
+   "min_level": 900,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2023,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1400,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1400,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1400,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1800,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": true,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "photo": "data/2023_repair/월배기지3.png",
+     "flood": false
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A01-04": {
+   "line": "1호선",
+   "section": "월배기지",
+   "no": 4,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 800,
+   "latest_level_year": 2025,
+   "prev_level": 700,
+   "avg_level": 650,
+   "max_level": 800,
+   "max_level_year": 2025,
+   "min_level": 400,
+   "min_level_year": 2020,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 400,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 450,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 700,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A01-05": {
+   "line": "1호선",
+   "section": "월배기지",
+   "no": 5,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 400,
+   "latest_level_year": 2025,
+   "prev_level": 300,
+   "avg_level": 286,
+   "max_level": 400,
+   "max_level_year": 2025,
+   "min_level": 200,
+   "min_level_year": 2021,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 200,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A01-06": {
+   "line": "1호선",
+   "section": "월배기지",
+   "no": 6,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 1300,
+   "latest_level_year": 2025,
+   "prev_level": 600,
+   "avg_level": 671,
+   "max_level": 1300,
+   "max_level_year": 2025,
+   "min_level": 300,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 300,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A01-07": {
+   "line": "1호선",
+   "section": "월배기지",
+   "no": 7,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 300,
+   "latest_level_year": 2025,
+   "prev_level": 200,
+   "avg_level": 164,
+   "max_level": 300,
+   "max_level_year": 2025,
+   "min_level": 50,
+   "min_level_year": 2019,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 50,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 100,
+     "grade": "C",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 100,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A04-01": {
+   "line": "1호선",
+   "section": "서부정류장",
+   "no": 1,
+   "repair_cnt": 1,
+   "flood_cnt": 0,
+   "latest_level": 900,
+   "latest_level_year": 2025,
+   "prev_level": 800,
+   "avg_level": 757,
+   "max_level": 900,
+   "max_level_year": 2025,
+   "min_level": 600,
+   "min_level_year": 2019,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2025,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 700,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 700,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 700,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": true,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "photo": "data/2025_repair/서부정류장1.png",
+     "flood": false
+    }
+   ]
+  },
+  "MH-1-A04-02": {
+   "line": "1호선",
+   "section": "서부정류장",
+   "no": 2,
+   "repair_cnt": 1,
+   "flood_cnt": 1,
+   "latest_level": 300,
+   "latest_level_year": 2025,
+   "prev_level": 200,
+   "avg_level": 429,
+   "max_level": 1900,
+   "max_level_year": 2019,
+   "min_level": 100,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2025,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1900,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": true,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "photo": "data/2025_repair/서부정류장2.png",
+     "flood": false
+    }
+   ]
+  },
+  "MH-1-A04-03": {
+   "line": "1호선",
+   "section": "서부정류장",
+   "no": 3,
+   "repair_cnt": 0,
+   "flood_cnt": 4,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 1700,
+   "avg_level": 1671,
+   "max_level": 2400,
+   "max_level_year": 2020,
+   "min_level": 600,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2000,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 2400,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 2300,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 2100,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A04-04": {
+   "line": "1호선",
+   "section": "서부정류장",
+   "no": 4,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 200,
+   "latest_level_year": 2025,
+   "prev_level": 100,
+   "avg_level": 157,
+   "max_level": 400,
+   "max_level_year": 2019,
+   "min_level": 0,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 0,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 100,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A04-05": {
+   "line": "1호선",
+   "section": "서부정류장",
+   "no": 5,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 1300,
+   "latest_level_year": 2025,
+   "prev_level": 1000,
+   "avg_level": 1086,
+   "max_level": 1500,
+   "max_level_year": 2019,
+   "min_level": 700,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 900,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 900,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 700,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A04-06": {
+   "line": "1호선",
+   "section": "서부정류장",
+   "no": 6,
+   "repair_cnt": 1,
+   "flood_cnt": 4,
+   "latest_level": 1800,
+   "latest_level_year": 2025,
+   "prev_level": 2200,
+   "avg_level": 2186,
+   "max_level": 2500,
+   "max_level_year": 2020,
+   "min_level": 1800,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2020,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2200,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": true,
+     "level": 2500,
+     "grade": "B",
+     "note": "접속제 침수",
+     "photo": "data/2020_repair/서부정류장6.png",
+     "flood": true
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 2400,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 2400,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 2200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A04-07": {
+   "line": "1호선",
+   "section": "서부정류장",
+   "no": 7,
+   "repair_cnt": 1,
+   "flood_cnt": 0,
+   "latest_level": 700,
+   "latest_level_year": 2025,
+   "prev_level": 300,
+   "avg_level": 400,
+   "max_level": 700,
+   "max_level_year": 2025,
+   "min_level": 100,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2014,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/서부정류장7.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A04-08": {
+   "line": "1호선",
+   "section": "서부정류장",
+   "no": 8,
+   "repair_cnt": 1,
+   "flood_cnt": 6,
+   "latest_level": 1600,
+   "latest_level_year": 2025,
+   "prev_level": 1200,
+   "avg_level": 1386,
+   "max_level": 2300,
+   "max_level_year": 2019,
+   "min_level": 900,
+   "min_level_year": 2021,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2014,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/서부정류장8.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2300,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1100,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 900,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A04-09": {
+   "line": "1호선",
+   "section": "서부정류장",
+   "no": 9,
+   "repair_cnt": 3,
+   "flood_cnt": 2,
+   "latest_level": 500,
+   "latest_level_year": 2025,
+   "prev_level": 900,
+   "avg_level": 914,
+   "max_level": 1200,
+   "max_level_year": 2021,
+   "min_level": 500,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2022
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2023,
+   "records": [
+    {
+     "year": 2017,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2017_repair/서부정류장9.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": true,
+     "level": 1100,
+     "grade": null,
+     "note": "침수",
+     "photo": "data/2019_repair/서부정류장9.png",
+     "flood": true
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1200,
+     "grade": "B",
+     "note": "부분보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1200,
+     "grade": "B",
+     "note": "부분보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": true,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "photo": "data/2023_repair/서부정류장9.png",
+     "flood": false
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A06-01": {
+   "line": "1호선",
+   "section": "반월당",
+   "no": 1,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 900,
+   "latest_level_year": 2025,
+   "prev_level": 300,
+   "avg_level": 300,
+   "max_level": 900,
+   "max_level_year": 2025,
+   "min_level": 0,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 0,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 0,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 0,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 0,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A06-02": {
+   "line": "1호선",
+   "section": "반월당",
+   "no": 2,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 900,
+   "latest_level_year": 2025,
+   "prev_level": 800,
+   "avg_level": 857,
+   "max_level": 1100,
+   "max_level_year": 2019,
+   "min_level": 600,
+   "min_level_year": 2021,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1100,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 700,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1000,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A06-03": {
+   "line": "1호선",
+   "section": "반월당",
+   "no": 3,
+   "repair_cnt": 0,
+   "flood_cnt": 4,
+   "latest_level": 1000,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 671,
+   "max_level": 1000,
+   "max_level_year": 2025,
+   "min_level": 0,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2023,
+    2025
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 900,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 400,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 0,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A06-04": {
+   "line": "1호선",
+   "section": "반월당",
+   "no": 4,
+   "repair_cnt": 1,
+   "flood_cnt": 0,
+   "latest_level": 900,
+   "latest_level_year": 2025,
+   "prev_level": 600,
+   "avg_level": 514,
+   "max_level": 900,
+   "max_level_year": 2025,
+   "min_level": 100,
+   "min_level_year": 2020,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2022,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 100,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": true,
+     "level": 400,
+     "grade": "A",
+     "note": null,
+     "photo": "data/2022_repair/반월당4.png",
+     "flood": false
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A02-01": {
+   "line": "1호선",
+   "section": "신천",
+   "no": 1,
+   "repair_cnt": 0,
+   "flood_cnt": 6,
+   "latest_level": 1400,
+   "latest_level_year": 2025,
+   "prev_level": 1400,
+   "avg_level": 1371,
+   "max_level": 1500,
+   "max_level_year": 2022,
+   "min_level": 1200,
+   "min_level_year": 2019,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1400,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1300,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1500,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1400,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1400,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1400,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A02-02": {
+   "line": "1호선",
+   "section": "신천",
+   "no": 2,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 1300,
+   "latest_level_year": 2025,
+   "prev_level": 1000,
+   "avg_level": 886,
+   "max_level": 1300,
+   "max_level_year": 2025,
+   "min_level": 500,
+   "min_level_year": 2020,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1000,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A02-03": {
+   "line": "1호선",
+   "section": "신천",
+   "no": 3,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 200,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 343,
+   "max_level": 800,
+   "max_level_year": 2022,
+   "min_level": 100,
+   "min_level_year": 2019,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 100,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 400,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 800,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A02-04": {
+   "line": "1호선",
+   "section": "신천",
+   "no": 4,
+   "repair_cnt": 1,
+   "flood_cnt": 2,
+   "latest_level": 1000,
+   "latest_level_year": 2025,
+   "prev_level": 1200,
+   "avg_level": 1529,
+   "max_level": 2600,
+   "max_level_year": 2019,
+   "min_level": 1000,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2020,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": true,
+     "level": 2400,
+     "grade": "B",
+     "note": "접속제 침수",
+     "photo": "data/2020_repair/신천4.png",
+     "flood": true
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1000,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A02-05": {
+   "line": "1호선",
+   "section": "신천",
+   "no": 5,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 400,
+   "latest_level_year": 2025,
+   "prev_level": 200,
+   "avg_level": 557,
+   "max_level": 2400,
+   "max_level_year": 2019,
+   "min_level": 0,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2400,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 0,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A02-06": {
+   "line": "1호선",
+   "section": "신천",
+   "no": 6,
+   "repair_cnt": 2,
+   "flood_cnt": 2,
+   "latest_level": 700,
+   "latest_level_year": 2025,
+   "prev_level": 700,
+   "avg_level": 1100,
+   "max_level": 2500,
+   "max_level_year": 2019,
+   "min_level": 200,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2021,
+   "records": [
+    {
+     "year": 2019,
+     "repair": true,
+     "level": 2500,
+     "grade": null,
+     "note": "침수",
+     "photo": "data/2019_repair/신천6.png",
+     "flood": true
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1800,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": true,
+     "level": 1100,
+     "grade": "A",
+     "note": null,
+     "photo": "data/2021_repair/신천6.png",
+     "flood": false
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A02-07": {
+   "line": "1호선",
+   "section": "신천",
+   "no": 7,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 800,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 800,
+   "max_level": 2100,
+   "max_level_year": 2019,
+   "min_level": 100,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2100,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 700,
+     "grade": "B",
+     "note": "부분보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A02-08": {
+   "line": "1호선",
+   "section": "신천",
+   "no": 8,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 800,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 871,
+   "max_level": 2100,
+   "max_level_year": 2019,
+   "min_level": 300,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2100,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1000,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A02-09": {
+   "line": "1호선",
+   "section": "신천",
+   "no": 9,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 400,
+   "latest_level_year": 2025,
+   "prev_level": 300,
+   "avg_level": 600,
+   "max_level": 2200,
+   "max_level_year": 2019,
+   "min_level": 200,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2200,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 400,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A02-10": {
+   "line": "1호선",
+   "section": "신천",
+   "no": 10,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 900,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 671,
+   "max_level": 1500,
+   "max_level_year": 2019,
+   "min_level": 100,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1500,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 600,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A02-11": {
+   "line": "1호선",
+   "section": "신천",
+   "no": 11,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 900,
+   "latest_level_year": 2025,
+   "prev_level": 700,
+   "avg_level": 900,
+   "max_level": 2000,
+   "max_level_year": 2019,
+   "min_level": 400,
+   "min_level_year": 2021,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2000,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 700,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 400,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 700,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-01": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 1,
+   "repair_cnt": 0,
+   "flood_cnt": 2,
+   "latest_level": 1000,
+   "latest_level_year": 2025,
+   "prev_level": 800,
+   "avg_level": 1157,
+   "max_level": 2300,
+   "max_level_year": 2019,
+   "min_level": 500,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2300,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1500,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1000,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-02": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 2,
+   "repair_cnt": 2,
+   "flood_cnt": 2,
+   "latest_level": 1000,
+   "latest_level_year": 2025,
+   "prev_level": 1100,
+   "avg_level": 1400,
+   "max_level": 2300,
+   "max_level_year": 2020,
+   "min_level": 1000,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2021,
+   "records": [
+    {
+     "year": 2016,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2016_repair/방촌2.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2000,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 2300,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": true,
+     "level": 1400,
+     "grade": "B",
+     "note": null,
+     "photo": "data/2021_repair/방촌2.png",
+     "flood": false
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1000,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1100,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-03": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 3,
+   "repair_cnt": 3,
+   "flood_cnt": 5,
+   "latest_level": 900,
+   "latest_level_year": 2025,
+   "prev_level": 700,
+   "avg_level": 914,
+   "max_level": 1400,
+   "max_level_year": 2020,
+   "min_level": 500,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2023,
+    2025
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2025,
+   "records": [
+    {
+     "year": 2016,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2016_repair/방촌3.png",
+     "flood": false
+    },
+    {
+     "year": 2018,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2018_repair/방촌3.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1400,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 800,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": true,
+     "level": 900,
+     "grade": null,
+     "note": "접속제 침수",
+     "photo": "data/2025_repair/방촌3.png",
+     "flood": true
+    }
+   ]
+  },
+  "MH-1-A05-04": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 4,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 1000,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 614,
+   "max_level": 1100,
+   "max_level_year": 2019,
+   "min_level": 100,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1100,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-05": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 5,
+   "repair_cnt": 1,
+   "flood_cnt": 1,
+   "latest_level": 700,
+   "latest_level_year": 2025,
+   "prev_level": 300,
+   "avg_level": 514,
+   "max_level": 1500,
+   "max_level_year": 2019,
+   "min_level": 0,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2025,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1500,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 0,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": true,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "photo": "data/2025_repair/방촌5.png",
+     "flood": false
+    }
+   ]
+  },
+  "MH-1-A05-06": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 6,
+   "repair_cnt": 2,
+   "flood_cnt": 4,
+   "latest_level": 800,
+   "latest_level_year": 2025,
+   "prev_level": 1700,
+   "avg_level": 1700,
+   "max_level": 2300,
+   "max_level_year": 2022,
+   "min_level": 800,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2018,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/방촌6.png",
+     "flood": false
+    },
+    {
+     "year": 2018,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2018_repair/방촌6.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2000,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 2300,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 2000,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 2300,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2026,
+     "repair": false,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2026_repair/방촌6.png",
+     "flood": false
+    }
+   ]
+  },
+  "MH-1-A05-07": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 7,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 800,
+   "latest_level_year": 2025,
+   "prev_level": 300,
+   "avg_level": 557,
+   "max_level": 1700,
+   "max_level_year": 2019,
+   "min_level": 0,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1700,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 0,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-08": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 8,
+   "repair_cnt": 0,
+   "flood_cnt": 2,
+   "latest_level": 1000,
+   "latest_level_year": 2025,
+   "prev_level": 800,
+   "avg_level": 1186,
+   "max_level": 2600,
+   "max_level_year": 2019,
+   "min_level": 500,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1400,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1000,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-09": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 9,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 700,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 457,
+   "max_level": 700,
+   "max_level_year": 2025,
+   "min_level": 200,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-10": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 10,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 793,
+   "max_level": 2600,
+   "max_level_year": 2019,
+   "min_level": 250,
+   "min_level_year": 2021,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 250,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-11": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 11,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 500,
+   "latest_level_year": 2025,
+   "prev_level": 700,
+   "avg_level": 886,
+   "max_level": 2000,
+   "max_level_year": 2019,
+   "min_level": 500,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2000,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 900,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 700,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 900,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-12": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 12,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 300,
+   "avg_level": 271,
+   "max_level": 600,
+   "max_level_year": 2025,
+   "min_level": 100,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 100,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-13": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 13,
+   "repair_cnt": 1,
+   "flood_cnt": 0,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 464,
+   "max_level": 600,
+   "max_level_year": 2025,
+   "min_level": 50,
+   "min_level_year": 2019,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2022,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 50,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": true,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "photo": "data/2022_repair/방촌13.png",
+     "flood": false
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-14": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 14,
+   "repair_cnt": 2,
+   "flood_cnt": 3,
+   "latest_level": 800,
+   "latest_level_year": 2025,
+   "prev_level": 1400,
+   "avg_level": 1629,
+   "max_level": 2600,
+   "max_level_year": 2020,
+   "min_level": 800,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2021,
+   "records": [
+    {
+     "year": 2016,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2016_repair/방촌14.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2300,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 2600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": true,
+     "level": 2400,
+     "grade": "B",
+     "note": "접속제 침수",
+     "photo": "data/2021_repair/방촌14.png",
+     "flood": true
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-15": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 15,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 500,
+   "latest_level_year": 2025,
+   "prev_level": 700,
+   "avg_level": 1014,
+   "max_level": 2700,
+   "max_level_year": 2019,
+   "min_level": 500,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2700,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-16": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 16,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 300,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 829,
+   "max_level": 2600,
+   "max_level_year": 2019,
+   "min_level": 100,
+   "min_level_year": 2021,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1000,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1000,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-17": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 17,
+   "repair_cnt": 4,
+   "flood_cnt": 2,
+   "latest_level": 1500,
+   "latest_level_year": 2025,
+   "prev_level": 2000,
+   "avg_level": 2043,
+   "max_level": 2500,
+   "max_level_year": 2022,
+   "min_level": 1500,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2022
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2023,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/방촌17.png",
+     "flood": false
+    },
+    {
+     "year": 2016,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2016_repair/방촌17.png",
+     "flood": false
+    },
+    {
+     "year": 2018,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2018_repair/방촌17.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2300,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 2500,
+     "grade": "B",
+     "note": "부분보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 2000,
+     "grade": "B",
+     "note": "부분보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 2500,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": true,
+     "level": 1500,
+     "grade": null,
+     "note": null,
+     "photo": "data/2023_repair/방촌17.png",
+     "flood": false
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 2000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-18": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 18,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 600,
+   "avg_level": 600,
+   "max_level": 900,
+   "max_level_year": 2019,
+   "min_level": 400,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 400,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 700,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 400,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-19": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 19,
+   "repair_cnt": 0,
+   "flood_cnt": 4,
+   "latest_level": 1200,
+   "latest_level_year": 2025,
+   "prev_level": 2200,
+   "avg_level": 2157,
+   "max_level": 2700,
+   "max_level_year": 2022,
+   "min_level": 1200,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 2400,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 2700,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 2700,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 2700,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": null,
+     "photo": "data/2023_repair/방촌19.png",
+     "flood": false
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 2200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A05-20": {
+   "line": "1호선",
+   "section": "방촌",
+   "no": 20,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 1200,
+   "latest_level_year": 2025,
+   "prev_level": 900,
+   "avg_level": 971,
+   "max_level": 1200,
+   "max_level_year": 2025,
+   "min_level": 600,
+   "min_level_year": 2021,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1100,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 800,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1000,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A03-01": {
+   "line": "1호선",
+   "section": "안심",
+   "no": 1,
+   "repair_cnt": 2,
+   "flood_cnt": 1,
+   "latest_level": 1000,
+   "latest_level_year": 2025,
+   "prev_level": 800,
+   "avg_level": 783,
+   "max_level": 1000,
+   "max_level_year": 2025,
+   "min_level": 500,
+   "min_level_year": 2019,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2018,
+   "records": [
+    {
+     "year": 2016,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2016_repair/안심1.png",
+     "flood": false
+    },
+    {
+     "year": 2018,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2018_repair/안심1.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 700,
+     "grade": "B",
+     "note": "부분보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 700,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": null,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-1-A08-01": {
+   "line": "1호선",
+   "section": "숙천",
+   "no": 1,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A08-02": {
+   "line": "1호선",
+   "section": "숙천",
+   "no": 2,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-01": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 1,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-02": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 2,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-03": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 3,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-04": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 4,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-05": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 5,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-06": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 6,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-07": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 7,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-08": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 8,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-09": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 9,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-10": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 10,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-11": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 11,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-12": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 12,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-13": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 13,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-14": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 14,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-15": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 15,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-16": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 16,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-17": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 17,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-18": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 18,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-19": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 19,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-20": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 20,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-21": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 21,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-22": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 22,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-23": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 23,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-24": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 24,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-25": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 25,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-26": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 26,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-1-A07-27": {
+   "line": "1호선",
+   "section": "금락",
+   "no": 27,
+   "repair_cnt": 0,
+   "flood_cnt": 0,
+   "latest_level": null,
+   "latest_level_year": null,
+   "prev_level": null,
+   "avg_level": null,
+   "max_level": null,
+   "max_level_year": null,
+   "min_level": null,
+   "min_level_year": null,
+   "level_years": null,
+   "flood_years": [],
+   "grade": null,
+   "grade_year": null,
+   "last_repair_year": null,
+   "records": []
+  },
+  "MH-2-A01-01": {
+   "line": "2호선",
+   "section": "문양",
+   "no": 1,
+   "repair_cnt": 0,
+   "flood_cnt": 7,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 600,
+   "avg_level": 586,
+   "max_level": 600,
+   "max_level_year": 2025,
+   "min_level": 500,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A01-02": {
+   "line": "2호선",
+   "section": "문양",
+   "no": 2,
+   "repair_cnt": 0,
+   "flood_cnt": 7,
+   "latest_level": 700,
+   "latest_level_year": 2025,
+   "prev_level": 800,
+   "avg_level": 757,
+   "max_level": 1100,
+   "max_level_year": 2021,
+   "min_level": 600,
+   "min_level_year": 2019,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 700,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1100,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 700,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2026,
+     "repair": false,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2026_repair/문양2.png",
+     "flood": false
+    }
+   ]
+  },
+  "MH-2-A01-03": {
+   "line": "2호선",
+   "section": "문양",
+   "no": 3,
+   "repair_cnt": 2,
+   "flood_cnt": 7,
+   "latest_level": 700,
+   "latest_level_year": 2025,
+   "prev_level": 600,
+   "avg_level": 607,
+   "max_level": 700,
+   "max_level_year": 2025,
+   "min_level": 450,
+   "min_level_year": 2021,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2017,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/문양3.png",
+     "flood": false
+    },
+    {
+     "year": 2017,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2017_repair/문양3.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 450,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A01-04": {
+   "line": "2호선",
+   "section": "문양",
+   "no": 4,
+   "repair_cnt": 1,
+   "flood_cnt": 7,
+   "latest_level": 500,
+   "latest_level_year": 2025,
+   "prev_level": 700,
+   "avg_level": 600,
+   "max_level": 1000,
+   "max_level_year": 2021,
+   "min_level": 500,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2018,
+   "records": [
+    {
+     "year": 2018,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2018_repair/문양4.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 500,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2026,
+     "repair": false,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2026_repair/문양4.png",
+     "flood": false
+    }
+   ]
+  },
+  "MH-2-A01-05": {
+   "line": "2호선",
+   "section": "문양",
+   "no": 5,
+   "repair_cnt": 0,
+   "flood_cnt": 7,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 600,
+   "avg_level": 614,
+   "max_level": 700,
+   "max_level_year": 2022,
+   "min_level": 600,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 700,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A01-06": {
+   "line": "2호선",
+   "section": "문양",
+   "no": 6,
+   "repair_cnt": 0,
+   "flood_cnt": 7,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 557,
+   "max_level": 600,
+   "max_level_year": 2025,
+   "min_level": 500,
+   "min_level_year": 2024,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 500,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A02-01": {
+   "line": "2호선",
+   "section": "대실",
+   "no": 1,
+   "repair_cnt": 0,
+   "flood_cnt": 5,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 557,
+   "max_level": 600,
+   "max_level_year": 2025,
+   "min_level": 400,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2023,
+    2025
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 400,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A02-02": {
+   "line": "2호선",
+   "section": "대실",
+   "no": 2,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 500,
+   "latest_level_year": 2025,
+   "prev_level": 200,
+   "avg_level": 260,
+   "max_level": 500,
+   "max_level_year": 2025,
+   "min_level": 20,
+   "min_level_year": 2021,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 20,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A02-03": {
+   "line": "2호선",
+   "section": "대실",
+   "no": 3,
+   "repair_cnt": 1,
+   "flood_cnt": 7,
+   "latest_level": 700,
+   "latest_level_year": 2025,
+   "prev_level": 600,
+   "avg_level": 614,
+   "max_level": 700,
+   "max_level_year": 2025,
+   "min_level": 500,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2021,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": true,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "photo": "data/2021_repair/대실3.png",
+     "flood": true
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A02-04": {
+   "line": "2호선",
+   "section": "대실",
+   "no": 4,
+   "repair_cnt": 0,
+   "flood_cnt": 5,
+   "latest_level": 700,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 557,
+   "max_level": 700,
+   "max_level_year": 2025,
+   "min_level": 100,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2023,
+    2025
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A02-05": {
+   "line": "2호선",
+   "section": "대실",
+   "no": 5,
+   "repair_cnt": 0,
+   "flood_cnt": 2,
+   "latest_level": 300,
+   "latest_level_year": 2025,
+   "prev_level": 200,
+   "avg_level": 300,
+   "max_level": 500,
+   "max_level_year": 2020,
+   "min_level": 100,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 500,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A02-06": {
+   "line": "2호선",
+   "section": "대실",
+   "no": 6,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 700,
+   "latest_level_year": 2025,
+   "prev_level": 400,
+   "avg_level": 400,
+   "max_level": 700,
+   "max_level_year": 2025,
+   "min_level": 100,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A02-07": {
+   "line": "2호선",
+   "section": "대실",
+   "no": 7,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 600,
+   "avg_level": 529,
+   "max_level": 600,
+   "max_level_year": 2025,
+   "min_level": 400,
+   "min_level_year": 2020,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 400,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A02-08": {
+   "line": "2호선",
+   "section": "대실",
+   "no": 8,
+   "repair_cnt": 0,
+   "flood_cnt": 5,
+   "latest_level": 700,
+   "latest_level_year": 2025,
+   "prev_level": 400,
+   "avg_level": 443,
+   "max_level": 700,
+   "max_level_year": 2025,
+   "min_level": 300,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 400,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A02-09": {
+   "line": "2호선",
+   "section": "대실",
+   "no": 9,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 600,
+   "avg_level": 586,
+   "max_level": 600,
+   "max_level_year": 2025,
+   "min_level": 500,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 600,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A02-10": {
+   "line": "2호선",
+   "section": "대실",
+   "no": 10,
+   "repair_cnt": 0,
+   "flood_cnt": 7,
+   "latest_level": 1200,
+   "latest_level_year": 2025,
+   "prev_level": 1000,
+   "avg_level": 1007,
+   "max_level": 1200,
+   "max_level_year": 2025,
+   "min_level": 650,
+   "min_level_year": 2021,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 650,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A02-11": {
+   "line": "2호선",
+   "section": "대실",
+   "no": 11,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 443,
+   "max_level": 600,
+   "max_level_year": 2025,
+   "min_level": 300,
+   "min_level_year": 2021,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 300,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A03-01": {
+   "line": "2호선",
+   "section": "성서산단",
+   "no": 1,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 200,
+   "latest_level_year": 2025,
+   "prev_level": 100,
+   "avg_level": 129,
+   "max_level": 200,
+   "max_level_year": 2025,
+   "min_level": 0,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 100,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 200,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 100,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 0,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 100,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A03-02": {
+   "line": "2호선",
+   "section": "성서산단",
+   "no": 2,
+   "repair_cnt": 2,
+   "flood_cnt": 1,
+   "latest_level": 1200,
+   "latest_level_year": 2025,
+   "prev_level": 900,
+   "avg_level": 871,
+   "max_level": 1200,
+   "max_level_year": 2025,
+   "min_level": 400,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2020,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/성서산단2.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": true,
+     "level": 600,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "photo": "data/2020_repair/성서산단2.png",
+     "flood": false
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 400,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A03-03": {
+   "line": "2호선",
+   "section": "성서산단",
+   "no": 3,
+   "repair_cnt": 3,
+   "flood_cnt": 0,
+   "latest_level": 200,
+   "latest_level_year": 2025,
+   "prev_level": 300,
+   "avg_level": 264,
+   "max_level": 500,
+   "max_level_year": 2022,
+   "min_level": 200,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2023,
+   "records": [
+    {
+     "year": 2016,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2016_repair/성서산단3.png",
+     "flood": false
+    },
+    {
+     "year": 2018,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2018_repair/성서산단3.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 250,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": true,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "photo": "data/2023_repair/성서산단3.png",
+     "flood": false
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A03-04": {
+   "line": "2호선",
+   "section": "성서산단",
+   "no": 4,
+   "repair_cnt": 0,
+   "flood_cnt": 4,
+   "latest_level": 900,
+   "latest_level_year": 2025,
+   "prev_level": 100,
+   "avg_level": 843,
+   "max_level": 1000,
+   "max_level_year": 2022,
+   "min_level": 100,
+   "min_level_year": 2024,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 100,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A03-05": {
+   "line": "2호선",
+   "section": "성서산단",
+   "no": 5,
+   "repair_cnt": 1,
+   "flood_cnt": 4,
+   "latest_level": 700,
+   "latest_level_year": 2025,
+   "prev_level": 900,
+   "avg_level": 886,
+   "max_level": 1000,
+   "max_level_year": 2022,
+   "min_level": 700,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2020,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": true,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제 침수",
+     "photo": "data/2020_repair/성서산단5.png",
+     "flood": true
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A03-06": {
+   "line": "2호선",
+   "section": "성서산단",
+   "no": 6,
+   "repair_cnt": 1,
+   "flood_cnt": 4,
+   "latest_level": 800,
+   "latest_level_year": 2025,
+   "prev_level": 900,
+   "avg_level": 914,
+   "max_level": 1000,
+   "max_level_year": 2022,
+   "min_level": 800,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2020,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": true,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제 침수",
+     "photo": "data/2020_repair/성서산단6.png",
+     "flood": true
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A04-01": {
+   "line": "2호선",
+   "section": "죽전",
+   "no": 1,
+   "repair_cnt": 0,
+   "flood_cnt": 5,
+   "latest_level": 500,
+   "latest_level_year": 2025,
+   "prev_level": 600,
+   "avg_level": 657,
+   "max_level": 900,
+   "max_level_year": 2019,
+   "min_level": 500,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2024
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 700,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 800,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A05-01": {
+   "line": "2호선",
+   "section": "반고개",
+   "no": 1,
+   "repair_cnt": 0,
+   "flood_cnt": 4,
+   "latest_level": 700,
+   "latest_level_year": 2025,
+   "prev_level": 300,
+   "avg_level": 457,
+   "max_level": 700,
+   "max_level_year": 2025,
+   "min_level": 100,
+   "min_level_year": 2022,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2023,
+    2025
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 100,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 300,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A05-02": {
+   "line": "2호선",
+   "section": "반고개",
+   "no": 2,
+   "repair_cnt": 3,
+   "flood_cnt": 5,
+   "latest_level": 500,
+   "latest_level_year": 2025,
+   "prev_level": 1100,
+   "avg_level": 1000,
+   "max_level": 1500,
+   "max_level_year": 2022,
+   "min_level": 500,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2024
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2021,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/반고개2.png",
+     "flood": false
+    },
+    {
+     "year": 2018,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2018_repair/반고개2.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": true,
+     "level": 1200,
+     "grade": "B",
+     "note": "접속제 침수",
+     "photo": "data/2021_repair/반고개2.png",
+     "flood": true
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1500,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1100,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A05-03": {
+   "line": "2호선",
+   "section": "반고개",
+   "no": 3,
+   "repair_cnt": 0,
+   "flood_cnt": 7,
+   "latest_level": 700,
+   "latest_level_year": 2025,
+   "prev_level": 600,
+   "avg_level": 629,
+   "max_level": 700,
+   "max_level_year": 2025,
+   "min_level": 600,
+   "min_level_year": 2024,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A05-04": {
+   "line": "2호선",
+   "section": "반고개",
+   "no": 4,
+   "repair_cnt": 2,
+   "flood_cnt": 5,
+   "latest_level": 1200,
+   "latest_level_year": 2025,
+   "prev_level": 1300,
+   "avg_level": 1264,
+   "max_level": 1300,
+   "max_level_year": 2024,
+   "min_level": 1200,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2024
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2018,
+   "records": [
+    {
+     "year": 2016,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2016_repair/반고개4.png",
+     "flood": false
+    },
+    {
+     "year": 2018,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2018_repair/반고개4.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1300,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1300,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1250,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1300,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1300,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A05-05": {
+   "line": "2호선",
+   "section": "반고개",
+   "no": 5,
+   "repair_cnt": 1,
+   "flood_cnt": 7,
+   "latest_level": 1200,
+   "latest_level_year": 2025,
+   "prev_level": 1100,
+   "avg_level": 1086,
+   "max_level": 1200,
+   "max_level_year": 2025,
+   "min_level": 900,
+   "min_level_year": 2020,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2023,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 900,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1200,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": true,
+     "level": 1200,
+     "grade": null,
+     "note": "접속제 침수",
+     "photo": "data/2023_repair/반고개5.png",
+     "flood": true
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1100,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A06-01": {
+   "line": "2호선",
+   "section": "만촌",
+   "no": 1,
+   "repair_cnt": 3,
+   "flood_cnt": 3,
+   "latest_level": 500,
+   "latest_level_year": 2025,
+   "prev_level": 700,
+   "avg_level": 686,
+   "max_level": 1000,
+   "max_level_year": 2021,
+   "min_level": 500,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2024,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/만촌1.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": true,
+     "level": 900,
+     "grade": "B",
+     "note": "접속제 침수",
+     "photo": "data/2020_repair/만촌1.png",
+     "flood": true
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": true,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "photo": "data/2024_repair/만촌1.png",
+     "flood": false
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A06-02": {
+   "line": "2호선",
+   "section": "만촌",
+   "no": 2,
+   "repair_cnt": 2,
+   "flood_cnt": 5,
+   "latest_level": 900,
+   "latest_level_year": 2025,
+   "prev_level": 1200,
+   "avg_level": 1143,
+   "max_level": 1500,
+   "max_level_year": 2022,
+   "min_level": 900,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2024
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2018,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/만촌2.png",
+     "flood": false
+    },
+    {
+     "year": 2018,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2018_repair/만촌2.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1300,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1100,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1100,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1500,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A06-03": {
+   "line": "2호선",
+   "section": "만촌",
+   "no": 3,
+   "repair_cnt": 0,
+   "flood_cnt": 7,
+   "latest_level": 1000,
+   "latest_level_year": 2025,
+   "prev_level": 900,
+   "avg_level": 914,
+   "max_level": 1000,
+   "max_level_year": 2025,
+   "min_level": 800,
+   "min_level_year": 2019,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 900,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 900,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 900,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 900,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A06-04": {
+   "line": "2호선",
+   "section": "만촌",
+   "no": 4,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 800,
+   "latest_level_year": 2025,
+   "prev_level": 700,
+   "avg_level": 671,
+   "max_level": 800,
+   "max_level_year": 2025,
+   "min_level": 500,
+   "min_level_year": 2019,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 700,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 600,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 700,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A06-05": {
+   "line": "2호선",
+   "section": "만촌",
+   "no": 5,
+   "repair_cnt": 2,
+   "flood_cnt": 7,
+   "latest_level": 2000,
+   "latest_level_year": 2025,
+   "prev_level": 1800,
+   "avg_level": 1657,
+   "max_level": 2000,
+   "max_level_year": 2025,
+   "min_level": 1000,
+   "min_level_year": 2019,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2023,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/만촌5.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1500,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1800,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1500,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": true,
+     "level": 2000,
+     "grade": null,
+     "note": "접속제 침수",
+     "photo": "data/2023_repair/만촌5.png",
+     "flood": true
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1800,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 2000,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A06-06": {
+   "line": "2호선",
+   "section": "만촌",
+   "no": 6,
+   "repair_cnt": 2,
+   "flood_cnt": 5,
+   "latest_level": 1100,
+   "latest_level_year": 2025,
+   "prev_level": 1300,
+   "avg_level": 1257,
+   "max_level": 1600,
+   "max_level_year": 2022,
+   "min_level": 1100,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2024
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2018,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/만촌6.png",
+     "flood": false
+    },
+    {
+     "year": 2018,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2018_repair/만촌6.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1300,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1200,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1600,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1100,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1300,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1100,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A06-07": {
+   "line": "2호선",
+   "section": "만촌",
+   "no": 7,
+   "repair_cnt": 2,
+   "flood_cnt": 7,
+   "latest_level": 1000,
+   "latest_level_year": 2025,
+   "prev_level": 1000,
+   "avg_level": 1029,
+   "max_level": 1100,
+   "max_level_year": 2022,
+   "min_level": 1000,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2024,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/만촌7.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1100,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1000,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1100,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": true,
+     "level": 1000,
+     "grade": null,
+     "note": "접속제 침수",
+     "photo": "data/2024_repair/만촌7.png",
+     "flood": true
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A06-08": {
+   "line": "2호선",
+   "section": "만촌",
+   "no": 8,
+   "repair_cnt": 2,
+   "flood_cnt": 7,
+   "latest_level": 1000,
+   "latest_level_year": 2025,
+   "prev_level": 1100,
+   "avg_level": 1029,
+   "max_level": 1500,
+   "max_level_year": 2022,
+   "min_level": 800,
+   "min_level_year": 2019,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2024,
+   "records": [
+    {
+     "year": 2016,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2016_repair/만촌8.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 800,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 900,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 900,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1500,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": true,
+     "level": 1100,
+     "grade": null,
+     "note": "접속제 침수",
+     "photo": "data/2024_repair/만촌8.png",
+     "flood": true
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A06-09": {
+   "line": "2호선",
+   "section": "만촌",
+   "no": 9,
+   "repair_cnt": 1,
+   "flood_cnt": 5,
+   "latest_level": 1200,
+   "latest_level_year": 2025,
+   "prev_level": 1400,
+   "avg_level": 1386,
+   "max_level": 1800,
+   "max_level_year": 2021,
+   "min_level": 1200,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2024
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2014,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/만촌9.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1500,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1300,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1800,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1300,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1400,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1200,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A06-10": {
+   "line": "2호선",
+   "section": "만촌",
+   "no": 10,
+   "repair_cnt": 0,
+   "flood_cnt": 7,
+   "latest_level": 1400,
+   "latest_level_year": 2025,
+   "prev_level": 1500,
+   "avg_level": 1443,
+   "max_level": 1500,
+   "max_level_year": 2024,
+   "min_level": 1300,
+   "min_level_year": 2020,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1500,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1300,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 1500,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1500,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1400,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1500,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1400,
+     "grade": null,
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A06-11": {
+   "line": "2호선",
+   "section": "만촌",
+   "no": 11,
+   "repair_cnt": 3,
+   "flood_cnt": 4,
+   "latest_level": 1000,
+   "latest_level_year": 2025,
+   "prev_level": 1500,
+   "avg_level": 1400,
+   "max_level": 1800,
+   "max_level_year": 2021,
+   "min_level": 1000,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020,
+    2021,
+    2022
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2021,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/만촌11.png",
+     "flood": false
+    },
+    {
+     "year": 2018,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2018_repair/만촌11.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 1100,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 1800,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": true,
+     "level": 1800,
+     "grade": "B",
+     "note": "접속제 침수",
+     "photo": "data/2021_repair/만촌11.png",
+     "flood": true
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 1600,
+     "grade": "B",
+     "note": "접속제침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 1500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 1000,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A06-12": {
+   "line": "2호선",
+   "section": "만촌",
+   "no": 12,
+   "repair_cnt": 2,
+   "flood_cnt": 1,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 600,
+   "avg_level": 529,
+   "max_level": 700,
+   "max_level_year": 2022,
+   "min_level": 400,
+   "min_level_year": 2021,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019
+   ],
+   "grade": "B",
+   "grade_year": 2022,
+   "last_repair_year": 2023,
+   "records": [
+    {
+     "year": 2016,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2016_repair/만촌12.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 400,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 400,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 700,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": true,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "photo": "data/2023_repair/만촌12.png",
+     "flood": false
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A06-13": {
+   "line": "2호선",
+   "section": "만촌",
+   "no": 13,
+   "repair_cnt": 2,
+   "flood_cnt": 2,
+   "latest_level": 500,
+   "latest_level_year": 2025,
+   "prev_level": 500,
+   "avg_level": 571,
+   "max_level": 900,
+   "max_level_year": 2020,
+   "min_level": 500,
+   "min_level_year": 2025,
+   "level_years": [
+    2019,
+    2025
+   ],
+   "flood_years": [
+    2019,
+    2020
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": 2018,
+   "records": [
+    {
+     "year": 2014,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2014_repair/만촌13.png",
+     "flood": false
+    },
+    {
+     "year": 2018,
+     "repair": true,
+     "level": null,
+     "grade": null,
+     "note": null,
+     "photo": "data/2018_repair/만촌13.png",
+     "flood": false
+    },
+    {
+     "year": 2019,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": "침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 900,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 500,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 500,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 500,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  },
+  "MH-2-A07-01": {
+   "line": "2호선",
+   "section": "대공원",
+   "no": 1,
+   "repair_cnt": 0,
+   "flood_cnt": 1,
+   "latest_level": 600,
+   "latest_level_year": 2025,
+   "prev_level": 400,
+   "avg_level": 467,
+   "max_level": 700,
+   "max_level_year": 2020,
+   "min_level": 200,
+   "min_level_year": 2022,
+   "level_years": [
+    2020,
+    2025
+   ],
+   "flood_years": [
+    2020
+   ],
+   "grade": "A",
+   "grade_year": 2022,
+   "last_repair_year": null,
+   "records": [
+    {
+     "year": 2020,
+     "repair": false,
+     "level": 700,
+     "grade": "B",
+     "note": "접속제 침수",
+     "flood": true,
+     "photo": null
+    },
+    {
+     "year": 2021,
+     "repair": false,
+     "level": 300,
+     "grade": "B",
+     "note": "관로구방수장치 보수필요",
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2022,
+     "repair": false,
+     "level": 200,
+     "grade": "A",
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2023,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2024,
+     "repair": false,
+     "level": 400,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    },
+    {
+     "year": 2025,
+     "repair": false,
+     "level": 600,
+     "grade": null,
+     "note": null,
+     "flood": false,
+     "photo": null
+    }
+   ]
+  }
+ }
+}
