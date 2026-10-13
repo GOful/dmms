@@ -11,7 +11,7 @@ const STROKE = '#1E90FF';
 const FILL = '#87CEFA';
 const FILL_RAIN = '#3B82F6';
 
-const layer = { overlays: [], loaded: false, visible: false };
+const layer = { overlays: [], loaded: false, visible: false, observedAt: '' };
 
 /** 날씨 레이어 켜기/끄기 (처음 켤 때 데이터 로드) */
 export async function toggleWeather(map, visible) {
@@ -20,8 +20,10 @@ export async function toggleWeather(map, visible) {
         layer.loaded = true;
         try {
             const data = await loadWeather();
+            const points = data.cells ? Object.values(data.cells) : Object.values(data);
             if (data.cells) drawGrid(map, data);
             else drawStations(map, data);
+            layer.observedAt = latestObservedTime(points);
         } catch (e) {
             layer.loaded = false;
             console.error('날씨 데이터 로드 실패:', e);
@@ -29,6 +31,17 @@ export async function toggleWeather(map, visible) {
     }
     // 로드 중에 체크가 바뀌었을 수 있으므로 마지막 상태로 맞춤
     layer.overlays.forEach((o) => o.setMap(layer.visible ? map : null));
+
+    const updated = document.getElementById('weather-updated');
+    updated.textContent = layer.observedAt ? `${layer.observedAt} 관측` : '';
+    updated.classList.toggle('hidden', !(layer.visible && layer.observedAt));
+}
+
+/** 지점들 중 가장 최근 관측 시각 → 'MM.DD HH:mm' (TM: YYYYMMDDHHMM, 없으면 '') */
+function latestObservedTime(points) {
+    const tm = points.map((p) => p.TM).filter(Boolean).sort().pop();
+    if (!tm) return '';
+    return `${tm.slice(4, 6)}.${tm.slice(6, 8)} ${tm.slice(8, 10)}:${tm.slice(10, 12)}`;
 }
 
 /** 시연 모드: 역 지점 원 + 라벨 */

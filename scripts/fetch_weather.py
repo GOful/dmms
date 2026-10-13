@@ -140,7 +140,7 @@ def create_session():
 
 
 def fetch_point(session, auth_key, lat, lon, now):
-    """한 지점의 최근 실황 → {'TA', 'RN_OX', 'RN_DAY', 'VS'} (값이 없으면 None)"""
+    """한 지점의 최근 실황 → {'TM'(관측시각 YYYYMMDDHHMM), 'TA', 'RN_OX', 'RN_DAY', 'VS'} (값이 없으면 None)"""
     params = {
         'tm1': (now - timedelta(minutes=LOOKBACK_MIN)).strftime('%Y%m%d%H%M'),
         'tm2': now.strftime('%Y%m%d%H%M'),
@@ -157,7 +157,7 @@ def fetch_point(session, auth_key, lat, lon, now):
             latest = row
     if latest is None:
         return None
-    return dict(zip(('TA', 'RN_OX', 'RN_DAY', 'VS'), latest[1:]))
+    return dict(zip(('TM', 'TA', 'RN_OX', 'RN_DAY', 'VS'), latest))
 
 
 def _is_observed(value):
