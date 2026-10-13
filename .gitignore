@@ -1,3 +1,6 @@
+# 로컬 전용 문서 (공개 저장소에 올리지 않음)
+README.md
+
 # 비밀 값 (배포 시 GitHub Actions 가 생성)
 .env
 js/apikey.js
