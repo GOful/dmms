@@ -175,7 +175,10 @@ function historyTable(records) {
             <td class="px-3 py-2 whitespace-nowrap">
                 ${r.repair ? '<span class="px-2 py-0.5 text-xs font-semibold rounded-full bg-blue-100 text-blue-700">보수</span>' : ''}
             </td>
-            <td class="px-3 py-2 text-slate-600 min-w-[140px]">${noteHtml(r)}</td>
+            <td class="px-3 py-2 whitespace-nowrap">
+                ${r.flood ? '<span class="px-2 py-0.5 text-xs font-bold rounded-full bg-red-600 text-white">침수</span>' : ''}
+            </td>
+            <td class="px-3 py-2 text-slate-600 min-w-[120px]">${r.note ? escapeHtml(r.note) : ''}</td>
         </tr>`);
 
     return `
@@ -183,21 +186,15 @@ function historyTable(records) {
             <table class="min-w-full divide-y divide-slate-200 text-sm text-center">
                 <thead class="bg-slate-50">
                     <tr class="text-xs font-medium text-slate-500">
-                        <th class="px-3 py-2">연도</th><th class="px-3 py-2">수위</th><th class="px-3 py-2">맨홀보수</th><th class="px-3 py-2">비고</th>
+                        <th class="px-3 py-2">연도</th><th class="px-3 py-2">수위</th><th class="px-3 py-2">맨홀보수</th>
+                        <th class="px-3 py-2">접속개소침수</th><th class="px-3 py-2">비고</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-slate-100">
-                    ${rows.join('') || '<tr><td colspan="4" class="px-3 py-6 text-slate-400">기록된 이력이 없습니다.</td></tr>'}
+                    ${rows.join('') || '<tr><td colspan="5" class="px-3 py-6 text-slate-400">기록된 이력이 없습니다.</td></tr>'}
                 </tbody>
             </table>
         </div>`;
-}
-
-/** 비고 칸: 침수 뱃지 + 원문 비고 (뱃지와 같은 뜻의 '침수'/'접속제 침수'는 생략) */
-function noteHtml(r) {
-    const badge = r.flood ? '<span class="px-1.5 py-0.5 mr-1 text-[11px] font-bold rounded bg-red-600 text-white">접속개소 침수</span>' : '';
-    const redundant = !r.note || (r.flood && /^(접속제\s*)?침수$/.test(r.note));
-    return badge + (redundant ? '' : escapeHtml(r.note));
 }
 
 /** 사진 클릭 → 화면 가득 확대 (클릭 · ESC 로 닫기) */
