@@ -7,7 +7,7 @@
 import { EVENTS } from './config.js';
 import { loadManholes } from './data.js';
 import { formatDateTime } from './utils.js';
-import { initMap, addManholeMarkers, selectManhole, relayoutMap } from './map/map.js';
+import { initMap, addManholeMarkers, selectManhole, filterMarkers, relayoutMap } from './map/map.js';
 import { initModal } from './ui/modal.js';
 import { initMenu } from './ui/menu.js';
 import { initSidebar, renderTree, showTreeError, highlightManhole, filterTree } from './ui/sidebar.js';
@@ -16,13 +16,19 @@ import { initChat } from './ui/chat.js';
 import { askAI } from './ai.js';
 
 async function init() {
-    initModal();
-    initMenu();
-    initSidebar({ onSelect: selectManhole, onToggle: relayoutMap });
-    startClock();
-
     // 카카오맵을 못 불러와도(도메인 미등록·네트워크 오류) 목록·메뉴·AI 는 동작하도록 분리
     const mapReady = typeof kakao !== 'undefined';
+
+    initModal();
+    initMenu();
+    initSidebar({
+        onSelect: selectManhole,
+        onToggle: relayoutMap,
+        // 빠른 필터는 지도 필터와 같은 경로로 처리 → 지도·목록이 함께 걸러짐
+        onFilter: (ids) => (mapReady ? filterMarkers(ids) : filterTree(ids)),
+    });
+    startClock();
+
     if (mapReady) initMap();
     else console.error('카카오맵 SDK 를 불러오지 못했습니다.');
 

@@ -1,7 +1,7 @@
 /**
  * 카카오맵 — 지도·로드뷰, 맨홀 마커, 선택·필터, 지도 컨트롤 패널
  */
-import { MAP_CENTER, MAP_LEVEL, LINE_STYLES, DEFAULT_LINE_STYLE, SELECTED_MARKER_STYLE, EVENTS } from '../config.js';
+import { MAP_CENTER, MAP_LEVEL, LINE_STYLES, DEFAULT_LINE_STYLE, SELECTED_MARKER_STYLE, HISTORY_COLORS, EVENTS } from '../config.js';
 import { forEachManhole } from '../utils.js';
 import { createManholePopup } from './manhole-popup.js';
 import { toggleWeather } from './weather-layer.js';
@@ -11,8 +11,9 @@ const state = {
     map: null,
     roadview: null,
     roadviewClient: null,
-    markers: {},            // { [맨홀 ID]: { marker, position, manhole } }
-    markerImages: {},       // { [노선 ID]: MarkerImage }
+    markers: {},            // { [맨홀 ID]: { marker, position, manhole, lineId } }
+    markerImages: {},       // { '노선:침수:보수': MarkerImage }
+    showHistory: { flood: true, repair: true },   // 마커에 침수·보수 이력 표시 여부 (지도 컨트롤 토글)
     selectedId: null,
     selectedOverlay: null,  // 선택된 맨홀 자리에 띄우는 강조 마커 (파동 효과)
     popup: null,            // 맨홀 정보 팝업
@@ -58,23 +59,55 @@ function markerSvg({ marker, ring }) {
     </svg>`;
 }
 
-function markerImage(lineId) {
-    state.markerImages[lineId] ??= new kakao.maps.MarkerImage(
-        `data:image/svg+xml;charset=utf-8,${encodeURIComponent(markerSvg(LINE_STYLES[lineId] || DEFAULT_LINE_STYLE))}`,
-        new kakao.maps.Size(44, 44),
-        { offset: new kakao.maps.Point(22, 22) },
-    );
-    return state.markerImages[lineId];
+const MARKER_PAD = 12;   // 이력 마커: 숫자가 들어갈 여백 (마커 본체 크기는 같게 유지)
+
+/** 이력이 있는 맨홀 마커: 마커 위쪽 가운데에 [보수(파랑)][침수(빨강)] 횟수를 나란히 표시 */
+function historyMarkerSvg(style, flood, repair) {
+    const badges = [repair && [HISTORY_COLORS.repair, repair], flood && [HISTORY_COLORS.flood, flood]].filter(Boolean);
+    const badge = ([color, count], i) => {
+        const x = 32 + (i - (badges.length - 1) / 2) * 23;   // 마커 중심(x=32) 기준 좌우 대칭
+        return `
+            <circle cx="${x}" cy="0" r="11" fill="${color}" stroke="#ffffff" stroke-width="2"/>
+            <text x="${x}" y="4.5" text-anchor="middle" font-size="13" font-weight="700" fill="#ffffff" font-family="sans-serif">${count}</text>`;
+    };
+    const base = markerSvg(style).replace(/^<svg[^>]*>|<\/svg>$/g, '');
+    return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="-${MARKER_PAD} -${MARKER_PAD} ${64 + MARKER_PAD * 2} ${64 + MARKER_PAD * 2}">
+        ${base}
+        ${badges.map(badge).join('')}
+    </svg>`;
+}
+
+function markerImage(lineId, manhole) {
+    const flood = state.showHistory.flood ? manhole.flood_cnt || 0 : 0;
+    const repair = state.showHistory.repair ? manhole.repair_cnt || 0 : 0;
+    const key = `${lineId}:${flood}:${repair}`;
+    if (!state.markerImages[key]) {
+        const style = LINE_STYLES[lineId] || DEFAULT_LINE_STYLE;
+        const svg = flood || repair ? historyMarkerSvg(style, flood, repair) : markerSvg(style);
+        const size = flood || repair ? 44 * (64 + MARKER_PAD * 2) / 64 : 44;
+        state.markerImages[key] = new kakao.maps.MarkerImage(
+            `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`,
+            new kakao.maps.Size(size, size),
+            { offset: new kakao.maps.Point(size / 2, size / 2) },
+        );
+    }
+    return state.markerImages[key];
 }
 
 /** 모든 맨홀 마커 생성 */
 export function addManholeMarkers(data) {
     forEachManhole(data, (manhole, station, line) => {
         const position = new kakao.maps.LatLng(manhole.lat, manhole.lng);
-        const marker = new kakao.maps.Marker({ position, map: state.map, image: markerImage(line.lineId) });
+        const marker = new kakao.maps.Marker({ position, map: state.map, image: markerImage(line.lineId, manhole) });
         kakao.maps.event.addListener(marker, 'click', () => selectManhole(manhole.id));
-        state.markers[manhole.id] = { marker, position, manhole };
+        state.markers[manhole.id] = { marker, position, manhole, lineId: line.lineId };
     });
+}
+
+/** 마커의 침수·보수 이력 표시 켜기/끄기 */
+function setHistoryVisible(kind, visible) {
+    state.showHistory[kind] = visible;
+    Object.values(state.markers).forEach(({ marker, manhole, lineId }) => marker.setImage(markerImage(lineId, manhole)));
 }
 
 // ── 선택 ─────────────────────────────────────────────────
@@ -185,6 +218,20 @@ function setupControls() {
     });
 
     $('reset-filter-btn').addEventListener('click', () => filterMarkers(null));
+
+    // 마커 이력 표시 토글 (아이콘이 곧 범례: 침수 = 빨간 숫자, 보수 = 파란 숫자)
+    const toggle = (kind, label, icon) => `
+        <label class="flex items-center gap-2 cursor-pointer hover:text-blue-600 transition-colors">
+            <input type="checkbox" data-history="${kind}" checked class="accent-blue-600 w-4 h-4">
+            ${icon}${label}
+        </label>`;
+    const icon = (color) => `<span class="inline-block w-4 h-4 rounded-full" style="background:${color}"></span>`;
+    $('map-legend').innerHTML = toggle('flood', '침수 이력', icon(HISTORY_COLORS.flood))
+        + toggle('repair', '보수 이력', icon(HISTORY_COLORS.repair));
+    $('map-legend').addEventListener('change', (e) => {
+        const kind = e.target.dataset.history;
+        if (kind) setHistoryVisible(kind, e.target.checked);
+    });
 }
 
 /** 지도와 로드뷰 사이 경계선을 끌어 로드뷰 높이 조절 (마우스·터치 공용) */

@@ -14,6 +14,16 @@ export const LINE_STYLES = {
 export const DEFAULT_LINE_STYLE = { marker: '#334155', ring: '#475569', badge: '#64748b', label: '?' };
 export const SELECTED_MARKER_STYLE = { marker: '#2563eb', ring: '#93c5fd' };
 
+/** 이력 표시 색 (지도 마커 숫자, 사이드바 표시) */
+export const HISTORY_COLORS = { flood: '#e11d48', repair: '#2563eb' };
+
+/** 사이드바 빠른 필터 */
+export const QUICK_FILTERS = [
+    { key: 'all', label: '전체', test: () => true },
+    { key: 'flood', label: '침수 이력', test: (mh) => mh.flood_cnt > 0 },
+    { key: 'repair', label: '보수 이력', test: (mh) => mh.repair_cnt > 0 },
+];
+
 /** 모듈 간 통신용 이벤트 (document 에서 발생, main.js 에서 연결) */
 export const EVENTS = {
     SELECT: 'dmms:manhole-select',   // detail: { id }       지도에서 맨홀 선택 (해제 시 id = null)
