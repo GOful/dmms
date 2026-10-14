@@ -23,7 +23,9 @@ PHOTO_DIR_RE = re.compile(r'(\d{4})_repair')
 PHOTO_EXTS = {'.png', '.jpg', '.jpeg', '.webp'}
 
 INFER_TAG = '(수위추정)'                 # infer_flood.py 가 기록한 비고 표시 (엑셀 관리용, 웹에는 숨김)
+NOTE_SEPARATOR = ' / '                   # 한 칸에 비고가 여러 개일 때 구분자 (예: '부분보수필요 / 접속제 침수(수위추정)')
 HIDDEN_NOTES = {'관로구방수장치보수필요'}  # 웹에 표시하지 않는 비고 (공백 제거 후 비교)
+FLOOD_ONLY_RE = re.compile(r'(접속제\s*)?침수')  # 침수 뱃지와 뜻이 같아 비고 글자로는 생략하는 문구
 
 
 def load_manhole_ids():
@@ -46,12 +48,24 @@ def find_photos():
     return photos
 
 
-def clean_note(note):
-    """웹에 보여줄 비고: 수위추정 표시 제거, 숨김 비고는 None"""
-    if not note:
-        return None
-    note = note.replace(INFER_TAG, '').strip()
-    return None if note.replace(' ', '') in HIDDEN_NOTES else note
+def split_note(note):
+    """비고 칸 → (직접 입력한 비고 목록, 수위추정 비고 목록)"""
+    parts = [p.strip() for p in (note or '').split(NOTE_SEPARATOR.strip()) if p.strip()]
+    return [p for p in parts if INFER_TAG not in p], [p for p in parts if INFER_TAG in p]
+
+
+def read_note(note):
+    """비고 칸 → (침수 여부, 웹에 보여줄 비고)
+
+    침수 여부: 비고(직접 입력 + 수위추정) 어디든 '침수'가 있으면 True
+    보여줄 비고: 수위추정 표시·숨김 비고·침수 뱃지와 같은 문구를 뺀 나머지 (없으면 None)
+    """
+    manual, inferred = split_note(note)
+    parts = manual + [p.replace(INFER_TAG, '').strip() for p in inferred]
+    flood = any('침수' in p for p in parts)
+    shown = [p for p in parts
+             if p.replace(' ', '') not in HIDDEN_NOTES and not FLOOD_ONLY_RE.fullmatch(p)]
+    return flood, NOTE_SEPARATOR.join(shown) or None
 
 
 def build_records(cells, columns, photos_by_year):
@@ -81,9 +95,8 @@ def build_records(cells, columns, photos_by_year):
     records = []
     for year in sorted(by_year):
         rec = by_year[year]
-        rec['note'] = clean_note(rec['note'])
-        rec['flood'] = bool(rec['note'] and '침수' in rec['note'])
-        if rec['repair'] or rec['level'] is not None or rec['grade'] or rec['note'] or rec['photo']:
+        rec['flood'], rec['note'] = read_note(rec['note'])
+        if rec['repair'] or rec['flood'] or rec['level'] is not None or rec['grade'] or rec['note'] or rec['photo']:
             records.append(rec)
     return records
 

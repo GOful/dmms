@@ -1,5 +1,5 @@
 {
- "generated_at": "2026-10-13T12:29:51",
+ "generated_at": "2026-10-14T23:57:12",
  "years": [
   2014,
   2016,
@@ -204,11 +204,13 @@
    "section": "월배기지",
    "no": 3,
    "repair_cnt": 1,
-   "flood_cnt": 3,
+   "flood_cnt": 5,
    "flood_years": [
     2019,
     2020,
-    2021
+    2021,
+    2022,
+    2024
    ],
    "last_repair_year": 2023,
    "latest_level": 900,
@@ -231,7 +233,7 @@
      "repair": false,
      "level": 1400,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -240,7 +242,7 @@
      "repair": false,
      "level": 1400,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -249,7 +251,7 @@
      "repair": false,
      "level": 1400,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -260,7 +262,7 @@
      "grade": "B",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2023,
@@ -278,7 +280,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -761,7 +763,7 @@
      "repair": false,
      "level": 1900,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -854,7 +856,7 @@
      "repair": false,
      "level": 2000,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -863,7 +865,7 @@
      "repair": false,
      "level": 2400,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -872,7 +874,7 @@
      "repair": false,
      "level": 2300,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -881,7 +883,7 @@
      "repair": false,
      "level": 2100,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1095,12 +1097,13 @@
    "section": "서부정류장",
    "no": 6,
    "repair_cnt": 1,
-   "flood_cnt": 4,
+   "flood_cnt": 5,
    "flood_years": [
     2019,
     2020,
     2021,
-    2022
+    2022,
+    2024
    ],
    "last_repair_year": 2020,
    "latest_level": 1800,
@@ -1123,7 +1126,7 @@
      "repair": false,
      "level": 2200,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1132,7 +1135,7 @@
      "repair": true,
      "level": 2500,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2020_repair/서부정류장6.png",
      "flood": true
     },
@@ -1141,7 +1144,7 @@
      "repair": false,
      "level": 2400,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1150,7 +1153,7 @@
      "repair": false,
      "level": 2400,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1170,7 +1173,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -1324,7 +1327,7 @@
      "repair": false,
      "level": 2300,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1333,7 +1336,7 @@
      "repair": false,
      "level": 1100,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1351,7 +1354,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1360,7 +1363,7 @@
      "repair": false,
      "level": 1600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1369,7 +1372,7 @@
      "repair": false,
      "level": 1200,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1378,7 +1381,7 @@
      "repair": false,
      "level": 1600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -1389,9 +1392,11 @@
    "section": "서부정류장",
    "no": 9,
    "repair_cnt": 3,
-   "flood_cnt": 2,
+   "flood_cnt": 4,
    "flood_years": [
     2019,
+    2020,
+    2021,
     2022
    ],
    "last_repair_year": 2023,
@@ -1424,7 +1429,7 @@
      "repair": true,
      "level": 1100,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": "data/2019_repair/서부정류장9.png",
      "flood": true
     },
@@ -1435,7 +1440,7 @@
      "grade": "B",
      "note": "부분보수필요",
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2021,
@@ -1444,14 +1449,14 @@
      "grade": "B",
      "note": "부분보수필요",
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2022,
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1693,7 +1698,7 @@
      "repair": false,
      "level": 900,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1702,7 +1707,7 @@
      "repair": false,
      "level": 900,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1729,7 +1734,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1747,7 +1752,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -1846,10 +1851,11 @@
    "section": "신천",
    "no": 1,
    "repair_cnt": 0,
-   "flood_cnt": 6,
+   "flood_cnt": 7,
    "flood_years": [
     2019,
     2020,
+    2021,
     2022,
     2023,
     2024,
@@ -1876,7 +1882,7 @@
      "repair": false,
      "level": 1200,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1885,7 +1891,7 @@
      "repair": false,
      "level": 1400,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1896,14 +1902,14 @@
      "grade": "B",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2022,
      "repair": false,
      "level": 1500,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1912,7 +1918,7 @@
      "repair": false,
      "level": 1400,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1921,7 +1927,7 @@
      "repair": false,
      "level": 1400,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -1930,7 +1936,7 @@
      "repair": false,
      "level": 1400,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -2143,7 +2149,7 @@
      "repair": false,
      "level": 2600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -2152,7 +2158,7 @@
      "repair": true,
      "level": 2400,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2020_repair/신천4.png",
      "flood": true
     },
@@ -2233,7 +2239,7 @@
      "repair": false,
      "level": 2400,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -2324,7 +2330,7 @@
      "repair": true,
      "level": 2500,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": "data/2019_repair/신천6.png",
      "flood": true
     },
@@ -2333,7 +2339,7 @@
      "repair": false,
      "level": 1800,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -2414,7 +2420,7 @@
      "repair": false,
      "level": 2100,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -2504,7 +2510,7 @@
      "repair": false,
      "level": 2100,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -2594,7 +2600,7 @@
      "repair": false,
      "level": 2200,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -2684,7 +2690,7 @@
      "repair": false,
      "level": 1500,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -2774,7 +2780,7 @@
      "repair": false,
      "level": 2000,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -2865,7 +2871,7 @@
      "repair": false,
      "level": 2300,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -2874,7 +2880,7 @@
      "repair": false,
      "level": 1500,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -2965,7 +2971,7 @@
      "repair": false,
      "level": 2000,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -2974,7 +2980,7 @@
      "repair": false,
      "level": 2300,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3077,7 +3083,7 @@
      "repair": false,
      "level": 1200,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3086,7 +3092,7 @@
      "repair": false,
      "level": 1400,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3095,7 +3101,7 @@
      "repair": false,
      "level": 800,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3113,7 +3119,7 @@
      "repair": false,
      "level": 900,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3131,7 +3137,7 @@
      "repair": true,
      "level": 900,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2025_repair/방촌3.png",
      "flood": true
     }
@@ -3167,7 +3173,7 @@
      "repair": false,
      "level": 1100,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3257,7 +3263,7 @@
      "repair": false,
      "level": 1500,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3368,7 +3374,7 @@
      "repair": false,
      "level": 2000,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3377,7 +3383,7 @@
      "repair": false,
      "level": 2300,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3386,7 +3392,7 @@
      "repair": false,
      "level": 2000,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3395,7 +3401,7 @@
      "repair": false,
      "level": 2300,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3467,7 +3473,7 @@
      "repair": false,
      "level": 1700,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3558,7 +3564,7 @@
      "repair": false,
      "level": 2600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3567,7 +3573,7 @@
      "repair": false,
      "level": 1400,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3736,7 +3742,7 @@
      "repair": false,
      "level": 2600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -3826,7 +3832,7 @@
      "repair": false,
      "level": 2000,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -4103,7 +4109,7 @@
      "repair": false,
      "level": 2300,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -4112,7 +4118,7 @@
      "repair": false,
      "level": 2600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -4121,7 +4127,7 @@
      "repair": true,
      "level": 2400,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2021_repair/방촌14.png",
      "flood": true
     },
@@ -4193,7 +4199,7 @@
      "repair": false,
      "level": 2700,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -4283,7 +4289,7 @@
      "repair": false,
      "level": 2600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -4348,9 +4354,10 @@
    "section": "방촌",
    "no": 17,
    "repair_cnt": 4,
-   "flood_cnt": 2,
+   "flood_cnt": 3,
    "flood_years": [
     2019,
+    2020,
     2022
    ],
    "last_repair_year": 2023,
@@ -4401,7 +4408,7 @@
      "repair": false,
      "level": 2300,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -4412,7 +4419,7 @@
      "grade": "B",
      "note": "부분보수필요",
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2021,
@@ -4428,7 +4435,7 @@
      "repair": false,
      "level": 2500,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -4582,7 +4589,7 @@
      "repair": false,
      "level": 2400,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -4591,7 +4598,7 @@
      "repair": false,
      "level": 2700,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -4600,7 +4607,7 @@
      "repair": false,
      "level": 2700,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -4609,7 +4616,7 @@
      "repair": false,
      "level": 2700,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -4647,9 +4654,11 @@
    "section": "방촌",
    "no": 20,
    "repair_cnt": 0,
-   "flood_cnt": 1,
+   "flood_cnt": 3,
    "flood_years": [
-    2019
+    2019,
+    2023,
+    2025
    ],
    "last_repair_year": null,
    "latest_level": 1200,
@@ -4672,7 +4681,7 @@
      "repair": false,
      "level": 1100,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -4710,7 +4719,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2024,
@@ -4728,7 +4737,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     }
    ]
   },
@@ -4737,9 +4746,14 @@
    "section": "안심",
    "no": 1,
    "repair_cnt": 2,
-   "flood_cnt": 1,
+   "flood_cnt": 6,
    "flood_years": [
-    2019
+    2019,
+    2020,
+    2021,
+    2023,
+    2024,
+    2025
    ],
    "last_repair_year": 2018,
    "latest_level": 1000,
@@ -4780,7 +4794,7 @@
      "repair": false,
      "level": 500,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -4791,7 +4805,7 @@
      "grade": "B",
      "note": "부분보수필요",
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2021,
@@ -4800,7 +4814,7 @@
      "grade": "B",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2022,
@@ -4818,7 +4832,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2024,
@@ -4827,7 +4841,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -4836,7 +4850,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     }
    ]
   },
@@ -5485,7 +5499,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5494,7 +5508,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5503,7 +5517,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5512,7 +5526,7 @@
      "repair": false,
      "level": 500,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5521,7 +5535,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5530,7 +5544,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5539,7 +5553,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -5581,7 +5595,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5590,7 +5604,7 @@
      "repair": false,
      "level": 700,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5599,7 +5613,7 @@
      "repair": false,
      "level": 1100,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5608,7 +5622,7 @@
      "repair": false,
      "level": 700,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5617,7 +5631,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5626,7 +5640,7 @@
      "repair": false,
      "level": 800,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5635,7 +5649,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5704,7 +5718,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5713,7 +5727,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5722,7 +5736,7 @@
      "repair": false,
      "level": 450,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5731,7 +5745,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5740,7 +5754,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5749,7 +5763,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5758,7 +5772,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -5809,7 +5823,7 @@
      "repair": false,
      "level": 500,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5818,7 +5832,7 @@
      "repair": false,
      "level": 500,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5827,7 +5841,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5836,7 +5850,7 @@
      "repair": false,
      "level": 500,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5845,7 +5859,7 @@
      "repair": false,
      "level": 500,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5854,7 +5868,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5863,7 +5877,7 @@
      "repair": false,
      "level": 500,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5914,7 +5928,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5923,7 +5937,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5932,7 +5946,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5941,7 +5955,7 @@
      "repair": false,
      "level": 700,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5950,7 +5964,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5959,7 +5973,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -5968,7 +5982,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -6010,7 +6024,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6019,7 +6033,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6028,7 +6042,7 @@
      "repair": false,
      "level": 500,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6037,7 +6051,7 @@
      "repair": false,
      "level": 500,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6046,7 +6060,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6055,7 +6069,7 @@
      "repair": false,
      "level": 500,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6064,7 +6078,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -6104,7 +6118,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6113,7 +6127,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6122,7 +6136,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6140,7 +6154,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6158,7 +6172,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -6169,9 +6183,11 @@
    "section": "대실",
    "no": 2,
    "repair_cnt": 0,
-   "flood_cnt": 1,
+   "flood_cnt": 3,
    "flood_years": [
-    2019
+    2019,
+    2023,
+    2025
    ],
    "last_repair_year": null,
    "latest_level": 500,
@@ -6194,7 +6210,7 @@
      "repair": false,
      "level": 400,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6232,7 +6248,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2024,
@@ -6250,7 +6266,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     }
    ]
   },
@@ -6290,7 +6306,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6299,7 +6315,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6308,7 +6324,7 @@
      "repair": true,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2021_repair/대실3.png",
      "flood": true
     },
@@ -6317,7 +6333,7 @@
      "repair": false,
      "level": 500,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6326,7 +6342,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6335,7 +6351,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6344,7 +6360,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -6384,7 +6400,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6393,7 +6409,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6402,7 +6418,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6420,7 +6436,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6438,7 +6454,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -6475,7 +6491,7 @@
      "repair": false,
      "level": 500,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6484,7 +6500,7 @@
      "repair": false,
      "level": 500,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6540,9 +6556,14 @@
    "section": "대실",
    "no": 6,
    "repair_cnt": 0,
-   "flood_cnt": 1,
+   "flood_cnt": 6,
    "flood_years": [
-    2019
+    2019,
+    2020,
+    2021,
+    2023,
+    2024,
+    2025
    ],
    "last_repair_year": null,
    "latest_level": 700,
@@ -6565,7 +6586,7 @@
      "repair": false,
      "level": 300,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6576,7 +6597,7 @@
      "grade": "A",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2021,
@@ -6585,7 +6606,7 @@
      "grade": "A",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2022,
@@ -6603,7 +6624,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2024,
@@ -6612,7 +6633,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -6621,7 +6642,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     }
    ]
   },
@@ -6630,9 +6651,15 @@
    "section": "대실",
    "no": 7,
    "repair_cnt": 0,
-   "flood_cnt": 1,
+   "flood_cnt": 7,
    "flood_years": [
-    2019
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
    ],
    "last_repair_year": null,
    "latest_level": 600,
@@ -6655,7 +6682,7 @@
      "repair": false,
      "level": 400,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6666,7 +6693,7 @@
      "grade": "A",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2021,
@@ -6675,7 +6702,7 @@
      "grade": "A",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2022,
@@ -6684,7 +6711,7 @@
      "grade": "A",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2023,
@@ -6693,7 +6720,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2024,
@@ -6702,7 +6729,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -6711,7 +6738,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     }
    ]
   },
@@ -6720,10 +6747,12 @@
    "section": "대실",
    "no": 8,
    "repair_cnt": 0,
-   "flood_cnt": 5,
+   "flood_cnt": 7,
    "flood_years": [
     2019,
     2020,
+    2021,
+    2022,
     2023,
     2024,
     2025
@@ -6749,7 +6778,7 @@
      "repair": false,
      "level": 300,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6758,7 +6787,7 @@
      "repair": false,
      "level": 400,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6769,7 +6798,7 @@
      "grade": "A",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2022,
@@ -6778,14 +6807,14 @@
      "grade": "A",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2023,
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6794,7 +6823,7 @@
      "repair": false,
      "level": 400,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6803,7 +6832,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -6814,9 +6843,14 @@
    "section": "대실",
    "no": 9,
    "repair_cnt": 0,
-   "flood_cnt": 1,
+   "flood_cnt": 6,
    "flood_years": [
-    2019
+    2019,
+    2020,
+    2021,
+    2023,
+    2024,
+    2025
    ],
    "last_repair_year": null,
    "latest_level": 600,
@@ -6839,7 +6873,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6850,7 +6884,7 @@
      "grade": "A",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2021,
@@ -6859,7 +6893,7 @@
      "grade": "A",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2022,
@@ -6877,7 +6911,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2024,
@@ -6886,7 +6920,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -6895,7 +6929,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     }
    ]
   },
@@ -6935,7 +6969,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6944,7 +6978,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6953,7 +6987,7 @@
      "repair": false,
      "level": 650,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6962,7 +6996,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6971,7 +7005,7 @@
      "repair": false,
      "level": 1200,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6980,7 +7014,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -6989,7 +7023,7 @@
      "repair": false,
      "level": 1200,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -7000,9 +7034,15 @@
    "section": "대실",
    "no": 11,
    "repair_cnt": 0,
-   "flood_cnt": 1,
+   "flood_cnt": 7,
    "flood_years": [
-    2019
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
    ],
    "last_repair_year": null,
    "latest_level": 600,
@@ -7025,7 +7065,7 @@
      "repair": false,
      "level": 300,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7036,7 +7076,7 @@
      "grade": "A",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2021,
@@ -7045,7 +7085,7 @@
      "grade": "A",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2022,
@@ -7054,7 +7094,7 @@
      "grade": "A",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2023,
@@ -7063,7 +7103,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2024,
@@ -7072,7 +7112,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -7081,7 +7121,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     }
    ]
   },
@@ -7090,9 +7130,14 @@
    "section": "성서산단",
    "no": 1,
    "repair_cnt": 0,
-   "flood_cnt": 1,
+   "flood_cnt": 6,
    "flood_years": [
-    2019
+    2019,
+    2020,
+    2021,
+    2023,
+    2024,
+    2025
    ],
    "last_repair_year": null,
    "latest_level": 200,
@@ -7115,7 +7160,7 @@
      "repair": false,
      "level": 100,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7126,7 +7171,7 @@
      "grade": "B",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2021,
@@ -7135,7 +7180,7 @@
      "grade": "B",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2022,
@@ -7153,7 +7198,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2024,
@@ -7162,7 +7207,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -7171,7 +7216,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     }
    ]
   },
@@ -7180,9 +7225,13 @@
    "section": "성서산단",
    "no": 2,
    "repair_cnt": 2,
-   "flood_cnt": 1,
+   "flood_cnt": 5,
    "flood_years": [
-    2019
+    2019,
+    2021,
+    2023,
+    2024,
+    2025
    ],
    "last_repair_year": 2020,
    "latest_level": 1200,
@@ -7214,7 +7263,7 @@
      "repair": false,
      "level": 800,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7234,7 +7283,7 @@
      "grade": "B",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2022,
@@ -7252,7 +7301,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2024,
@@ -7261,7 +7310,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -7270,7 +7319,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     }
    ]
   },
@@ -7413,7 +7462,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7422,7 +7471,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7431,7 +7480,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7440,7 +7489,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7478,12 +7527,13 @@
    "section": "성서산단",
    "no": 5,
    "repair_cnt": 1,
-   "flood_cnt": 4,
+   "flood_cnt": 5,
    "flood_years": [
     2019,
     2020,
     2021,
-    2022
+    2022,
+    2024
    ],
    "last_repair_year": 2020,
    "latest_level": 700,
@@ -7506,7 +7556,7 @@
      "repair": false,
      "level": 900,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7515,7 +7565,7 @@
      "repair": true,
      "level": 1000,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2020_repair/성서산단5.png",
      "flood": true
     },
@@ -7524,7 +7574,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7533,7 +7583,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7553,7 +7603,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -7571,12 +7621,13 @@
    "section": "성서산단",
    "no": 6,
    "repair_cnt": 1,
-   "flood_cnt": 4,
+   "flood_cnt": 5,
    "flood_years": [
     2019,
     2020,
     2021,
-    2022
+    2022,
+    2024
    ],
    "last_repair_year": 2020,
    "latest_level": 800,
@@ -7599,7 +7650,7 @@
      "repair": false,
      "level": 900,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7608,7 +7659,7 @@
      "repair": true,
      "level": 1000,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2020_repair/성서산단6.png",
      "flood": true
     },
@@ -7617,7 +7668,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7626,7 +7677,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7646,7 +7697,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -7693,7 +7744,7 @@
      "repair": false,
      "level": 900,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7702,7 +7753,7 @@
      "repair": false,
      "level": 700,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7711,7 +7762,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7720,7 +7771,7 @@
      "repair": false,
      "level": 800,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7738,7 +7789,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7786,7 +7837,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7795,7 +7846,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7822,7 +7873,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7840,7 +7891,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -7898,7 +7949,7 @@
      "repair": false,
      "level": 1200,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7907,7 +7958,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7916,7 +7967,7 @@
      "repair": true,
      "level": 1200,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2021_repair/반고개2.png",
      "flood": true
     },
@@ -7925,7 +7976,7 @@
      "repair": false,
      "level": 1500,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7943,7 +7994,7 @@
      "repair": false,
      "level": 1100,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -7994,7 +8045,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8003,7 +8054,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8012,7 +8063,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8021,7 +8072,7 @@
      "repair": false,
      "level": 600,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8030,7 +8081,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8039,7 +8090,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8048,7 +8099,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -8106,7 +8157,7 @@
      "repair": false,
      "level": 1300,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8115,7 +8166,7 @@
      "repair": false,
      "level": 1300,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8124,7 +8175,7 @@
      "repair": false,
      "level": 1250,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8133,7 +8184,7 @@
      "repair": false,
      "level": 1300,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8151,7 +8202,7 @@
      "repair": false,
      "level": 1300,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8202,7 +8253,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8211,7 +8262,7 @@
      "repair": false,
      "level": 900,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8220,7 +8271,7 @@
      "repair": false,
      "level": 1200,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8229,7 +8280,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8238,7 +8289,7 @@
      "repair": true,
      "level": 1200,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2023_repair/반고개5.png",
      "flood": true
     },
@@ -8247,7 +8298,7 @@
      "repair": false,
      "level": 1100,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8256,7 +8307,7 @@
      "repair": false,
      "level": 1200,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -8267,11 +8318,12 @@
    "section": "만촌",
    "no": 1,
    "repair_cnt": 3,
-   "flood_cnt": 3,
+   "flood_cnt": 4,
    "flood_years": [
     2019,
     2020,
-    2021
+    2021,
+    2024
    ],
    "last_repair_year": 2024,
    "latest_level": 500,
@@ -8303,7 +8355,7 @@
      "repair": false,
      "level": 700,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8312,7 +8364,7 @@
      "repair": true,
      "level": 900,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2020_repair/만촌1.png",
      "flood": true
     },
@@ -8321,7 +8373,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8350,7 +8402,7 @@
      "grade": null,
      "note": null,
      "photo": "data/2024_repair/만촌1.png",
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -8415,7 +8467,7 @@
      "repair": false,
      "level": 1300,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8424,7 +8476,7 @@
      "repair": false,
      "level": 1100,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8433,7 +8485,7 @@
      "repair": false,
      "level": 1100,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8442,7 +8494,7 @@
      "repair": false,
      "level": 1500,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8460,7 +8512,7 @@
      "repair": false,
      "level": 1200,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8511,7 +8563,7 @@
      "repair": false,
      "level": 800,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8520,7 +8572,7 @@
      "repair": false,
      "level": 900,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8529,7 +8581,7 @@
      "repair": false,
      "level": 900,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8538,7 +8590,7 @@
      "repair": false,
      "level": 900,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8547,7 +8599,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8556,7 +8608,7 @@
      "repair": false,
      "level": 900,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8565,7 +8617,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -8576,9 +8628,15 @@
    "section": "만촌",
    "no": 4,
    "repair_cnt": 0,
-   "flood_cnt": 1,
+   "flood_cnt": 7,
    "flood_years": [
-    2019
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
    ],
    "last_repair_year": null,
    "latest_level": 800,
@@ -8601,7 +8659,7 @@
      "repair": false,
      "level": 500,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8612,7 +8670,7 @@
      "grade": "B",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2021,
@@ -8621,7 +8679,7 @@
      "grade": "B",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2022,
@@ -8630,7 +8688,7 @@
      "grade": "B",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2023,
@@ -8639,7 +8697,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2024,
@@ -8648,7 +8706,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -8657,7 +8715,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     }
    ]
   },
@@ -8706,7 +8764,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8715,7 +8773,7 @@
      "repair": false,
      "level": 1500,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8724,7 +8782,7 @@
      "repair": false,
      "level": 1800,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8733,7 +8791,7 @@
      "repair": false,
      "level": 1500,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8742,7 +8800,7 @@
      "repair": true,
      "level": 2000,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2023_repair/만촌5.png",
      "flood": true
     },
@@ -8751,7 +8809,7 @@
      "repair": false,
      "level": 1800,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8760,7 +8818,7 @@
      "repair": false,
      "level": 2000,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -8818,7 +8876,7 @@
      "repair": false,
      "level": 1200,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8827,7 +8885,7 @@
      "repair": false,
      "level": 1300,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8836,7 +8894,7 @@
      "repair": false,
      "level": 1200,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8845,7 +8903,7 @@
      "repair": false,
      "level": 1600,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8863,7 +8921,7 @@
      "repair": false,
      "level": 1300,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8923,7 +8981,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8932,7 +8990,7 @@
      "repair": false,
      "level": 1100,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8941,7 +8999,7 @@
      "repair": false,
      "level": 1000,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8950,7 +9008,7 @@
      "repair": false,
      "level": 1100,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8959,7 +9017,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -8968,7 +9026,7 @@
      "repair": true,
      "level": 1000,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2024_repair/만촌7.png",
      "flood": true
     },
@@ -8977,7 +9035,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -9028,7 +9086,7 @@
      "repair": false,
      "level": 800,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9037,7 +9095,7 @@
      "repair": false,
      "level": 900,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9046,7 +9104,7 @@
      "repair": false,
      "level": 900,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9055,7 +9113,7 @@
      "repair": false,
      "level": 1500,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9064,7 +9122,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9073,7 +9131,7 @@
      "repair": true,
      "level": 1100,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2024_repair/만촌8.png",
      "flood": true
     },
@@ -9082,7 +9140,7 @@
      "repair": false,
      "level": 1000,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -9131,7 +9189,7 @@
      "repair": false,
      "level": 1500,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9140,7 +9198,7 @@
      "repair": false,
      "level": 1300,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9149,7 +9207,7 @@
      "repair": false,
      "level": 1800,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9158,7 +9216,7 @@
      "repair": false,
      "level": 1300,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9176,7 +9234,7 @@
      "repair": false,
      "level": 1400,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9227,7 +9285,7 @@
      "repair": false,
      "level": 1500,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9236,7 +9294,7 @@
      "repair": false,
      "level": 1300,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9245,7 +9303,7 @@
      "repair": false,
      "level": 1500,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9254,7 +9312,7 @@
      "repair": false,
      "level": 1500,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9263,7 +9321,7 @@
      "repair": false,
      "level": 1400,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9272,7 +9330,7 @@
      "repair": false,
      "level": 1500,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9281,7 +9339,7 @@
      "repair": false,
      "level": 1400,
      "grade": null,
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     }
@@ -9292,12 +9350,13 @@
    "section": "만촌",
    "no": 11,
    "repair_cnt": 3,
-   "flood_cnt": 4,
+   "flood_cnt": 5,
    "flood_years": [
     2019,
     2020,
     2021,
-    2022
+    2022,
+    2024
    ],
    "last_repair_year": 2021,
    "latest_level": 1000,
@@ -9338,7 +9397,7 @@
      "repair": false,
      "level": 1100,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9347,7 +9406,7 @@
      "repair": false,
      "level": 1800,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9356,7 +9415,7 @@
      "repair": true,
      "level": 1800,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": "data/2021_repair/만촌11.png",
      "flood": true
     },
@@ -9365,7 +9424,7 @@
      "repair": false,
      "level": 1600,
      "grade": "B",
-     "note": "접속제침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9385,7 +9444,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -9403,9 +9462,15 @@
    "section": "만촌",
    "no": 12,
    "repair_cnt": 2,
-   "flood_cnt": 1,
+   "flood_cnt": 7,
    "flood_years": [
-    2019
+    2019,
+    2020,
+    2021,
+    2022,
+    2023,
+    2024,
+    2025
    ],
    "last_repair_year": 2023,
    "latest_level": 600,
@@ -9437,7 +9502,7 @@
      "repair": false,
      "level": 400,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9448,7 +9513,7 @@
      "grade": "B",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2021,
@@ -9457,7 +9522,7 @@
      "grade": "B",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2022,
@@ -9466,7 +9531,7 @@
      "grade": "B",
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2023,
@@ -9475,7 +9540,7 @@
      "grade": null,
      "note": null,
      "photo": "data/2023_repair/만촌12.png",
-     "flood": false
+     "flood": true
     },
     {
      "year": 2024,
@@ -9484,7 +9549,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     },
     {
      "year": 2025,
@@ -9493,7 +9558,7 @@
      "grade": null,
      "note": null,
      "photo": null,
-     "flood": false
+     "flood": true
     }
    ]
   },
@@ -9546,7 +9611,7 @@
      "repair": false,
      "level": 600,
      "grade": null,
-     "note": "침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9555,7 +9620,7 @@
      "repair": false,
      "level": 900,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
@@ -9636,7 +9701,7 @@
      "repair": false,
      "level": 700,
      "grade": "B",
-     "note": "접속제 침수",
+     "note": null,
      "photo": null,
      "flood": true
     },
